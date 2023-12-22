@@ -1,11 +1,12 @@
 <script lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import { defineComponent } from 'vue';
-import PaymentModule from '@/components/PaymentModule.vue';
+import ClinicHeader from '@/components/common/ClinicHeader.vue';
+import ClinicFooter from '@/components/common/ClinicFooter.vue';
 
 export default defineComponent({
     name: 'App',
-    components: { PaymentModule },
+    components: { ClinicFooter, ClinicHeader },
     setup() {
         return {
             RouterLink,
@@ -16,17 +17,15 @@ export default defineComponent({
 </script>
 
 <template>
-    <header>
-        <div class="wrapper">
-            <nav>
-                <RouterLink to="/">Home</RouterLink>
-                <RouterLink to="/about">About</RouterLink>
-                <PaymentModule></PaymentModule>
-            </nav>
-        </div>
-    </header>
-
+    <clinic-header></clinic-header>
     <RouterView />
+    <clinic-footer></clinic-footer>
 </template>
 
-<style scoped></style>
+<style scoped>
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+</style>

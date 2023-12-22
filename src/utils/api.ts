@@ -3,13 +3,13 @@ import axios from 'axios';
 import { CONSTANTS } from '../../constants';
 
 const axiosInstance = axios.create({
-    // baseURL: CONSTANTS.API_URL,
     baseURL: CONSTANTS.API_URL,
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
     }
 });
+axiosInstance.defaults.withCredentials = true;
 
 axiosInstance.interceptors.request.use(
     function (config) {
@@ -31,8 +31,4 @@ axiosInstance.interceptors.response.use(
 
 export const getApiInstance = () => {
     return axiosInstance;
-};
-
-export const setApiAccessToken = (token: string) => {
-    // axiosInstance.defaults.headers.common['X-AUTH-TOKEN'] = token;
 };

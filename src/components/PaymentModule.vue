@@ -18,12 +18,13 @@ export default defineComponent({
             pay_method: '',
             merchant_uid: '',
             name: '',
-            amount: 1,
+            amount: 5,
             buyer_email: '',
             buyer_name: '',
             buyer_tel: '',
             buyer_addr: '',
-            buyer_postcode: ''
+            buyer_postcode: '',
+            bypass: {},
         };
 
         const kakaoPaymentBaseRequest: IAmPortPgBaseRequest = {
@@ -35,9 +36,16 @@ export default defineComponent({
             pay_method: 'card'
         };
 
+        const kgPaymentBaseRequest: IAmPortPgBaseRequest = {
+            pg: 'html5_inicis.INIpayTest',
+            // pg: 'html5_inicis.INIpayTest',
+            pay_method: 'card',
+            buyer_tel: '01026727162'
+        };
+
         //sample
         const productId = ref<number>(1);
-        const phoneNumber = ref<string>('01022222222');
+        const phoneNumber = ref<string>('01026727162');
         const address = ref<string>('부천시 상동');
         const footage = ref<number>(29);
         const description = ref<string>('잘해주세요');
@@ -80,9 +88,10 @@ export default defineComponent({
             const iAmPortClient = window.IMP;
             iAmPortClient.init('imp15738717');
             const paymentRequest = Object.assign({}, paymentBaseRequest, pgBaseRequest);
-            // paymentRequest.name = '테스트 아이템';
+            paymentRequest.name = '입주청소';
             const prepareRequest = {
                 productId: productId.value,
+                productName: paymentRequest.name,
                 phoneNumber: phoneNumber.value,
                 address: address.value,
                 footage: footage.value,
@@ -91,19 +100,29 @@ export default defineComponent({
                 isAgreePolicy: true
             } as PaymentPrepareRequest;
 
+            if (pgBaseRequest.pg === 'html5_inicis.INIpayTest') {
+                paymentRequest['bypass'] = {
+                    acceptmethod: 'noeasypay' // 간편결제 버튼을 통합결제창에서 제외(PC)
+                };
+            }
+
+            console.log(prepareRequest);
+
             try {
                 const prepareResponse = await doPaymentPrepare(prepareRequest);
                 console.log(prepareResponse);
-
-                const merchantUid = prepareResponse.data.data;
-
+                paymentRequest.merchant_uid = prepareResponse.data.data;
+                paymentRequest.buyer_tel = "01026727162";
+                console.log(paymentRequest);
 
                 iAmPortClient.request_pay(paymentRequest, async (rsp: IAmPortPaymentResponse) => {
                     // callback
+                    console.log(rsp);
                     const response = (await getApiInstance().post(
-                        '/payment/result',
+                        '/orders/result',
                         toRequest(rsp)
                     )) as ApiResponse<any>;
+                    console.log(response);
                     if (response.data.code == 0) {
                         console.log('success');
                     } else {
@@ -118,7 +137,8 @@ export default defineComponent({
         return {
             doPayment,
             kakaoPaymentBaseRequest,
-            tossPaymentBaseRequest
+            tossPaymentBaseRequest,
+            kgPaymentBaseRequest
         };
     }
 });
@@ -128,6 +148,7 @@ export default defineComponent({
     <div>결제모듈</div>
     <button @click="() => doPayment(kakaoPaymentBaseRequest)">카카오 결제하기</button>
     <button @click="() => doPayment(tossPaymentBaseRequest)">토스 결제하기</button>
+    <button @click="() => doPayment(kgPaymentBaseRequest)">kg 결제하기</button>
 </template>
 
 <style scoped></style>

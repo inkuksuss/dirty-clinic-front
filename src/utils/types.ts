@@ -1,15 +1,17 @@
+import Big from 'big.js';
+
 export interface User {
     id: string;
     name: string;
 }
 
-export interface ApiResponse<T> {
+export type ApiResponse<T> = {
     code: number;
     message: string;
     data: T;
-}
+};
 
-export interface IAmPortPaymentRequest {
+export type IAmPortPaymentRequest = {
     pg: string;
     pay_method: string | null;
     merchant_uid: string;
@@ -20,14 +22,17 @@ export interface IAmPortPaymentRequest {
     buyer_tel: string | null;
     buyer_addr: string | null;
     buyer_postcode: string | null;
-}
+    bypass?: object;
+    notice_url?: string;
+};
 
-export interface IAmPortPgBaseRequest {
+export type IAmPortPgBaseRequest = {
     pg: string;
     pay_method?: string;
-}
+    buyer_tel?: string;
+};
 
-export interface IAmPortPaymentResponse {
+export type IAmPortPaymentResponse = {
     apply_num: string | null;
     bank_name: string | null;
     buyer_addr: string | null;
@@ -53,19 +58,20 @@ export interface IAmPortPaymentResponse {
     status: string;
     success: boolean;
     error_msg?: string;
-}
+};
 
-export interface PaymentPrepareRequest {
+export type PaymentPrepareRequest = {
     productId: number;
+    productName: string;
     phoneNumber: string;
     address: string;
     footage: number;
     description: string;
     amount: number;
     isAgreePolicy: boolean;
-}
+};
 
-export interface PaymentResultRequest {
+export type PaymentResultRequest = {
     applyNum: string | null;
     bankName: string | null;
     buyerAddr: string | null;
@@ -91,4 +97,4 @@ export interface PaymentResultRequest {
     status: string;
     success: boolean;
     errorMsg?: string;
-}
+};
