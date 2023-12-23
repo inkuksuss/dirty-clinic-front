@@ -13,6 +13,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@egjs/flicking-plugins": "^4.7.1",
+    "@egjs/vue3-flicking": "^4.11.2",
     "axios": "^1.6.2",
     "normalize-scss": "^8.0.0",
     "pinia": "^2.1.7",

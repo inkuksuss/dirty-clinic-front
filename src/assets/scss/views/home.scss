@@ -1,11 +1,30 @@
 .main-wrapper {
-    .main-img-wrapper {
+    padding-top: $header-height;
+
+    .main-title-wrapper {
         width: 100vw;
         height: calc(100vh - $header-height);
+        background-image: url("@/assets/images/home/clinic_main1@x.jpg");
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
-        img {
-            width: 100%;
-            height: 100%;
+        .text-title {
+            text-align: center;
+            color: $color-white;
+            font-weight: 600;
+            font-size: 48px;
+            line-height: 72px;
+            padding-bottom: 35px;
+        }
+
+        .main-button {
+            background-color: $color-white;
+            width: 255px;
+            height: 60px;
+            border-radius: 80px;
         }
     }
 
@@ -94,7 +113,7 @@
                 width: 100%;
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
-                grid-column-gap: 10px;
+                grid-column-gap: 20px;
                 grid-row-gap: 50px;
 
                 .contents {
@@ -153,13 +172,11 @@
     }
     .main-promotion-wrapper {
         margin-top: 120px;
-        padding-left: 160px;
-        padding-right: 160px;
         display: flex;
         justify-content: center;
 
         .promotion-text-wrapper {
-            background-image: url("@/assets/images/home/promotion1@x.jpg");
+            background-image: url('@/assets/images/home/promotion1@x.jpg');
             width: 880px;
             height: 180px;
             display: flex;
@@ -176,6 +193,55 @@
                 padding-left: 50px;
                 font-weight: 700;
                 font-size: 48px;
+            }
+        }
+    }
+
+    .main-slider-wrapper {
+        width: 100%;
+        padding-top: 120px;
+        display: flex;
+        justify-content: end;
+        height: 300px;
+        margin-bottom: 160px;
+
+
+        .slider-contents-wrapper {
+            width: 1040px;
+            margin-right: calc((100% - 1200px) / 2);
+            display: flex;
+
+            .text-wrapper {
+                width: 220px;
+                height: 170px;
+                margin-right: 57px;
+                padding-top: 65px;
+                div {
+                    width: 220px;
+                    font-size: 48px;
+                    font-weight: 700;
+                    line-height: 57px;
+                }
+            }
+
+            .flicking-wrapper {
+                overflow: hidden;
+                width: 770px;
+                .flicking-camera {
+                    display: flex;
+                    margin-left: 10px;
+
+                    .flicking-panel {
+                        margin-left: 20px;
+                        width: 240px;
+                        height: 300px;
+
+                        img {
+                            width: 240px;
+                            height: 300px;
+                        }
+                    }
+                }
             }
         }
     }

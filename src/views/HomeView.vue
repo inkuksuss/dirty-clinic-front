@@ -1,15 +1,30 @@
 <script>
 import { defineComponent } from 'vue';
+import { AutoPlay } from '@egjs/flicking-plugins';
+import Flicking from '@egjs/vue3-flicking';
 
 export default defineComponent({
-    components: {}
+    components: { Flicking: Flicking },
+    setup() {
+        const autoPlay = new AutoPlay({ duration: 1000, direction: 'NEXT', stopOnHover: true });
+        autoPlay.play();
+        const plugins = [autoPlay];
+
+        return {
+            plugins
+        };
+    }
 });
 </script>
 
 <template>
     <main class="main-wrapper">
-        <div class="main-img-wrapper">
-            <img src="@/assets/images/home/clinic_main1@x.jpg" alt="main" />
+        <div class="main-title-wrapper">
+            <div class="text-title">
+                더티클리닉 <br />
+                슬로건을 작성해주세요
+            </div>
+            <div class="main-button"></div>
         </div>
 
         <div class="main-first-wrapper">
@@ -119,19 +134,49 @@ export default defineComponent({
                 </div>
             </div>
         </div>
-      <div class="main-promotion-wrapper">
-        <div class="promotion-text-wrapper">
-          <span class="text-sub">더티클리닉의 꺠끗함을 만나보세요.</span>
-          <span class="text-main">프로모션 50%</span>
+        <div class="main-promotion-wrapper">
+            <div class="promotion-text-wrapper">
+                <span class="text-sub">더티클리닉의 꺠끗함을 만나보세요.</span>
+                <span class="text-main">프로모션 50%</span>
+            </div>
         </div>
-      </div>
+        <div class="main-slider-wrapper">
+            <div class="slider-contents-wrapper">
+                <div class="text-wrapper">
+                    <div>
+                        우리는 <br />
+                        이렇게 <br />
+                        보장합니다.
+                    </div>
+                </div>
+
+                <Flicking class="flicking-wrapper" :plugins="plugins" :options="{ circular: true }">
+                    <div class="flicking-panel">
+                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
+                    </div>
+                    <div class="flicking-panel">
+                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
+                    </div>
+                    <div class="flicking-panel">
+                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
+                    </div>
+                    <div class="flicking-panel">
+                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
+                    </div>
+                    <div class="flicking-panel">
+                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
+                    </div>
+                    <div class="flicking-panel">
+                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
+                    </div>
+                    <div class="flicking-panel">
+                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
+                    </div>
+                </Flicking>
+            </div>
+        </div>
     </main>
 </template>
 
 <style scoped>
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
 </style>
