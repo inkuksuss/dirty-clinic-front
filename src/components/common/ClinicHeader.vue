@@ -1,14 +1,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-type Category = {
-    title: string;
-};
+
 
 export default defineComponent({
     name: 'ClinicHeader',
-    props: {},
     setup() {
+      type Category = {
+        title: string;
+      };
+
         const categoryList: Array<Category> = [
             { title: '간편클리닉' },
             { title: '전문클리닉' },

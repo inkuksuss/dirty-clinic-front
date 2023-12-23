@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue';
 import { AutoPlay } from '@egjs/flicking-plugins';
 import Flicking from '@egjs/vue3-flicking';
@@ -178,5 +178,4 @@ export default defineComponent({
     </main>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

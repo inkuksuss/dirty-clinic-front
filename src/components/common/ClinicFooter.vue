@@ -7,7 +7,6 @@ type FooterCategory = {
 
 export default defineComponent({
     name: 'ClinicFooter',
-    props: {},
     setup() {
         const categoryList: Array<FooterCategory> = [
             { title: '회사소개' },
