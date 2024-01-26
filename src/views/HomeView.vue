@@ -1,17 +1,35 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { AutoPlay } from '@egjs/flicking-plugins';
-import Flicking from '@egjs/vue3-flicking';
+import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
+import homeSlider from '@/components/home/HomeSlider.vue';
+import HomeScroll from '@/components/home/HomeScroll.vue';
+import HomeIntro from '@/components/home/HomeIntro.vue';
+import HomePromotion from '@/components/home/HomePromotion.vue';
+import router from '@/router';
 
 export default defineComponent({
-    components: { Flicking: Flicking },
+    components: { HomePromotion, HomeIntro, HomeScroll, homeSlider },
     setup() {
-        const autoPlay = new AutoPlay({ duration: 1000, direction: 'NEXT', stopOnHover: true });
-        autoPlay.play();
-        const plugins = [autoPlay];
+        const isButtonActive = ref<boolean>(false);
+
+        const handleScroll = () => {
+            isButtonActive.value = window.scrollY > 0;
+        };
+
+        const handleClickBtn = () => {
+            router.push('/sub');
+        };
+
+        onMounted(() => {
+            window.addEventListener('scroll', handleScroll);
+        });
+
+        onUnmounted(() => {
+            window.removeEventListener('scroll', handleScroll);
+        });
 
         return {
-            plugins
+            isButtonActive,
+            handleClickBtn
         };
     }
 });
@@ -19,160 +37,45 @@ export default defineComponent({
 
 <template>
     <main class="main-wrapper">
-        <div class="main-title-wrapper">
-            <div class="text-title">
-                더티클리닉 <br />
-                슬로건을 작성해주세요
-            </div>
-            <div class="main-button"></div>
-        </div>
-
-        <div class="main-first-wrapper">
-            <div class="main-contents-wrapper">
-                <div class="text-wrapper">
-                    <span class="text-title">더티클리닉은 약속합니다.</span>
-                    <span class="text-sub"
-                        >여기에 서브 타이틀을 넣으려고 합니다. 원하는 문구가 있으신가요?</span
+        <div class="main-image-wrapper flex justify-center items-center bg-black">
+            <div class="main-image w-[--full-width] h-full flex justify-center items-center">
+                <div class="image-content w-[--body-width] h-[305px] flex flex-col justify-between">
+                    <div class="text-area flex flex-col items-start">
+                        <span
+                            class="main-text text-[48px] font-[700] text-[--color-white] leading-[62px] mb-[10px]"
+                            >깨끗함을 재정의하다.</span
+                        >
+                        <span
+                            class="sub-text text-[38px] font-[600] text-[--color-white] leading-[49px]"
+                            >우리는 청결의 미학을 실현하는 전문기업 <br />
+                            더티클리닉입니다.</span
+                        >
+                    </div>
+                    <div
+                        class="payment-btn w-[255px] h-[65px] rounded-[80px] bg-[--color-main-blue] text-[--color-white] flex justify-center items-center text-[24px] font-[600]"
                     >
-                </div>
-                <div class="main-image-wrapper">
-                    <div class="contents-wrapper">
-                        <div class="contents">
-                            <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                            <span
-                                >첫번째 약속에 대한 <br />
-                                설명을 여기에 작성합니다.</span
-                            >
-                        </div>
-                        <div class="contents">
-                            <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                            <span
-                                >두번째 약속에 대한 <br />
-                                설명을 여기에 작성합니다.</span
-                            >
-                        </div>
-                        <div class="contents">
-                            <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                            <span
-                                >세번째 약속에 대한 <br />
-                                설명을 여기에 작성합니다.</span
-                            >
-                        </div>
+                        온라인 예약하기
                     </div>
                 </div>
             </div>
         </div>
-        <div class="main-second-wrapper">
-            <div class="main-contents-wrapper">
-                <div class="text-wrapper">
-                    <span class="text-title">더티클리닉의 대표서비스</span>
-                    <span class="text-sub"
-                        >여기에 서브 타이틀을 넣으려고 합니다. 원하는 문구 있으신가요?</span
-                    >
-                </div>
-                <div class="contents-wrapper">
-                    <div class="contents">
-                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                        <div class="description">
-                            <div class="description-text">
-                                <span class="description-title">전문클리닉</span>
-                                <span class="description-sub"
-                                    >첫번째 약속에 대한 <br />
-                                    첫번째 약속에 대한 설명을 여기에</span
-                                >
-                            </div>
-                            <div class="description-button">
-                                <span>more</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contents">
-                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                        <div class="description">
-                            <div class="description-text">
-                                <span class="description-title">전문클리닉</span>
-                                <span class="description-sub"
-                                    >첫번째 약속에 대한 <br />
-                                    첫번째 약속에 대한 설명을 여기에</span
-                                >
-                            </div>
-                            <div class="description-button">
-                                <span>more</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contents">
-                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                        <div class="description">
-                            <div class="description-text">
-                                <span class="description-title">전문클리닉</span>
-                                <span class="description-sub"
-                                    >첫번째 약속에 대한 <br />
-                                    첫번째 약속에 대한 설명을 여기에</span
-                                >
-                            </div>
-                            <div class="description-button">
-                                <span>more</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contents">
-                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                        <div class="description">
-                            <div class="description-text">
-                                <span class="description-title">전문클리닉</span>
-                                <span class="description-sub"
-                                    >첫번째 약속에 대한 <br />
-                                    첫번째 약속에 대한 설명을 여기에</span
-                                >
-                            </div>
-                            <div class="description-button">
-                                <span>more</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="main-contents-wrapper w-full h-full flex flex-col justify-center items-center">
+            <home-intro></home-intro>
+            <home-promotion></home-promotion>
+            <home-slider></home-slider>
+            <home-scroll></home-scroll>
         </div>
-        <div class="main-promotion-wrapper">
-            <div class="promotion-text-wrapper">
-                <span class="text-sub">더티클리닉의 꺠끗함을 만나보세요.</span>
-                <span class="text-main">프로모션 50%</span>
+        <div
+            v-if="isButtonActive"
+            class="fixed bottom-[150px] right-[30px] w-[175px] h-[75px] bg-[--color-main-blue] rounded-[100px] flex-center"
+            @click="handleClickBtn"
+        >
+            <div class="w-[33px] h-[30px] mr-[10px]">
+                <img class="w-full h-full" src="@/assets/images/icons/calendar.png" />
             </div>
-        </div>
-        <div class="main-slider-wrapper">
-            <div class="slider-contents-wrapper">
-                <div class="text-wrapper">
-                    <div>
-                        우리는 <br />
-                        이렇게 <br />
-                        보장합니다.
-                    </div>
-                </div>
-
-                <Flicking class="flicking-wrapper" :plugins="plugins" :options="{ circular: true }">
-                    <div class="flicking-panel">
-                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                    </div>
-                    <div class="flicking-panel">
-                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                    </div>
-                    <div class="flicking-panel">
-                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                    </div>
-                    <div class="flicking-panel">
-                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                    </div>
-                    <div class="flicking-panel">
-                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                    </div>
-                    <div class="flicking-panel">
-                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                    </div>
-                    <div class="flicking-panel">
-                        <img src="@/assets/images/home/test-img1@x.jpg" alt="test" />
-                    </div>
-                </Flicking>
+            <div class="font-[600] text-[20px] leading-[26px] text-[--color-white]">
+                온라인 <br />
+                예약하기
             </div>
         </div>
     </main>

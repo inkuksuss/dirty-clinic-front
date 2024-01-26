@@ -180,7 +180,7 @@ export default defineComponent({
 
 <template>
     <header
-        class="header-wrapper fixed top-0 left-0 bg-[--color-white] flex items-center justify-between w-screen h-[--header-height] pl-[50px] pr-[60px]"
+        class="header-wrapper fixed top-0 left-0 bg-[--color-white] flex items-center justify-between w-screen h-[--header-height] pl-[50px] pr-[60px] z-40"
         :class="[isOpen ? 'border-b-[1px] border-b-[--color-border-blue]' : '']"
     >
         <div class="logo-wrapper w-[133px] h-[41px]">
