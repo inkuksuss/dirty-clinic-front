@@ -20,7 +20,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/icons/living_room.svg',
+                icon: '/dirty-clinic-front/assets/images/living_room.svg',
                 isOpen: false
             },
             {
@@ -31,7 +31,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/icons/bath_room.svg',
+                icon: '/dirty-clinic-front/assets/images/bath_room.svg',
                 isOpen: false
             },
             {
@@ -42,7 +42,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/icons/kitchen.svg',
+                icon: '/dirty-clinic-front/assets/images/kitchen.svg',
                 isOpen: false
             },
             {
@@ -53,7 +53,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/icons/veranda.svg',
+                icon: '/dirty-clinic-front/assets/images/veranda.svg',
                 isOpen: false
             },
             {
@@ -64,7 +64,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/icons/room.svg',
+                icon: '/dirty-clinic-front/assets/images/room.svg',
                 isOpen: false
             },
             {
@@ -75,7 +75,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/icons/entrance.svg',
+                icon: '/dirty-clinic-front/assets/images/entrance.svg',
                 isOpen: false
             }
         ]);
