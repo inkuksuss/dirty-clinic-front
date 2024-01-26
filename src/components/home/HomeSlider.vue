@@ -6,7 +6,6 @@ import { AutoPlay } from '@egjs/flicking-plugins';
 export default defineComponent({
     name: 'HomeSlider',
     components: { Flicking: Flicking },
-    props: {},
     setup() {
         const autoPlay = new AutoPlay({ duration: 1000, direction: 'NEXT', stopOnHover: true });
 

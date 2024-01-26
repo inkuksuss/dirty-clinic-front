@@ -9,7 +9,6 @@ type PromotionInfo = {
 
 export default defineComponent({
     name: 'HomePromotion',
-    props: {},
     setup() {
         const promList: PromotionInfo[] = [
             {

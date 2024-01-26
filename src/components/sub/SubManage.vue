@@ -10,7 +10,6 @@ type ManageInfo = {
 
 export default defineComponent({
     name: 'SubManage',
-    props: {},
     setup() {
         const manageList = ref<ManageInfo[]>([
             {

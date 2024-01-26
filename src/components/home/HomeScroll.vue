@@ -1,18 +1,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Flicking from '@egjs/vue3-flicking';
-import { AutoPlay } from '@egjs/flicking-plugins';
 
 export default defineComponent({
     name: 'HomeScroll',
-    props: {},
-    setup() {
-        const autoPlay = new AutoPlay({ duration: 1000, direction: 'NEXT', stopOnHover: false });
-
-        return {
-            plugins: [autoPlay]
-        };
-    }
+    setup() {}
 });
 </script>
 
