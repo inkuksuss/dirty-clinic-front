@@ -20,7 +20,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/living_room.svg',
+                icon: 'src/assets/images/icons/living_room.svg',
                 isOpen: false
             },
             {
@@ -31,7 +31,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/bath_room.svg',
+                icon: 'src/assets/images/icons/bath_room.svg',
                 isOpen: false
             },
             {
@@ -42,7 +42,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/kitchen.svg',
+                icon: 'src/assets/images/icons/kitchen.svg',
                 isOpen: false
             },
             {
@@ -53,7 +53,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/veranda.svg',
+                icon: 'src/assets/images/icons/veranda.svg',
                 isOpen: false
             },
             {
@@ -64,7 +64,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/room.svg',
+                icon: 'src/assets/images/icons/room.svg',
                 isOpen: false
             },
             {
@@ -75,7 +75,7 @@ export default defineComponent({
                     { main: '베란다 창문 청소' },
                     { main: '베란다 창문 청소', sub: '2, 4 외부 창문 제외' }
                 ],
-                icon: '/dirty-clinic-front/assets/images/entrance.svg',
+                icon: 'src/assets/images/icons/entrance.svg',
                 isOpen: false
             }
         ]);
@@ -102,7 +102,7 @@ export default defineComponent({
 
 <template>
     <div class="manage-wrapper bg-[--color-skyblue] w-full pt-[85px] pb-[85px] flex justify-center">
-        <div class="w-[--body-width] flex flex-col">
+        <div class="manage-contents max-w-[--body-width] w-[73%] flex flex-col">
             <div class="text-area mb-[30px]">
                 <div
                     class="text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px]"
@@ -110,7 +110,7 @@ export default defineComponent({
                     어디까지 관리 되나요?
                 </div>
                 <div class="text-[--color-text-black] text-[18px] font-[500] leading-[26px]">
-                    클린함을 원칙으로 오염 요소는 완벽 제거를 원칙으로 합니다. <br />
+                    청결을 모토로 오염요소는 완벽하게 제거해드립니다. <br />
                     알고싶은 영역을 눌러보세요.
                 </div>
             </div>
@@ -118,7 +118,7 @@ export default defineComponent({
                 <div
                     v-for="(info, idx) in manageList"
                     :key="idx"
-                    class="content-wrapper relative w-[430px] h-[80px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] px-[30px] flex justify-between items-center"
+                    class="content-wrapper relative max-w-[430px] h-[80px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] px-[30px] flex justify-between items-center"
                     :class="{ active: info.isOpen }"
                     @click="() => handleClick(info)"
                 >
@@ -134,7 +134,7 @@ export default defineComponent({
                     <transition name="slide-fade" mode="out-in">
                         <div
                             v-if="info.isOpen"
-                            class="info-label absolute w-[430px] top-[77px] left-[-1.5px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] z-10"
+                            class="info-label absolute max-w-[430px] w-full top-[77px] left-[-1.5px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] z-10"
                         >
                             <div
                                 v-for="(content, idx) in info.content"

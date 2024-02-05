@@ -1,5 +1,6 @@
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
+import { useStore } from '@/stores/store';
 
 type Category = {
     id: number;
@@ -135,6 +136,9 @@ export default defineComponent({
             }
         ]);
 
+        const store = useStore();
+        const compIsMobile = computed(() => store.isMobile);
+
         const handleClick = () => {};
 
         const calculateElementWidth = () => {
@@ -167,6 +171,7 @@ export default defineComponent({
         });
 
         return {
+            compIsMobile,
             categoryList,
             categoryWrapperElement,
             isOpen,
@@ -179,56 +184,75 @@ export default defineComponent({
 </script>
 
 <template>
-    <header
-        class="header-wrapper fixed top-0 left-0 bg-[--color-white] flex items-center justify-between w-screen h-[--header-height] pl-[50px] pr-[60px] z-40"
-        :class="[isOpen ? 'border-b-[1px] border-b-[--color-border-blue]' : '']"
-    >
-        <div class="logo-wrapper w-[133px] h-[41px]">
+    <header>
+        <div
+            v-if="!compIsMobile"
+            class="header-wrapper fixed top-0 left-0 bg-[--color-white] flex items-center justify-between w-screen h-[--header-height] pl-[50px] pr-[60px] z-40"
+            :class="[isOpen ? 'border-b-[1px] border-b-[--color-border-blue]' : '']"
+        >
+            <div class="logo-wrapper w-[133px] h-[41px]">
+                <img
+                    class="w-full h-full"
+                    src="@/assets/images/home/clinic_logo@1x.png"
+                    alt="main_logo"
+                />
+            </div>
+            <div
+                class="category-wrapper flex justify-end items-center h-full"
+                ref="categoryWrapperElement"
+            >
+                <div
+                    :id="`category-${category.id}`"
+                    class="category-contents relative inline-flex justify-end items-center h-full pl-[15px] pr-[15px]"
+                    v-for="category in categoryList"
+                    :key="category.title"
+                    @mouseenter="() => handleMouseEnter(category)"
+                    @mouseleave="() => handleMouseLeave(category)"
+                >
+                    <div
+                        class="title w-full h-full flex-center font-[500] text-[16px] hover:text-[--color-hover] hover:font-[800]"
+                    >
+                        <span class="leading-[19px]">{{ category.title }}</span>
+                    </div>
+                    <transition name="slide-fade" mode="out-in"
+                        ><div
+                            class="sub-wrapper bg-[--color-white] absolute flex-center flex-col top-[--header-height] w-[150px] pt-[22.5px] pb-[22.5px] border-[1px] border-t-[0] border-[--color-border-blue]"
+                            :class="[category.isSelect ? 'active' : '']"
+                            :style="`left: ${-category.posCenterX}px`"
+                            v-if="category.isSelect"
+                        >
+                            <div
+                                class="title-wrapper w-full flex-center py-[7.5px] hover:bg-[--color-gray]"
+                                v-for="subCategory in category.subList"
+                                :key="subCategory.title"
+                            >
+                                <div
+                                    class="sub-title leading-[19px] font-[500] text-[16px]"
+                                    @click="handleClick"
+                                >
+                                    {{ subCategory.title }}
+                                </div>
+                            </div>
+                        </div></transition
+                    >
+                </div>
+            </div>
+        </div>
+        <div v-else class="px-[20px] bg-[--color-white] h-[--header-height] flex justify-between items-center fixed top-0 left-0 w-screen z-40">
+          <div class="logo-wrapper w-[88px] h-[27px]">
             <img
                 class="w-full h-full"
                 src="@/assets/images/home/clinic_logo@1x.png"
                 alt="main_logo"
             />
-        </div>
-        <div
-            class="category-wrapper flex justify-end items-center h-full"
-            ref="categoryWrapperElement"
-        >
-            <div
-                :id="`category-${category.id}`"
-                class="category-contents relative inline-flex justify-end items-center h-full pl-[15px] pr-[15px]"
-                v-for="category in categoryList"
-                :key="category.title"
-                @mouseenter="() => handleMouseEnter(category)"
-                @mouseleave="() => handleMouseLeave(category)"
-            >
-                <div
-                    class="title w-full h-full flex-center font-[500] text-[16px] hover:text-[--color-hover] hover:font-[800]"
-                >
-                    <span class="leading-[19px]">{{ category.title }}</span>
-                </div>
-                <transition name="slide-fade" mode="out-in"
-                    ><div
-                        class="sub-wrapper bg-[--color-white] absolute flex-center flex-col top-[--header-height] w-[150px] pt-[22.5px] pb-[22.5px] border-[1px] border-t-[0] border-[--color-border-blue]"
-                        :class="[category.isSelect ? 'active' : '']"
-                        :style="`left: ${-category.posCenterX}px`"
-                        v-if="category.isSelect"
-                    >
-                        <div
-                            class="title-wrapper w-full flex-center py-[7.5px] hover:bg-[--color-gray]"
-                            v-for="subCategory in category.subList"
-                            :key="subCategory.title"
-                        >
-                            <div
-                                class="sub-title leading-[19px] font-[500] text-[16px]"
-                                @click="handleClick"
-                            >
-                                {{ subCategory.title }}
-                            </div>
-                        </div>
-                    </div></transition
-                >
-            </div>
+          </div>
+          <div class="btn-wrapper w-[40px] h-[40px]">
+            <img
+                class="w-full h-full"
+                src="@/assets/images/home/test-img1@1x.jpg"
+                alt="main_logo"
+            />
+          </div>
         </div>
     </header>
 </template>

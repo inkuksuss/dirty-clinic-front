@@ -24,14 +24,14 @@ export default defineComponent({
                     원룸청소
                 </div>
                 <div class="text-[--color-text-black] text-[18px] font-[500] leading-[26px]">
-                    원룸청소에 대한 간략한 내용 <br />
-                    얼마나 어덯게 신경써준다.
+                    1인 가구가 늘어난 요즘, <br />
+                    원룸 청소는 더티클리닉에게 맡겨주세요.
                 </div>
             </div>
         </div>
         <sub-intro></sub-intro>
         <sub-manage></sub-manage>
-        <sub-promotion></sub-promotion>
+<!--        <sub-promotion></sub-promotion>-->
         <sub-service></sub-service>
         <sub-check-list></sub-check-list>
     </div>

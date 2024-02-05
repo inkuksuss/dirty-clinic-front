@@ -37,8 +37,8 @@ export default defineComponent({
 
 <template>
     <main class="main-wrapper">
-        <div class="main-image-wrapper flex justify-center items-center bg-black">
-            <div class="main-image w-[--full-width] h-full flex justify-center items-center">
+        <div class="main-image-wrapper w-full flex justify-center items-center bg-black">
+            <div class="main-image w-full h-full flex justify-center items-center">
                 <div class="image-content w-[--body-width] h-[305px] flex flex-col justify-between">
                     <div class="text-area flex flex-col items-start">
                         <span

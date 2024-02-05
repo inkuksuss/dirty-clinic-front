@@ -5,57 +5,168 @@
         .banner {
             background-image: url('@/assets/images/sub/sub_banner@1x.jpg');
             background-size: cover;
+
+            @include mobile {
+                padding-left: 25px;
+            }
+
+            div {
+                &:first-child {
+                    font-size: 36px;
+                    line-height: 43px;
+                }
+
+                &:last-child {
+                    font-size: 16px;
+                    line-height: 19px;
+                }
+            }
+        }
+    }
+
+    .intro-wrapper {
+        .intro-contents {
+            &.mobile {
+                width: calc(100% - 50px);
+
+                .text-area {
+                }
+
+                .first-row {
+                    .image-wrapper {
+                        aspect-ratio: 1 / 1;
+                    }
+                }
+            }
+
+            .text-area {
+                .text-main {
+                    @include mobile {
+                        font-size: 22px;
+                        line-height: 26.25px;
+                        margin-bottom: 5px;
+                    }
+                }
+
+                .text-sub {
+                    @include mobile {
+                        font-size: 14px;
+                        line-height: 16.7px;
+                    }
+                }
+
+                .text-sub {
+                }
+            }
+
+            .image-area {
+                .image-wrapper {
+                    aspect-ratio: 150 / 150;
+                }
+            }
         }
     }
 
     .manage-wrapper {
-        .text-area {
+        @include mobile {
+            padding-top: 60px;
+            padding-bottom: 60px;
         }
-        .list-area {
-            .content-wrapper {
-                .slide-fade-enter-active,
-                .slide-fade-leave-active {
-                    transition: all 0.25s ease;
-                    transform: scaleY(1);
-                    transform-origin: top;
-                    overflow: hidden;
-                }
 
-                .slide-fade-enter-from,
-                .slide-fade-leave-to {
-                    transform: scaleY(0);
-                }
+        .manage-contents {
+            @include mobile {
+                display: flex;
+                justify-content: center;
+                max-width: 608px;
+                width: 100%;
+                margin-left: 25px;
+                margin-right: 25px;
+            }
 
-                .slide-fade-enter-to,
-                .slide-fade-leave-from {
-                    transform: scaleY(1);
-                    transform-origin: top;
-                }
-
-                .arrow {
-                    animation: closeSpin 0.25s linear;
-                    transform: rotate(0deg);
-                }
-
-                .info-label {
-                    .info-box {
-                        &:first-child {
-                            margin-top: 15px;
+            .text-area {
+                div {
+                    &:first-child {
+                        @include mobile {
+                            font-size: 24px;
+                            font-weight: 600;
+                            line-height: 28px;
                         }
+                    }
 
-                        &:last-child {
-                            margin-bottom: 15px;
+                    &:last-child {
+                        @include mobile {
+                            font-size: 16px;
+                            font-weight: 400;
+                            line-height: 19px;
                         }
                     }
                 }
+            }
+            .list-area {
+                @include mobile {
+                    display: flex;
+                    flex-direction: column;
+                }
 
-                &.active {
+                .content-wrapper {
+                    @include mobile {
+                        width: 100%;
+                        max-width: 608px;
+                    }
+
+                    //.slide-fade {
+                    //    width: 100%;
+                    //    max-width: 608px;
+                    //}
+
+                    .slide-fade-enter-active,
+                    .slide-fade-leave-active {
+                        transition: all 0.25s ease;
+                        transform: scaleY(1);
+                        transform-origin: top;
+                        overflow: hidden;
+                    }
+
+                    .slide-fade-enter-from,
+                    .slide-fade-leave-to {
+                        transform: scaleY(0);
+                    }
+
+                    .slide-fade-enter-to,
+                    .slide-fade-leave-from {
+                        transform: scaleY(1);
+                        transform-origin: top;
+                    }
+
                     .arrow {
-                        animation: openSpin 0.25s linear;
-                        transform: rotate(-180deg);
+                        animation: closeSpin 0.25s linear;
+                        transform: rotate(0deg);
                     }
 
                     .info-label {
+                        .info-box {
+                            &:first-child {
+                                margin-top: 15px;
+                            }
+
+                            &:last-child {
+                                margin-bottom: 15px;
+                            }
+                        }
+                    }
+
+                    &.active {
+                        .arrow {
+                            animation: openSpin 0.25s linear;
+                            transform: rotate(-180deg);
+                        }
+
+                        .info-label {
+                            @include mobile {
+                                width: 100%;
+                                max-width: 608px;
+                            }
+                        }
                     }
                 }
             }
@@ -76,6 +187,90 @@
                 &:last-child {
                     background-image: url('@/assets/images/home/test-img1@1x.jpg');
                 }
+            }
+        }
+    }
+
+    .service-wrapper {
+        @include mobile {
+            width: 100vw;
+            max-width: 658px;
+            padding-left: 25px;
+            padding-right: 25px;
+            margin-bottom: 80px;
+        }
+
+        .text-area {
+            @include mobile {
+                div {
+                    &:first-child {
+                        font-size: 24px;
+                        font-weight: 600;
+                        line-height: 28px;
+                    }
+
+                    &:last-child {
+                        font-size: 16px;
+                        font-weight: 400;
+                        line-height: 19px;
+                    }
+                }
+            }
+        }
+
+        .service-area {
+            @include mobile {
+                display: flex;
+                flex-direction: column;
+
+                .service-box {
+                    width: 100%;
+                    max-width: 608px;
+                    padding: 20px;
+
+                    .text {
+                        .title {
+                            font-size: 18px;
+                            font-weight: 600;
+                            line-height: 21px;
+                            margin-bottom: 5px;
+                        }
+
+                        .desc {
+                            font-size: 14px;
+                            font-weight: 400;
+                            line-height: 17px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .check-wrapper {
+        @include mobile {
+            width: 100%;
+            max-width: 658px;
+            padding-left: 25px;
+            padding-right: 25px;
+            flex-direction: column;
+            margin-bottom: 80px;
+
+            .text-area {
+                .main {
+                    font-size: 24px;
+                    font-weight: 600;
+                    line-height: 28px;
+                }
+
+                .sub {
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 19px;
+                }
+            }
+            .check-btn {
+                margin-top: 30px;
             }
         }
     }

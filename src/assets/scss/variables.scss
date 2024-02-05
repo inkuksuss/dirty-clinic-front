@@ -1,3 +1,8 @@
+$tablet: 1199px;
+$mobile: 767px;
+$sm: 375px;
+
+
 $full-width: 1200px;
 $body-width: 880px;
 $header-height: 80px;
@@ -6,3 +11,21 @@ $color-gray: #EEEEEE;
 $color-main: #54A3ED;
 $color-white: #FFFFFF;
 $color-hover: #2C88E1;
+
+@mixin tablet {
+  @media (max-width: #{$tablet}) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: #{$mobile}) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @media (max-width: #{$sm}) {
+    @content;
+  }
+}

@@ -8,24 +8,86 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="scroll-wrapper flex justify-center mt-[130px] mb-[80px]">
-        <div class="banner-area w-[--full-width] flex overflow-hidden">
-            <div class="banner-content w-full h-[200px] flex">
-                <div class="image-content first-banner w-[1200px] h-full">
-                    <img
-                        class="w-full h-full"
-                        src="@/assets/images/home/brand_scroll@1x.jpg"
-                        alt="brand_1"
-                    />
+    <div class="scroll-wrapper w-screen h-[200px] flex justify-center mt-[130px] mb-[80px]">
+        <div class="banner-area w-full h-full flex">
+            <div class="banner-content w-full h-[200px] flex flex-col">
+                <div class="banner first-row w-full h-full flex relative overflow-x-hidden">
+                    <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_1@1x.png"
+                            alt="brand_1"
+                        />
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_1@1x.png"
+                            alt="brand_1"
+                        />
+                    </div>
+                    <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_1@1x.png"
+                            alt="brand_1"
+                        />
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_1@1x.png"
+                            alt="brand_1"
+                        />
+                    </div>
                 </div>
-            </div>
-            <div class="banner-content w-full h-[200px] flex">
-                <div class="image-content first-banner w-[1200px] h-full">
-                    <img
-                        class="w-full h-full"
-                        src="@/assets/images/home/brand_scroll@1x.jpg"
-                        alt="brand_2"
-                    />
+                <div class="banner second-row w-full h-full flex relative overflow-x-hidden">
+                    <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_2@1x.png"
+                            alt="brand_1"
+                        />
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_2@1x.png"
+                            alt="brand_1"
+                        />
+                    </div>
+                    <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_2@1x.png"
+                            alt="brand_1"
+                        />
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_2@1x.png"
+                            alt="brand_1"
+                        />
+                    </div>
+                </div>
+                <div class="banner third-row w-full h-full flex relative overflow-x-hidden">
+                    <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_3@1x.png"
+                            alt="brand_1"
+                        />
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_3@1x.png"
+                            alt="brand_1"
+                        />
+                    </div>
+                    <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_3@1x.png"
+                            alt="brand_1"
+                        />
+                        <img
+                            class="w-full h-full"
+                            src="@/assets/images/home/brand_3@1x.png"
+                            alt="brand_1"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
