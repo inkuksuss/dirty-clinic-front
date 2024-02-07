@@ -1,15 +1,17 @@
 <script lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
-import { computed, defineComponent, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, defineComponent, onMounted, onUnmounted } from 'vue';
 import ClinicHeader from '@/components/common/ClinicHeader.vue';
 import ClinicFooter from '@/components/common/ClinicFooter.vue';
 import { useStore } from '@/stores/store';
+import ClinicPopup from '@/components/common/ClinicPopup.vue';
 
 export default defineComponent({
     name: 'App',
-    components: { ClinicFooter, ClinicHeader },
+    components: { ClinicPopup, ClinicFooter, ClinicHeader },
     setup() {
         const store = useStore();
+        const compOpenPopup = computed(() => store.openPopup);
 
         const handleResize = () => {
             const clientWidth = document.documentElement.clientWidth;
@@ -27,6 +29,7 @@ export default defineComponent({
 
         return {
             RouterLink,
+            compOpenPopup,
             RouterView
         };
     }
@@ -37,6 +40,7 @@ export default defineComponent({
     <clinic-header></clinic-header>
     <router-view />
     <clinic-footer></clinic-footer>
+    <clinic-popup v-if="compOpenPopup !== null"></clinic-popup>
 </template>
 
 <style scoped></style>

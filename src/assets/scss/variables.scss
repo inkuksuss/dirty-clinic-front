@@ -11,6 +11,10 @@ $color-gray: #EEEEEE;
 $color-main: #54A3ED;
 $color-white: #FFFFFF;
 $color-hover: #2C88E1;
+$color-main-blue: #2c88e1;
+$color-border-blue: #96C8F6;
+$color-text-black: #2A2A2A;
+$color-text-gray: #999999;
 
 @mixin tablet {
   @media (max-width: #{$tablet}) {

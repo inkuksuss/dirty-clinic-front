@@ -162,9 +162,13 @@
                         }
 
                         .info-label {
+                            width: calc(100% + 3px) !important;
+
                             @include mobile {
-                                width: 100%;
                                 max-width: 608px;
+
+                                .info-box {
+                                }
                             }
                         }
                     }
@@ -174,18 +178,91 @@
     }
 
     .promotion-wrapper {
-        .text-area {
+        @include mobile {
+            margin-bottom: 80px;
         }
-        .main-image {
-        }
-        .sub-image {
-            .promotion {
-                &:first-child {
-                    background-image: url('@/assets/images/home/test-img1@1x.jpg');
-                }
 
-                &:last-child {
-                    background-image: url('@/assets/images/home/test-img1@1x.jpg');
+        .promotion-content {
+            @include mobile {
+                width: calc(100% - 50px);
+            }
+
+            .text-area {
+                @include mobile {
+                    div:first-child {
+                        font-size: 24px;
+                        font-weight: 600;
+                        line-height: 28px;
+                    }
+
+                    div:last-child {
+                        font-size: 16px;
+                        font-weight: 400;
+                        line-height: 19px;
+                    }
+                }
+            }
+            .main-image {
+                img {
+                    aspect-ratio: 880 / 300;
+                    @include mobile {
+                        aspect-ratio: 325 / 430;
+                    }
+                }
+            }
+            .sub-promotion-list {
+                .sub-promotion {
+                    &.single {
+                        .promotion-box {
+                            img {
+                                aspect-ratio: 880 / 180;
+
+                                @include mobile {
+                                    aspect-ratio: 325 / 180;
+                                }
+                            }
+                        }
+                    }
+
+                    &.double {
+                        .promotion-box {
+                            img {
+                                aspect-ratio: 430 / 180;
+                            }
+                        }
+                    }
+
+                    &.multi {
+                        .flicking-area {
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
+                            .flicking-camera {
+                                display: inline-flex;
+                                padding-left: 10px;
+
+                                .promotion-box {
+                                    img {
+                                        aspect-ratio: 430 / 180;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    @include mobile {
+                        .flicking-area {
+                            .flicking-camera {
+                                display: flex;
+                                .promotion-box {
+                                    img {
+                                        aspect-ratio: 325 / 180;
+                                    }
+
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

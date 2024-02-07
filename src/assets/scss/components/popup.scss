@@ -1,0 +1,33 @@
+.popup-wrapper {
+    .popup-payment {
+        div {
+            &.payment-product {
+                .head-area {
+                }
+                .contents-area {
+                    .content {
+                        img {
+                            aspect-ratio: 40 / 40;
+                        }
+                    }
+                }
+            }
+
+          &.payment-room {
+            .head-area {
+            }
+            .contents-area {
+              .first-row {
+
+              }
+
+              .content {
+                img {
+                  aspect-ratio: 40 / 40;
+                }
+              }
+            }
+          }
+        }
+    }
+}

@@ -31,7 +31,34 @@ export default defineComponent({
         </div>
         <sub-intro></sub-intro>
         <sub-manage></sub-manage>
-<!--        <sub-promotion></sub-promotion>-->
+        <sub-promotion
+            main-img="src/assets/images/home/test-img1@1x.jpg"
+            :sub-list="[{ img: 'src/assets/images/home/test-img1@1x.jpg' }]"
+        ></sub-promotion>
+        <sub-promotion
+            main-img="src/assets/images/home/test-img1@1x.jpg"
+            :sub-list="[
+                { img: 'src/assets/images/home/test-img1@1x.jpg' },
+                { img: 'src/assets/images/home/test-img1@1x.jpg' }
+            ]"
+        ></sub-promotion>
+        <sub-promotion
+            main-img="src/assets/images/home/test-img1@1x.jpg"
+            :sub-list="[
+                { img: 'src/assets/images/home/test-img1@1x.jpg' },
+                { img: 'src/assets/images/home/test-img1@1x.jpg' },
+                { img: 'src/assets/images/home/test-img1@1x.jpg' }
+            ]"
+        ></sub-promotion>
+        <sub-promotion
+            main-img="src/assets/images/home/test-img1@1x.jpg"
+            :sub-list="[
+                { img: 'src/assets/images/home/test-img1@1x.jpg' },
+                { img: 'src/assets/images/home/test-img1@1x.jpg' },
+                { img: 'src/assets/images/home/test-img1@1x.jpg' },
+                { img: 'src/assets/images/home/test-img1@1x.jpg' }
+            ]"
+        ></sub-promotion>
         <sub-service></sub-service>
         <sub-check-list></sub-check-list>
     </div>

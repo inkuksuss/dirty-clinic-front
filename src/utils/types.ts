@@ -1,8 +1,12 @@
 import Big from 'big.js';
 
-export interface User {
+export type User = {
     id: string;
     name: string;
+};
+
+export enum PopupType {
+    PAYMENT = 'PAYMENT'
 }
 
 export type ApiResponse<T> = {

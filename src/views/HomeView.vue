@@ -5,10 +5,13 @@ import HomeScroll from '@/components/home/HomeScroll.vue';
 import HomeIntro from '@/components/home/HomeIntro.vue';
 import HomePromotion from '@/components/home/HomePromotion.vue';
 import router from '@/router';
+import { useStore } from '@/stores/store';
+import { PopupType } from '@/utils/types';
 
 export default defineComponent({
     components: { HomePromotion, HomeIntro, HomeScroll, homeSlider },
     setup() {
+        const store = useStore();
         const isButtonActive = ref<boolean>(false);
 
         const handleScroll = () => {
@@ -16,6 +19,10 @@ export default defineComponent({
         };
 
         const handleClickBtn = () => {
+            store.setOpenPopup(PopupType.PAYMENT);
+        };
+
+        const handleClickSubPage = () => {
             router.push('/sub');
         };
 
@@ -29,7 +36,8 @@ export default defineComponent({
 
         return {
             isButtonActive,
-            handleClickBtn
+            handleClickBtn,
+            handleClickSubPage
         };
     }
 });
@@ -76,6 +84,18 @@ export default defineComponent({
             <div class="font-[600] text-[20px] leading-[26px] text-[--color-white]">
                 온라인 <br />
                 예약하기
+            </div>
+        </div>
+        <div
+            v-if="isButtonActive"
+            class="fixed bottom-[250px] right-[30px] w-[175px] h-[75px] bg-[--color-main-blue] rounded-[100px] flex-center"
+            @click="handleClickSubPage"
+        >
+            <div class="w-[33px] h-[30px] mr-[10px]">
+                <img class="w-full h-full" src="@/assets/images/icons/calendar.png" />
+            </div>
+            <div class="font-[600] text-[20px] leading-[26px] text-[--color-white]">
+                서브페이지 <br />
             </div>
         </div>
     </main>

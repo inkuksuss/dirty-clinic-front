@@ -46,15 +46,16 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="todo-input-wrapper">
-        <input
-            class="border-2 border-black"
-            :value="value"
-            :placeholder="placeHolder"
-            :maxlength="length"
-            @input="handleChangeInput"
-            @keydown="handleKeyDown"
-            :readonly="readOnly"
-        />
-    </div>
+  <div class="input-wrapper w-full h-full flex-center">
+    <input
+        class=" w-full h-full border-[1.5px] border-[--color-border-blue] py-[17px] px-[20px]"
+        :value="value"
+        :placeholder="placeHolder"
+        :maxlength="length"
+        @input="handleChangeInput"
+        @keydown="handleKeyDown"
+        :readonly="readOnly"
+    />
+  </div>
+
 </template>

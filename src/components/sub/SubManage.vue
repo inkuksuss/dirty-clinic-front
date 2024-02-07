@@ -131,10 +131,10 @@ export default defineComponent({
                     </div>
                     <img class="arrow" src="@/assets/images/icons/arrow_down.svg" alt="arrow" />
 
-                    <transition name="slide-fade" mode="out-in">
+                    <transition name="slide-fade" mode="out-in" class="w-full">
                         <div
                             v-if="info.isOpen"
-                            class="info-label absolute max-w-[430px] w-full top-[77px] left-[-1.5px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] z-10"
+                            class="info-label absolute max-w-[430px] top-[77px] left-[-1.5px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] z-10"
                         >
                             <div
                                 v-for="(content, idx) in info.content"
