@@ -114,7 +114,7 @@ export default defineComponent({
 
             <div class="first-row flex justify-between mx-[13px] relative gap-x-[30px]">
                 <div class="image-wrapper w-full w-[25%] max-w-[80px] z-30">
-                    <img class="w-full h-full" src="@/assets/images/sub/intro_image2@1x.jpg" />
+                    <img class="w-full h-full" src="@/assets/images/sub/intro_image1@1x.jpg" />
                 </div>
                 <div class="image-wrapper w-full w-[25%] max-w-[80px] z-30">
                     <img class="w-full h-full" src="@/assets/images/sub/intro_image2@1x.jpg" />

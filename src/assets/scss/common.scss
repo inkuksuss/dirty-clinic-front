@@ -14,6 +14,16 @@ body {
         'Malgun Gothic',
         sans-serif;
     color: $color-black;
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s ease;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
+    }
 }
 
 .input-wrapper {

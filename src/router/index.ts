@@ -11,7 +11,57 @@ const router = createRouter({
         {
             path: '/sub',
             name: 'sub',
-            component: () => import('@/views/SubView.vue')
+            component: () => import('@/views/sub/SubView.vue')
+        },
+        {
+            path: '/moving-cleaning',
+            name: 'movingCleaning',
+            component: () => import('@/views/sub/MovingCleaningView.vue')
+        },
+        {
+            path: '/move-in-cleaning',
+            name: 'moveInCleaning',
+            component: () => import('@/views/sub/MoveInCleaningView.vue')
+        },
+        {
+            path: '/interior-cleaning',
+            name: 'interiorCleaning',
+            component: () => import('@/views/sub/InteriorCleaningView.vue')
+        },
+        {
+            path: '/regular-cleaning',
+            name: 'regularCleaning',
+            component: () => import('@/views/sub/RegularCleaningView.vue')
+        },
+        {
+            path: '/window-cleaning',
+            name: 'windowCleaning',
+            component: () => import('@/views/sub/WindowCleaningView.vue')
+        },
+        {
+            path: '/one-room-cleaning',
+            name: 'oneRoomCleaning',
+            component: () => import('@/views/sub/OneRoomCleaningView.vue')
+        },
+        {
+            path: '/spot-cleaning',
+            name: 'spotCleaning',
+            component: () => import('@/views/sub/SpotCleaningView.vue')
+        },
+        {
+            path: '/store-cleaning',
+            name: 'storeCleaning',
+            component: () => import('@/views/sub/StoreCleaningView.vue')
+        },
+        {
+            path: '/office-cleaning',
+            name: 'officeCleaning',
+            component: () => import('@/views/sub/OfficeCleaningView.vue')
+        },
+        {
+            path: '/residential-cleaning',
+            name: 'residentialCleaning',
+            component: () => import('@/views/sub/ResidentialCleaningView.vue')
         },
         {
             path: '/login',

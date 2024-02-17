@@ -25,7 +25,7 @@ export default defineComponent({
                 <div class="hover-filter absolute left-0 top-0 w-full h-full hidden">
                     <img
                         class="w-[280px] max-h-[250px]"
-                        src="@/assets/images/home/intro_3_filter@1x.png"
+                        src="@/assets/images/home/intro_1_filter@1x.jpg"
                         alt="hello"
                     />
                 </div>
@@ -40,7 +40,7 @@ export default defineComponent({
                 <div class="hover-filter absolute left-0 top-0 w-full h-full hidden">
                     <img
                         class="w-[280px] max-h-[250px]"
-                        src="@/assets/images/home/intro_3_filter@1x.png"
+                        src="@/assets/images/home/intro_2_filter@1x.jpg"
                         alt="hello"
                     />
                 </div>
@@ -55,7 +55,7 @@ export default defineComponent({
                 <div class="hover-filter absolute left-0 top-0 w-full h-full hidden">
                     <img
                         class="w-[280px] max-h-[250px]"
-                        src="@/assets/images/home/intro_3_filter@1x.png"
+                        src="@/assets/images/home/intro_3_filter@1x.jpg"
                         alt="hello"
                     />
                 </div>

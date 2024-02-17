@@ -44,18 +44,6 @@
 
         .slider-wrapper {
             .slider-contents {
-        //        .text-area {
-        //            width: calc((100vw - 880px) / 2 + 300px);
-        //            padding-left: calc((100vw - 880px) / 2);
-        //        }
-        //
-        //        .flicking-area {
-        //            .flicking-camera {
-        //                display: flex;
-        //                padding-left: 20px;
-        //            }
-        //        }
-
                 .image-container {
                     aspect-ratio: 280 / 340;
                 }
@@ -69,19 +57,19 @@
                     &:nth-child(2) {
                         .img-wrapper {
                             &:first-child {
-                                -webkit-animation: middleBannerMove 5s linear infinite;
-                                -moz-animation: middleBannerMove 5s linear infinite;
-                                -ms-animation: middleBannerMove 5s linear infinite;
-                                -o-animation: middleBannerMove 5s linear infinite;
-                                animation: middleBannerMove 5s linear infinite;
+                                -webkit-animation: middleBannerMove 13s linear infinite;
+                                -moz-animation: middleBannerMove 13s linear infinite;
+                                -ms-animation: middleBannerMove 13s linear infinite;
+                                -o-animation: middleBannerMove 13s linear infinite;
+                                animation: middleBannerMove 13s linear infinite;
                             }
 
                             &:last-child {
-                                -webkit-animation: middleBannerMove-2 5s linear infinite;
-                                -moz-animation: middleBannerMove-2 5s linear infinite;
-                                -ms-animation: middleBannerMove-2 5s linear infinite;
-                                -o-animation: middleBannerMove-2 5s linear infinite;
-                                animation: middleBannerMove-2 5s linear infinite;
+                                -webkit-animation: middleBannerMove-2 13s linear infinite;
+                                -moz-animation: middleBannerMove-2 13s linear infinite;
+                                -ms-animation: middleBannerMove-2 13s linear infinite;
+                                -o-animation: middleBannerMove-2 13s linear infinite;
+                                animation: middleBannerMove-2 13s linear infinite;
                             }
                         }
                     }
@@ -90,19 +78,19 @@
                     &:last-child {
                         .img-wrapper {
                             &:first-child {
-                                -webkit-animation: bannerMove 5s linear infinite;
-                                -moz-animation: bannerMove 5s linear infinite;
-                                -ms-animation: bannerMove 5s linear infinite;
-                                -o-animation: bannerMove 5s linear infinite;
-                                animation: bannerMove 5s linear infinite;
+                                -webkit-animation: bannerMove 13s linear infinite;
+                                -moz-animation: bannerMove 13s linear infinite;
+                                -ms-animation: bannerMove 13s linear infinite;
+                                -o-animation: bannerMove 13s linear infinite;
+                                animation: bannerMove 13s linear infinite;
                             }
 
                             &:last-child {
-                                -webkit-animation: bannerMove-2 5s linear infinite;
-                                -moz-animation: bannerMove-2 5s linear infinite;
-                                -ms-animation: bannerMove-2 5s linear infinite;
-                                -o-animation: bannerMove-2 5s linear infinite;
-                                animation: bannerMove-2 5s linear infinite;
+                                -webkit-animation: bannerMove-2 13s linear infinite;
+                                -moz-animation: bannerMove-2 13s linear infinite;
+                                -ms-animation: bannerMove-2 13s linear infinite;
+                                -o-animation: bannerMove-2 13s linear infinite;
+                                animation: bannerMove-2 13s linear infinite;
                             }
                         }
                     }

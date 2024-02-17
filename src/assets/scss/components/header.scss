@@ -10,26 +10,11 @@
     }
 
     .category-wrapper {
+        .category-body {
+            transition: all 0.2s ease;
+        }
+
         .category-contents {
-
-            .slide-fade-enter-active,
-            .slide-fade-leave-active {
-                transition: all 0.25s ease;
-                transform: scaleY(1);
-                transform-origin: top;
-                overflow: hidden;
-            }
-
-            .slide-fade-enter-from,
-            .slide-fade-leave-to {
-                transform: scaleY(0);
-            }
-
-            .slide-fade-enter-to,
-            .slide-fade-leave-from {
-                transform: scaleY(1);
-                transform-origin: top;
-            }
         }
     }
 }
