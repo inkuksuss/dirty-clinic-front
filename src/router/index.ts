@@ -73,7 +73,10 @@ const router = createRouter({
             name: 'payment',
             component: () => import('@/views/PaymentView.vue')
         }
-    ]
+    ],
+    scrollBehavior(to, from, savePosition) {
+        return { top: 0 };
+    }
 });
 
 export default router;

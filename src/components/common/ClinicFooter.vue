@@ -43,7 +43,7 @@ export default defineComponent({
                 <div class="contents-body-wrapper pt-[60px]">
                     <div class="contents-link-wrapper flex">
                         <div
-                            class="link-wrapper mr-[30px] text-[18px] font-[600] text-[--color-text-black]"
+                            class="link-wrapper mr-[30px] text-[18px] font-[600] text-[--color-text-black] cursor-pointer"
                             v-for="category in categoryList"
                             :key="category.title"
                         >

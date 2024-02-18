@@ -7,9 +7,10 @@ import HomePromotion from '@/components/home/HomePromotion.vue';
 import { useStore } from '@/stores/store';
 import { PopupType } from '@/utils/types';
 import PaymentButton from '@/components/PaymentButton.vue';
+import HomeService from '@/components/home/HomeService.vue';
 
 export default defineComponent({
-    components: { PaymentButton, HomePromotion, HomeIntro, HomeScroll, homeSlider },
+    components: { HomeService, PaymentButton, HomePromotion, HomeIntro, HomeScroll, homeSlider },
     setup() {
         const store = useStore();
         const handleClickBtn = () => {
@@ -40,7 +41,7 @@ export default defineComponent({
                         >
                     </div>
                     <div
-                        class="payment-btn w-[255px] h-[65px] rounded-[80px] bg-[--color-main-blue] text-[--color-white] flex justify-center items-center text-[24px] font-[600]"
+                        class="payment-btn w-[255px] h-[65px] rounded-[80px] bg-[--color-main-blue] text-[--color-white] flex justify-center items-center text-[24px] font-[600] cursor-pointer"
                         @click="handleClickBtn"
                     >
                         온라인 예약하기
@@ -51,6 +52,7 @@ export default defineComponent({
         <div class="main-contents-wrapper w-full h-full flex flex-col justify-center items-center">
             <home-intro></home-intro>
             <home-promotion></home-promotion>
+            <home-service></home-service>
             <home-slider></home-slider>
             <home-scroll></home-scroll>
         </div>
