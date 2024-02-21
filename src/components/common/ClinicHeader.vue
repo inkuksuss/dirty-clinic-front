@@ -71,7 +71,7 @@ export default defineComponent({
                     { title: '거주대청소', dest: '/residential-cleaning' },
                     { title: '사무실청소', dest: '/office-cleaning' },
                     { title: '상가매장', dest: '/store-cleaning' },
-                    { title: '식당·후드청소', dest: '' },
+                    { title: '식당·후드청소', dest: '/restaurant-cleaning' },
                     { title: '공동구매', dest: '' }
                 ]
             },
@@ -84,9 +84,9 @@ export default defineComponent({
                 posCenterX: 0,
                 posStartX: 0,
                 subList: [
-                    { title: '화재청소', dest: '' },
+                    { title: '화재청소', dest: '/fire-cleaning' },
                     { title: '쓰레기집청소', dest: '' },
-                    { title: '유품·고독사청소', dest: '' },
+                    { title: '유품·고독사청소', dest: '/trauma-scene-cleaning' },
                     { title: '폐기물처리', dest: '' },
                     { title: '준공청소', dest: '' },
                     { title: '주차장청소', dest: '' },

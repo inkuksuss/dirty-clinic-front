@@ -1,14 +1,31 @@
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, onMounted, type PropType, ref } from 'vue';
 import { useStore } from '@/stores/store';
+import { type SubIntroScript } from '@/utils/types';
 
 export default defineComponent({
     name: 'SubIntro',
-    setup() {
+    props: {
+        introScriptList: Array as PropType<SubIntroScript[]>
+    },
+    setup(props) {
         const store = useStore();
         const compWidth = computed(() => store.width);
 
-        return { compWidth };
+        const scriptList = ref<SubIntroScript[]>([
+            { title: '전문 상담과\n예약 확정' },
+            { title: '해피콜과\n특이사항 체크' },
+            { title: '현장의 특이사항\n체크' },
+            { title: '알맞는 약품청소' },
+            { title: '고객님과 함께\n현장 검수 및 완료' }
+        ]);
+
+        onMounted(() => {
+            if (props.introScriptList && props.introScriptList.length > 0)
+                scriptList.value = props.introScriptList;
+        });
+
+        return { compWidth, scriptList };
     }
 });
 </script>
@@ -66,34 +83,29 @@ export default defineComponent({
 
             <div class="flex justify-between mt-[30px]">
                 <div
-                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center"
+                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
                 >
-                    전문 상담과 <br />
-                    예약 확정
+                    {{ scriptList[0].title }}
                 </div>
                 <div
-                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center"
+                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
                 >
-                    직영팀장님의 <br />
-                    사전 해피콜
+                    {{ scriptList[1].title }}
                 </div>
                 <div
-                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center"
+                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
                 >
-                    현장 투입 및<br />
-                    특이사항 체크
+                    {{ scriptList[2].title }}
                 </div>
                 <div
-                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center"
+                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
                 >
-                    구역별 <br />
-                    알맞은 약품청소
+                    {{ scriptList[3].title }}
                 </div>
                 <div
-                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center"
+                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
                 >
-                    고객님과 함께<br />
-                    현장 검수 및 완료
+                    {{ scriptList[4].title }}
                 </div>
             </div>
         </div>
@@ -128,22 +140,19 @@ export default defineComponent({
             </div>
             <div class="first-text-row flex justify-between mx-[13px] mt-[10px]">
                 <div
-                    class="w-[25%] max-w-[80px] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center"
+                    class="w-[25%] max-w-[80px] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
                 >
-                    전문 상담과 <br />
-                    예약 확정
+                    {{ scriptList[0].title }}
                 </div>
                 <div
-                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center"
+                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
                 >
-                    직영팀장님의 <br />
-                    사전 해피콜
+                    {{ scriptList[1].title }}
                 </div>
                 <div
-                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center"
+                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
                 >
-                    현장 투입 및<br />
-                    특이사항 체크
+                    {{ scriptList[2].title }}
                 </div>
             </div>
 
@@ -160,16 +169,14 @@ export default defineComponent({
             </div>
             <div class="second-text-row flex justify-center gap-x-[42px] mt-[10px]">
                 <div
-                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center"
+                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
                 >
-                    구역별 <br />
-                    알맞은 약품청소
+                    {{ scriptList[3].title }}
                 </div>
                 <div
-                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center"
+                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
                 >
-                    고객님과 함께<br />
-                    현장 검수 및 완료
+                    {{ scriptList[4].title }}
                 </div>
             </div>
         </div>

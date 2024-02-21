@@ -64,6 +64,21 @@ const router = createRouter({
             component: () => import('@/views/sub/ResidentialCleaningView.vue')
         },
         {
+            path: '/fire-cleaning',
+            name: 'fireCleaning',
+            component: () => import('@/views/sub/FireCleaningView.vue')
+        },
+        {
+            path: '/restaurant-cleaning',
+            name: 'restaurantCleaning',
+            component: () => import('@/views/sub/RestaurantCleaningView.vue')
+        },
+        {
+            path: '/trauma-scene-cleaning',
+            name: 'traumaSceneCleaning',
+            component: () => import('@/views/sub/TraumaSceneCleaningView.vue')
+        },
+        {
             path: '/login',
             name: 'login',
             component: () => import('@/views/LoginView.vue')

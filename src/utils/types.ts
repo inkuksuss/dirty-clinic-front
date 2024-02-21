@@ -102,3 +102,7 @@ export type PaymentResultRequest = {
     success: boolean;
     errorMsg?: string;
 };
+
+export type SubIntroScript = {
+    title: string;
+};
