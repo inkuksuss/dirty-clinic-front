@@ -1,6 +1,7 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {computed, defineComponent} from 'vue';
 import { useRouter } from 'vue-router';
+import {useStore} from "@/stores/store";
 
 type HomeServiceType = {
     title: string;
@@ -11,26 +12,28 @@ type HomeServiceType = {
 export default defineComponent({
     name: 'HomeService',
     setup() {
+        const store = useStore();
+        const compIsMobile = computed(() => store.isMobile);
         const router = useRouter();
         const scriptList: HomeServiceType[] = [
             {
                 title: '전문클리닉',
-                desc: '첫번째 약속에 대한\n첫번째 약속에 대한 설명을 여기에',
+                desc: '첫번째 약속에 대한\n설명을 여기에 작성합니다.',
                 link: ''
             },
             {
                 title: '특수클리닉',
-                desc: '첫번째 약속에 대한\n첫번째 약속에 대한 설명을 여기에',
+                desc: '첫번째 약속에 대한\n설명을 여기에 작성합니다.',
                 link: ''
             },
             {
                 title: '전문시공',
-                desc: '첫번째 약속에 대한\n첫번째 약속에 대한 설명을 여기에',
+                desc: '첫번째 약속에 대한\n설명을 여기에 작성합니다.',
                 link: ''
             },
             {
                 title: '연마/코팅',
-                desc: '첫번째 약속에 대한\n첫번째 약속에 대한 설명을 여기에',
+                desc: '첫번째 약속에 대한\n설명을 여기에 작성합니다.',
                 link: ''
             }
         ];
@@ -41,6 +44,7 @@ export default defineComponent({
 
         return {
             scriptList,
+          compIsMobile,
             handleClickBtn
         };
     }
@@ -48,7 +52,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="service-wrapper max-w-[--body-width] w-[73%] mb-[50px] mt-[100px]">
+    <div class="service-wrapper w-[--body-width] mb-[50px] mt-[100px]">
         <div class="service-contents w-full">
             <div class="text-wrapper w-full flex flex-col items-center mb-[30px]">
                 <span
@@ -57,7 +61,7 @@ export default defineComponent({
                 >
                 <span
                     class="text-sub text-[18px] font-[500] text-[--color-text-black] leading-[21px]"
-                    >여기에 서브 타이틀을 넣으려고 합니다. 원하는 문구 있으신가요?</span
+                    >최고의 만족도를 선사하기 위한 <br class="break-m">더티클리닉의 핵심부서를 소개합니다.</span
                 >
             </div>
             <div class="contents-wrapper grid grid-cols-2 gap-x-[20px]">
@@ -65,25 +69,25 @@ export default defineComponent({
                     <img
                         v-if="idx === 0"
                         class="w-full mb-[25px]"
-                        src="@/assets/images/home/test-img1@1x.jpg"
+                        src="@/assets/images/home/service_1@1x.png"
                         alt="test"
                     />
                     <img
                         v-else-if="idx === 1"
                         class="w-full mb-[25px]"
-                        src="@/assets/images/home/test-img1@1x.jpg"
+                        src="@/assets/images/home/service_2@1x.png"
                         alt="test"
                     />
                     <img
                         v-else-if="idx === 2"
                         class="w-full mb-[25px]"
-                        src="@/assets/images/home/test-img1@1x.jpg"
+                        src="@/assets/images/home/service_3@1x.png"
                         alt="test"
                     />
                     <img
                         v-else
                         class="w-full mb-[25px]"
-                        src="@/assets/images/home/test-img1@1x.jpg"
+                        src="@/assets/images/home/service_4@1x.png"
                         alt="test"
                     />
                     <div class="description flex justify-between mb-[50px]">

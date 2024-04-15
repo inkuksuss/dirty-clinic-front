@@ -1,18 +1,27 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, type PropType, ref } from 'vue';
 import { getApiInstance } from '@/utils/api';
 import {
     type ApiResponse,
     type IAmPortPaymentRequest,
     type IAmPortPaymentResponse,
     type IAmPortPgBaseRequest,
+    type PaymentData,
     type PaymentPrepareRequest,
-    type PaymentResultRequest
+    type PaymentResultRequest,
+    type ProductResponse
 } from '@/utils/types';
 
 export default defineComponent({
     name: 'PaymentModule',
-    setup() {
+    props: {
+        paymentData: Object as PropType<PaymentData>,
+        productData: Object as PropType<ProductResponse>
+    },
+    setup(props) {
+        const paymentData = ref<PaymentData | undefined>(props.paymentData);
+        const productData = ref<ProductResponse | undefined>(props.productData);
+
         const paymentBaseRequest: IAmPortPaymentRequest = {
             pg: '',
             pay_method: '',
@@ -24,7 +33,7 @@ export default defineComponent({
             buyer_tel: '',
             buyer_addr: '',
             buyer_postcode: '',
-            bypass: {},
+            bypass: {}
         };
 
         const kakaoPaymentBaseRequest: IAmPortPgBaseRequest = {
@@ -42,13 +51,6 @@ export default defineComponent({
             pay_method: 'card',
             buyer_tel: '01026727162'
         };
-
-        //sample
-        const productId = ref<number>(1);
-        const phoneNumber = ref<string>('01026727162');
-        const address = ref<string>('부천시 상동');
-        const footage = ref<number>(29);
-        const description = ref<string>('잘해주세요');
 
         const toRequest = (rsp: IAmPortPaymentResponse): PaymentResultRequest => {
             return {
@@ -81,56 +83,78 @@ export default defineComponent({
         };
 
         const doPaymentPrepare = async (data: PaymentPrepareRequest) => {
-            return await getApiInstance().post('/payment/prepare', data);
+            const res = await getApiInstance().post('/payment/prepare', data);
+            if (res.data.code === 0) {
+                return res;
+            } else {
+                window.alert(res.data.message);
+            }
         };
 
         const doPayment = async (pgBaseRequest: IAmPortPgBaseRequest) => {
-            const iAmPortClient = window.IMP;
-            iAmPortClient.init('imp15738717');
-            const paymentRequest = Object.assign({}, paymentBaseRequest, pgBaseRequest);
-            paymentRequest.name = '입주청소';
-            const prepareRequest = {
-                productId: productId.value,
-                productName: paymentRequest.name,
-                phoneNumber: phoneNumber.value,
-                address: address.value,
-                footage: footage.value,
-                description: description.value,
-                amount: paymentRequest.amount,
-                isAgreePolicy: true
-            } as PaymentPrepareRequest;
+            console.log(paymentData.value);
+            console.log(productData.value);
 
-            if (pgBaseRequest.pg === 'html5_inicis.INIpayTest') {
-                paymentRequest['bypass'] = {
-                    acceptmethod: 'noeasypay' // 간편결제 버튼을 통합결제창에서 제외(PC)
-                };
-            }
+            if (productData.value && paymentData.value) {
+                const iAmPortClient = window.IMP;
+                iAmPortClient.init('imp15738717');
+                const paymentRequest = Object.assign({}, paymentBaseRequest, pgBaseRequest);
+                paymentRequest.name = productData.value.name;
+                console.log('targetData', paymentData.value.targetDate);
+                console.log('target', paymentData.value.targetTime);
+                const prepareRequest = {
+                    productId: productData.value.id,
+                    productName: productData.value.name,
+                    phoneNumber: paymentData.value.phoneNumber,
+                    address: '주소',
+                    footage: paymentData.value.footage,
+                    description: '잘해주세요',
+                    depositAmount: productData.value.depositAmount,
+                    balanceAmount: productData.value.balanceAmount,
+                    isAgreePolicy: 'Y',
+                    targetDate: paymentData.value.targetDate,
+                    targetTime: paymentData.value.targetTime
+                } as PaymentPrepareRequest;
 
-            console.log(prepareRequest);
+                if (pgBaseRequest.pg === 'html5_inicis.INIpayTest') {
+                    paymentRequest['bypass'] = {
+                        acceptmethod: 'noeasypay' // 간편결제 버튼을 통합결제창에서 제외(PC)
+                    };
+                }
 
-            try {
-                const prepareResponse = await doPaymentPrepare(prepareRequest);
-                console.log(prepareResponse);
-                paymentRequest.merchant_uid = prepareResponse.data.data;
-                paymentRequest.buyer_tel = "01026727162";
-                console.log(paymentRequest);
+                console.log(prepareRequest);
 
-                iAmPortClient.request_pay(paymentRequest, async (rsp: IAmPortPaymentResponse) => {
-                    // callback
-                    console.log(rsp);
-                    const response = (await getApiInstance().post(
-                        '/orders/result',
-                        toRequest(rsp)
-                    )) as ApiResponse<any>;
-                    console.log(response);
-                    if (response.data.code == 0) {
-                        console.log('success');
-                    } else {
-                        console.log('fail');
+                try {
+                    const prepareResponse = await doPaymentPrepare(prepareRequest);
+                    if (prepareResponse) {
+                        console.log('resp', prepareResponse);
+                        paymentRequest.merchant_uid = prepareResponse.data.data.merchantUid;
+                        paymentRequest.amount = prepareResponse.data.data.amount;
+                        paymentRequest.buyer_tel = paymentData.value.phoneNumber as string;
+                        console.log(paymentRequest);
+
+                        iAmPortClient.request_pay(
+                            paymentRequest,
+                            async (rsp: IAmPortPaymentResponse) => {
+                                // callback
+                                console.log(rsp);
+                                const response = (await getApiInstance().post(
+                                    '/reservation/result',
+                                    toRequest(rsp)
+                                )) as ApiResponse<any>;
+                                console.log(response);
+                                if (response.data.code == 0) {
+                                    window.alert("success");
+                                    console.log('success', response);
+                                } else {
+                                    console.log('fail');
+                                }
+                            }
+                        );
                     }
-                });
-            } catch (err) {
-                console.error(err);
+                } catch (err) {
+                    console.error(err);
+                }
             }
         };
 
@@ -145,10 +169,29 @@ export default defineComponent({
 </script>
 
 <template>
-    <div>결제모듈</div>
-    <button @click="() => doPayment(kakaoPaymentBaseRequest)">카카오 결제하기</button>
-    <button @click="() => doPayment(tossPaymentBaseRequest)">토스 결제하기</button>
-    <button @click="() => doPayment(kgPaymentBaseRequest)">kg 결제하기</button>
+    <div class="flex flex-col gap-y-[15px] w-[285px]">
+        <div
+            class="flex justify-between items-center px-[10px] py-[10px] border-[1px]"
+            @click="() => doPayment(kakaoPaymentBaseRequest)"
+        >
+            <img class="w-[60px]" src="@/assets/images/payment/payment_kakao@1x.png" />
+            <span>카카오페이</span>
+        </div>
+        <div
+            class="flex justify-between items-center px-[10px] py-[10px] border-[1px]"
+            @click="() => doPayment(tossPaymentBaseRequest)"
+        >
+            <img class="w-[60px]" src="@/assets/images/payment/payment_toss@1x.png" /><span
+                >토스페이먼츠</span
+            >
+        </div>
+        <div
+            class="flex justify-center items-center px-[10px] py-[10px] border-[1px]"
+            @click="() => doPayment(kgPaymentBaseRequest)"
+        >
+            <span>신용카드</span>
+        </div>
+    </div>
 </template>
 
 <style scoped></style>

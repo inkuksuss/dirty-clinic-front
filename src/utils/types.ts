@@ -71,8 +71,9 @@ export type PaymentPrepareRequest = {
     address: string;
     footage: number;
     description: string;
-    amount: number;
-    isAgreePolicy: boolean;
+    depositAmount: string;
+    balanceAmount: string;
+    isAgreePolicy: 'N' | 'Y';
 };
 
 export type PaymentResultRequest = {
@@ -105,4 +106,58 @@ export type PaymentResultRequest = {
 
 export type SubIntroScript = {
     title: string;
+};
+
+export type SelectType = {
+    name: string;
+    value: string;
+};
+
+export enum ProductType {
+    NO_SELECT = 'NO_SELECT',
+    APART = 'APART',
+    VILLA = 'VILLA',
+    COMMERCIAL_COMPLEX = 'COMMERCIAL_COMPLEX',
+    HOUSE = 'HOUSE'
+}
+
+export enum RoomType {
+    NO_SELECT = 'NO_SELECT',
+    APART = 'APART',
+    VILLA = 'VILLA',
+    COMMERCIAL_COMPLEX = 'COMMERCIAL_COMPLEX',
+    HOUSE = 'HOUSE'
+}
+
+export enum ClinicType {
+    NO_SELECT = 'NO_SELECT',
+    ONE_ROOM_CLINIC = 'ONE_ROOM_CLINIC',
+    MOVE_IN_OR_MOVING_CLINIC = 'MOVE_IN_OR_MOVING_CLINIC',
+    RESIDENTIAL_CLINIC = 'RESIDENTIAL_CLINIC',
+    BUSINESS_CLINIC = 'BUSINESS_CLINIC',
+    SPECIAL_CLINIC = 'SPECIAL_CLINIC'
+}
+
+export type ProductResponse = {
+    id: number;
+    name: string;
+    description: string;
+    balanceAmount: string;
+    depositAmount: string;
+    serviceType: string;
+    created: Date;
+    updated: Date;
+};
+
+export type PaymentData = {
+    roomType: RoomType;
+    clinicType: ClinicType;
+    footage: number | null;
+    toiletCnt: number | null;
+    expansion: 'N' | 'Y' | null;
+    verandaCnt: number | null;
+    username: string | null;
+    phoneNumber: string | null;
+    targetDate: string | null;
+    targetTime: string | null;
 };

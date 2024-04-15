@@ -10,6 +10,37 @@
             background-image: url('@/assets/images/home/clinic_main@1x.jpg');
             background-size: cover;
         }
+
+        @include mobile {
+            .main-image {
+                width: 100%;
+
+                .image-content {
+                    width: 100%;
+                    height: 100%;
+                    padding: 20% 8%;
+                    align-items: center;
+
+                    .main-text {
+                        line-height: 49px;
+                        font-size: 38px;
+                    }
+
+                    .sub-text {
+                        padding: 0% 4%;
+                        text-align: center;
+                        line-height: 31px;
+                        font-size: 24px;
+                    }
+
+                    .payment-btn {
+                        width: 78%;
+                        max-width: 245px;
+                        aspect-ratio: 245/55;
+                    }
+                }
+            }
+        }
     }
 
     .main-contents-wrapper {
@@ -17,12 +48,26 @@
 
         .intro-wrapper {
             .text-area {
+                div:first-child {
+                    font-weight: 600;
+                    font-size: 24px;
+                    line-height: 29px;
+                }
+
+                div:last-child {
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 19px;
+                }
             }
             .image-area {
                 .first-intro,
                 .second-intro,
                 .third-intro {
-                    aspect-ratio: 280 / 250;
+                    img {
+                        aspect-ratio: 280 / 250;
+                    }
+
                     &:hover .hover-filter {
                         display: block;
                     }
@@ -32,12 +77,155 @@
                     }
                 }
             }
+
+            @include mobile {
+                width: $mobile-body-width;
+                margin-top: 80px;
+                margin-bottom: 70px;
+
+                .text-area {
+                }
+
+                .image-area {
+                    flex-direction: column;
+
+                    .content {
+                        width: 100%;
+                        margin-bottom: 10px;
+
+                        img {
+                            aspect-ratio: 325/135 !important;
+                        }
+
+                        .hover-filter {
+                            background-color: rgba(0, 0, 0, 0.55);
+                        }
+
+                        .text-label {
+                            margin-left: 54%;
+                            width: 46%;
+                            border-top-left-radius: 25px;
+
+                            span {
+                                font-size: 20px;
+                                font-weight: 600;
+                                line-height: 24px;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         .promotion-wrapper {
             .promotion-contents {
                 .content {
+                    background-size: cover;
+
+                    &:first-child {
+                        background-image: url('@/assets/images/home/promotion_1@1x.png');
+                    }
+
+                    &:nth-child(2) {
+                        background-image: url('@/assets/images/home/promotion_2@1x.png');
+                    }
+
+                    &:last-child {
+                        background-image: url('@/assets/images/home/promotion_3@1x.png');
+                    }
+
                     aspect-ratio: 280 / 310;
+                }
+            }
+
+            @include mobile {
+                width: 100%;
+                padding-left: 6%;
+                .flicking-viewport {
+                    justify-content: start;
+                    padding: 16% 6% 16% 0%;
+
+                    .flicking-camera {
+                        display: flex;
+                        margin-right: 6%;
+
+                        .content {
+                            background-size: cover;
+                            aspect-ratio: 150 / 180;
+                            margin-right: 15px;
+
+                            &:first-child {
+                                background-image: url('@/assets/images/home/promotion_1@1x.png');
+                            }
+
+                            &:nth-child(2) {
+                                background-image: url('@/assets/images/home/promotion_2@1x.png');
+                            }
+
+                            &:last-child {
+                                background-image: url('@/assets/images/home/promotion_3@1x.png');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .service-wrapper {
+            @include mobile {
+                width: $mobile-body-width;
+                margin-top: 80px;
+                margin-bottom: 65px;
+
+                .service-contents {
+                    .text-wrapper {
+                        align-items: start;
+                        margin-bottom: 20px;
+
+                        .text-title {
+                            font-weight: 600;
+                            font-size: 24px;
+                            line-height: 29px;
+                            margin-bottom: 5px;
+                        }
+
+                        .text-sub {
+                            font-weight: 400;
+                            font-size: 16px;
+                            line-height: 19px;
+                        }
+                    }
+
+                    .contents-wrapper {
+                        gap: 0 10px;
+
+                        div {
+                            img {
+                                margin-bottom: 20px;
+                            }
+
+                            .description {
+                                width: 100%;
+                                margin-bottom: 15px;
+
+                                .description-title {
+                                    font-weight: 600;
+                                    font-size: 18px;
+                                    line-height: 21px;
+                                }
+
+                                .description-sub {
+                                    font-weight: 400;
+                                    font-size: 14px;
+                                    line-height: 17px;
+                                }
+
+                                .description-button {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -46,6 +234,42 @@
             .slider-contents {
                 .image-container {
                     aspect-ratio: 280 / 340;
+                }
+            }
+
+            @include mobile {
+                width: $mobile-body-width;
+
+                .slider-contents {
+                    width: 100%;
+                    display: grid;
+                    grid-template-areas:
+                        'header header'
+                        'a b';
+
+                    .text-area {
+                        width: 100%;
+                        grid-area: header;
+
+                        div {
+                            padding-left: 5%;
+                            font-weight: 700;
+                            font-size: 38px;
+                            line-height: 45px;
+                        }
+                    }
+
+                    .first-image {
+                        grid-area: a;
+                    }
+
+                    .second-image {
+                        grid-area: b;
+                    }
+
+                    .image-container {
+                        width: 100%;
+                    }
                 }
             }
         }

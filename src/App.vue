@@ -14,9 +14,10 @@ export default defineComponent({
         const compOpenPopup = computed(() => store.openPopup);
 
         const handleResize = () => {
-            const clientWidth = document.documentElement.clientWidth;
-            store.setIsMobile(clientWidth < 768);
-            store.setWidth(clientWidth);
+            const viewWidth = window.innerWidth ?? document.documentElement.clientWidth;
+
+            store.setIsMobile(viewWidth <= 767);
+            store.setWidth(viewWidth);
         };
 
         onMounted(() => {

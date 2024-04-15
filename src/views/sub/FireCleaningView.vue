@@ -5,7 +5,7 @@ import SubManage from '@/components/sub/SubManage.vue';
 import SubService from '@/components/sub/SubService.vue';
 import SubCheckList from '@/components/sub/SubCheckList.vue';
 import SubBanner from '@/components/sub/SubBanner.vue';
-import { PopupType, SubIntroScript } from '@/utils/types';
+import { PopupType, type SubIntroScript } from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 

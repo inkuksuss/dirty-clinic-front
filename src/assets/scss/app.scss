@@ -10,6 +10,8 @@
 @import '@/assets/scss/common.scss';
 @import '@/assets/scss/variables.scss';
 
+@import 'vue3-timepicker/dist/VueTimepicker.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,7 +19,8 @@
 @layer base {
     :root {
         --full-width: 1200px;
-        --body-width: 880px;
+        --body-width: 73%;
+        --mobile-body-width: 88%;
         --header-height: 80px;
         --color-black: #000000;
         --color-gray: #eeeeee;

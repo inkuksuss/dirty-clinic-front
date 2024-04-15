@@ -24,6 +24,23 @@ body {
     .fade-leave-to {
         opacity: 0;
     }
+
+    .break-m {
+        display: none;
+
+        @include mobile {
+            display: inline;
+
+        }
+    }
+
+    .break-d {
+        display: inline;
+
+        @include mobile {
+            display: none;
+        }
+    }
 }
 
 .input-wrapper {
@@ -74,6 +91,14 @@ body {
     .slide-fade-leave-from {
         transform: scaleY(1);
         transform-origin: top;
+    }
+}
+
+.time-wrapper {
+    input {
+        width: 100% !important;
+        border: none !important;
+        height: 100% !important;
     }
 }
 

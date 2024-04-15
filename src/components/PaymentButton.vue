@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ref, type PropType, defineComponent, onMounted, onUnmounted } from 'vue';
+import { ref, type PropType, defineComponent, onMounted, onUnmounted, computed } from 'vue';
 import vClickOutside from 'click-outside-vue3';
 import { useStore } from '@/stores/store';
 
@@ -19,10 +19,12 @@ export default defineComponent({
         }
     },
     setup(props) {
-        const isButtonActive = ref<boolean>(false);
+        const store = useStore();
+        const isScrolled = ref<boolean>(false);
+        const compIsMobile = computed(() => store.isMobile);
 
         const handleScroll = () => {
-            isButtonActive.value = window.scrollY > 0;
+            isScrolled.value = window.scrollY > 0;
         };
 
         const handleClickBtn = () => {
@@ -38,7 +40,8 @@ export default defineComponent({
         });
 
         return {
-            isButtonActive,
+            isScrolled,
+            compIsMobile,
             handleClickBtn
         };
     }
@@ -48,7 +51,7 @@ export default defineComponent({
 <template>
     <transition name="fade" mode="out-in">
         <div
-            v-if="isButtonActive"
+            v-if="isScrolled && !compIsMobile"
             class="online-btn fixed bottom-[40px] right-[30px] w-[175px] h-[75px] bg-[--color-main-blue] rounded-[100px] flex-center opacity-1 cursor-pointer"
             @click="handleClickBtn"
         >

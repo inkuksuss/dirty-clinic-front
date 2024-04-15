@@ -1,11 +1,7 @@
 <script lang="ts">
 import { ref, type PropType, defineComponent } from 'vue';
 import vClickOutside from 'click-outside-vue3';
-
-export type SelectType = {
-    name: string;
-    value: string;
-};
+import { type SelectType } from '@/utils/types';
 
 export default defineComponent({
     name: 'ClinicSelect',
@@ -26,7 +22,7 @@ export default defineComponent({
     setup(props) {
         const isOpen = ref<boolean>(false);
         const inputList = ref<Array<SelectType>>(props.selectList);
-        const selected = ref<string>(props.selectedValue);
+        const selected = ref<string>('');
 
         const handleClickSelectBox = () => {
             isOpen.value = !isOpen.value;

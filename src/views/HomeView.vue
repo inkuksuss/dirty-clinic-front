@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
+import { defineComponent } from 'vue';
 import homeSlider from '@/components/home/HomeSlider.vue';
 import HomeScroll from '@/components/home/HomeScroll.vue';
 import HomeIntro from '@/components/home/HomeIntro.vue';
@@ -36,8 +36,8 @@ export default defineComponent({
                         >
                         <span
                             class="sub-text text-[38px] font-[600] text-[--color-white] leading-[49px]"
-                            >우리는 청결의 미학을 실현하는 전문기업 <br />
-                            더티클리닉입니다.</span
+                            >우리는 청결의 미학을 실현하는 <br class="break-m" />
+                            전문기업<br class="break-d" /> 더티클리닉입니다.</span
                         >
                     </div>
                     <div
