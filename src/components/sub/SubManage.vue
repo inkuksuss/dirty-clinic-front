@@ -1,5 +1,8 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, type PropType, ref } from 'vue';
+import ClinicImage from '@/components/common/ClinicImage.vue';
+import { resolveUrl } from '@/utils/common';
+import { SubPageType } from '@/utils/types';
 
 type ManageInfo = {
     title: string;
@@ -10,17 +13,26 @@ type ManageInfo = {
 
 export default defineComponent({
     name: 'SubManage',
+    methods: { resolveUrl },
+    components: { ClinicImage },
     props: {
         title: {
-            type: String as PropType<string>,
-            default: '어디까지 관리 되나요?'
+            type: String as PropType<string>
         },
         desc: {
             type: String as PropType<string>,
-            default: '클리닉의 철학을 가지고 고객님께 서비스를 제공합니다.'
+            required: false
         },
         manageList: {
             type: Array as PropType<Array<ManageInfo>>,
+            required: false
+        },
+        pageType: {
+            type: String as PropType<SubPageType>,
+            required: false
+        },
+        mainImg: {
+            type: String as PropType<string>,
             required: false
         }
     },
@@ -44,7 +56,7 @@ export default defineComponent({
                         sub: '어느정도 먼지가 남아있을 수 있습니다.'
                     }
                 ],
-                icon: 'src/assets/images/icons/living_room.svg',
+                icon: new URL('@/assets/images/icons/living_room.svg', import.meta.url).href,
                 isOpen: false
             },
             {
@@ -58,7 +70,7 @@ export default defineComponent({
                     { main: '하수구 커버 분리, 세척 오염 제거, 약품 살균, 소독' },
                     { main: '환풍구 탈거 청소' }
                 ],
-                icon: 'src/assets/images/icons/bath_room.svg',
+                icon: new URL('@/assets/images/icons/bath_room.svg', import.meta.url).href,
                 isOpen: false
             },
             {
@@ -70,7 +82,7 @@ export default defineComponent({
                     { main: '서랍장 탈거 후 청소' },
                     { main: '빌트인 냉장고, 세탁기, 오븐 등 가전제품 내부청소는 별도' }
                 ],
-                icon: 'src/assets/images/icons/kitchen.svg',
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href,
                 isOpen: false
             },
             {
@@ -81,7 +93,7 @@ export default defineComponent({
                     { main: '베란다 바닥 오염 제거' },
                     { main: '배수구 안쪽 부속품', sub: '탈거, 세척, 소독, 살균, 건조순으로 작업' }
                 ],
-                icon: 'src/assets/images/icons/veranda.svg',
+                icon: new URL('@/assets/images/icons/window.svg', import.meta.url).href,
                 isOpen: false
             },
             {
@@ -102,7 +114,7 @@ export default defineComponent({
                         sub: '어느정도 먼지가 남아있을 수 있습니다.'
                     }
                 ],
-                icon: 'src/assets/images/icons/room.svg',
+                icon: new URL('@/assets/images/icons/room.svg', import.meta.url).href,
                 isOpen: false
             },
             {
@@ -118,7 +130,7 @@ export default defineComponent({
                         sub: '폐기물, 쓰레기 처리는 추가요금 발생'
                     }
                 ],
-                icon: 'src/assets/images/icons/entrance.svg',
+                icon: new URL('@/assets/images/icons/entrance.svg', import.meta.url).href,
                 isOpen: false
             }
         ];
@@ -126,6 +138,8 @@ export default defineComponent({
         const scriptList = ref<ManageInfo[]>([]);
         const compTitle = computed(() => props.title);
         const compDesc = computed(() => props.desc);
+        const compPageType = computed(() => props.pageType);
+        const compMainImg = computed(() => props.mainImg);
 
         const handleClick = (info: ManageInfo) => {
             const open = scriptList.value.find((m) => m.isOpen);
@@ -144,12 +158,18 @@ export default defineComponent({
             else scriptList.value = defaultScript;
         };
 
+        const noHeaderList = [SubPageType.FIRE];
+
         onMounted(() => doOverwriteScript());
 
         return {
             scriptList,
             compTitle,
             compDesc,
+            compPageType,
+            SubPageType,
+            noHeaderList,
+            compMainImg,
             handleClick
         };
     }
@@ -157,28 +177,123 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="manage-wrapper bg-[--color-skyblue] w-full pt-[85px] pb-[85px] flex justify-center">
-        <div class="manage-contents max-w-[--body-width] w-[73%] flex flex-col">
-            <div class="text-area mb-[30px]">
+    <div
+        class="manage-wrapper bg-[--color-skyblue] w-full pt-[85px] flex justify-center"
+        :class="[compPageType === SubPageType.SPOT ? 'pb-0' : 'pb-[85px]']"
+    >
+        <div class="manage-contents max-w-[--body-width] w-[--body-ratio] flex flex-col">
+            <div v-if="!noHeaderList.includes(compPageType)" class="text-area mb-[30px]">
                 <div
-                    class="text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px]"
+                    class="text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px] whitespace-pre-wrap"
                 >
                     {{ compTitle }}
                 </div>
-                <div class="text-[--color-text-black] text-[18px] font-[500] leading-[26px]">
+                <div
+                    v-if="compDesc"
+                    class="text-[--color-text-black] text-[18px] font-[500] leading-[26px] whitespace-pre-wrap"
+                >
                     {{ compDesc }}
                 </div>
             </div>
-            <div class="list-area grid grid-cols-2 gap-[20px]">
+            <!-- 외창청소 -->
+            <div
+                v-if="compPageType === SubPageType.WINDOW"
+                class="w-full min-h-[228px] flex flex-col bg-[--color-white] border-[1.5px] border-[--color-border-blue]"
+            >
+                <div
+                    class="flex h-[80px] mx-[30px] py-[20px] items-center border-b-[1px] border-b-[--color-border-blue]"
+                >
+                    <div class="flex-center w-[40px] h-[40px] bg-[--color-skyblue] mr-[20px]">
+                        <img src="@/assets/images/icons/window.svg" />
+                    </div>
+                    <span class="text-[--color-black] font-[600] text-[24px] leading-[26px]"
+                        >창문을 전부다 탈거하고 진행하는 방법</span
+                    >
+                </div>
+                <div class="ml-[90px] mr-[30px] py-[30px] flex flex-col">
+                    <span
+                        class="text-[20px] text-[--color-black] font-[500] mb-[10px] leading-[26px]"
+                        >창문이 무겁고 파손위험이 있어 전문성이 필요해요.<br />외부 오염물은
+                        간단하게 없어지지 않아요.</span
+                    >
+                    <span
+                        class="text-[16px] text-[--color-text-gray] font-[500] leading-[26px] whitespace-pre-wrap"
+                        >*자석을 이용하는 방법은 묶은 때를 벗겨 내기엔 어려워요. 아쉬운 퀄리티로
+                        더티클리닉은 이용하지 않는방법이에요. 😢</span
+                    >
+                </div>
+            </div>
+            <!-- 정기청소 -->
+            <div
+                v-else-if="compPageType === SubPageType.REGULAR"
+                class="w-full min-h-[224px] flex flex-col bg-[--color-white] border-[1.5px] border-[--color-border-blue] pl-[30px] py-[20px]"
+            >
+                <div class="flex items-center py-[10px]">
+                    <div
+                        class="w-[20px] h-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
+                    ></div>
+                    <span class="text-[20px] text-[--color-black] font-[500] leading-[26px]"
+                        >사무실에 매일 쓰레기가 넘쳐 버릴 사람이 필요한 경우</span
+                    >
+                </div>
+                <div class="flex items-center py-[10px]">
+                    <div
+                        class="w-[20px] h-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
+                    ></div>
+                    <span class="text-[20px] text-[--color-black] font-[500] leading-[26px]"
+                        >공간 불문 입주청소 이후 정기적인 관리가 필요하신 경우</span
+                    >
+                </div>
+                <div class="flex items-center py-[10px]">
+                    <div
+                        class="w-[20px] h-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
+                    ></div>
+                    <span class="text-[20px] text-[--color-black] font-[500] leading-[26px]"
+                        >거주공간, 기숙사 등 정리정돈과 청소할 시간이 없는 경우</span
+                    >
+                </div>
+                <div class="flex items-center py-[10px]">
+                    <div
+                        class="w-[20px] h-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
+                    ></div>
+                    <span class="text-[20px] text-[--color-black] font-[500] leading-[26px]"
+                        >사람이 많이 다녀 주기적인 바닥청소와 코팅까지 필요하신 경우</span
+                    >
+                </div>
+            </div>
+            <!-- 화재청소 -->
+            <div
+                v-else-if="compPageType === SubPageType.FIRE"
+                class="w-full flex justify-between items-center"
+            >
+                <div class="mr-[50px] min-w-[260px]">
+                    <div
+                        class="text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px] whitespace-pre-wrap"
+                    >
+                        {{ compTitle }}
+                    </div>
+                    <div
+                        v-if="compDesc"
+                        class="text-[--color-text-black] text-[18px] font-[500] leading-[26px] whitespace-pre-wrap"
+                    >
+                        {{ compDesc }}
+                    </div>
+                </div>
+                <div v-if="compMainImg" class="max-w-[430px]">
+                    <clinic-image :src="compMainImg"></clinic-image>
+                </div>
+            </div>
+
+            <div v-else class="list-area grid grid-cols-2 gap-[20px]">
                 <div
                     v-for="(info, idx) in scriptList"
                     :key="idx"
-                    class="content-wrapper relative max-w-[430px] h-[80px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] px-[30px] flex justify-between items-center"
+                    class="content-wrapper relative h-[80px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] px-[30px] flex justify-between items-center"
                     :class="{ active: info.isOpen }"
                     @click="() => handleClick(info)"
                 >
                     <div class="body flex items-center">
-                        <img class="mr-[20px]" :src="info.icon" />
+                        <clinic-image class="mr-[20px] w-[39px] h-[39px]" :src="info.icon" />
                         <span
                             class="text-[--color-text-black] text-[24px] font-[600] leading-[26px]"
                             >{{ info.title }}</span
@@ -189,7 +304,7 @@ export default defineComponent({
                     <transition name="slide-fade" mode="out-in" class="w-full">
                         <div
                             v-if="info.isOpen"
-                            class="info-label absolute max-w-[430px] top-[77px] left-[-1.5px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] z-10"
+                            class="info-label absolute top-[77px] left-[-1.5px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] z-10"
                         >
                             <div
                                 v-for="(content, idx) in info.content"
@@ -210,6 +325,13 @@ export default defineComponent({
                         </div>
                     </transition>
                 </div>
+            </div>
+
+            <div
+                v-if="pageType === SubPageType.SPOT"
+                class="h-[85px] text-[18px] text-[--color-black] font-[400] leading-[26px] pt-[20px]"
+            >
+                ※ 이외 부분도 부분청소가 가능하니 상담실로 문의주시면 도와드리겠습니다.
             </div>
         </div>
     </div>

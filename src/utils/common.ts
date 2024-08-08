@@ -46,3 +46,7 @@ export const getUserId = (): string => {
     const loadUserInfo = loadLocalStorage(CONSTANTS.KEY.USER_INFO);
     return loadUserInfo ? loadUserInfo.id : '1';
 };
+
+export const resolveUrl = (url: string) => {
+    return new URL(url, import.meta.url).href;
+};

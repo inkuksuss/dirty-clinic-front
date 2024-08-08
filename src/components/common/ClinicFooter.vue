@@ -52,13 +52,13 @@ export default defineComponent({
                     </div>
                     <div class="contents-description-wrapper flex flex-col mt-[30px]">
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
-                            >경기도 부천시 경인로 29번길 32, 5동 507호(송내동, 우성아파트)</span
+                            >경기도 부천시 소사구 경인로 1185번길 57-12, 1층(송내동)</span
                         >
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
-                            >대표자 최문석 | 사업자등록번호 03030303030303</span
+                            >대표자 최문석 | 사업자등록번호 571-54-00602</span
                         >
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
-                            >대표번호 070-393-3939</span
+                            >대표번호 010-3352-0037</span
                         >
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
                             >Copyright © 2023 DIRTY CLINIC. All Rights Reserved.</span
@@ -92,14 +92,14 @@ export default defineComponent({
             </div>
             <div class="contents-description-wrapper flex flex-col mt-[30px]">
                 <span class="text-[14px] font-[400] text-[--color-text-gray]"
-                    >경기도 부천시 경인로 29번길 32, 5동 507호</span
+                    >경기도 부천시 소사구 경인로 1185번길 57-12, 1층(송내동)</span
                 >
                 <span
                     class="mb-[5px] text-[14px] font-[400] text-[--color-text-gray] leading-[16px]"
-                    >(송내동, 우성아파트) | 대표자 최문석</span
+                    >대표자 최문석 | 사업자등록번호 571-54-00602</span
                 >
                 <span class="mb-[5px] text-[14px] font-[400] text-[--color-text-gray]"
-                    >사업자등록번호 03030303030303 | 대표번호 070-393-3939</span
+                    >대표번호 010-3352-0037</span
                 >
                 <span class="mb-[20px] text-[14px] font-[400] text-[--color-text-gray]"
                     >Copyright © 2023 DIRTY CLINIC. All Rights Reserved.</span

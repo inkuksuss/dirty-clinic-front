@@ -1,4 +1,8 @@
-import Big from 'big.js';
+export enum ViewSize {
+    DESKTOP = 1200,
+    MOBILE = 767,
+    SMALL_MOBILE = 374
+}
 
 export type User = {
     id: string;
@@ -104,8 +108,53 @@ export type PaymentResultRequest = {
     errorMsg?: string;
 };
 
-export type SubIntroScript = {
+export enum SubPageType {
+    ONE_ROOM = 'ONE_ROOM',
+    SPOT = 'SPOT',
+    WINDOW = 'WINDOW',
+    REGULAR = 'REGULAR',
+    MOVE_IN = 'MOVE_IN',
+    MOVING = 'MOVING',
+    INTERIOR = 'INTERIOR',
+    RESIDENTIAL = 'RESIDENTIAL',
+    OFFICE = 'OFFICE',
+    STORE = 'STORE',
+    FIRE = 'FIRE',
+    TRASH = 'TRASH',
+    KEEPSAKE = 'KEEPSAKE',
+    WASTE = 'WASTE',
+    COMPLETION = 'COMPLETION',
+    PARKING = 'PARKING',
+    WALL = 'WALL',
+    FACTORY = 'FACTORY',
+    SCHOOL = 'SCHOOL',
+    JOINT = 'JOINT',
+    MOLD = 'MOLD',
+    RESTAURANT = 'RESTAURANT',
+    WAX = 'WAX',
+    COATING = 'COATING',
+    GRINDING = 'GRINDING',
+    AIR = 'AIR',
+    WASHING_MACHINE = 'WASHING_MACHINE',
+    REFRIGERATOR = 'REFRIGERATOR',
+    SOFA = 'SOFA'
+}
+
+export type SubIntroType = {
+    src: string;
     title: string;
+};
+
+export type SubPromotionType = {
+    src: string;
+    link?: string;
+};
+
+export type SubServiceType = {
+    src: string;
+    title: string;
+    desc: string;
+    ext?: string;
 };
 
 export type SelectType = {

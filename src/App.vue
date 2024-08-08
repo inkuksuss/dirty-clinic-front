@@ -5,6 +5,7 @@ import ClinicHeader from '@/components/common/ClinicHeader.vue';
 import ClinicFooter from '@/components/common/ClinicFooter.vue';
 import { useStore } from '@/stores/store';
 import ClinicPopup from '@/components/common/ClinicPopup.vue';
+import {ViewSize} from "@/utils/types";
 
 export default defineComponent({
     name: 'App',
@@ -16,7 +17,7 @@ export default defineComponent({
         const handleResize = () => {
             const viewWidth = window.innerWidth ?? document.documentElement.clientWidth;
 
-            store.setIsMobile(viewWidth <= 767);
+            store.setIsMobile(viewWidth <= ViewSize.MOBILE);
             store.setWidth(viewWidth);
         };
 

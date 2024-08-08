@@ -63,6 +63,8 @@
                 .image-wrapper {
                     aspect-ratio: 150 / 150;
                 }
+                .two-line {
+                }
             }
         }
     }
@@ -203,12 +205,12 @@
                 }
             }
             .main-image {
-                img {
-                    aspect-ratio: 880 / 300;
-                    @include mobile {
-                        aspect-ratio: 325 / 430;
-                    }
-                }
+                //img {
+                //    aspect-ratio: 880 / 300;
+                //    @include mobile {
+                //        aspect-ratio: 325 / 430;
+                //    }
+                //}
             }
             .sub-promotion-list {
                 .sub-promotion {
@@ -258,7 +260,6 @@
                                     img {
                                         aspect-ratio: 325 / 180;
                                     }
-
                                 }
                             }
                         }
@@ -296,6 +297,14 @@
         }
 
         .service-area {
+            &.third-grid {
+                .service-box {
+                    &:first-child {
+                        grid-row: 1 / 3;
+                    }
+                }
+            }
+
             @include mobile {
                 display: flex;
                 flex-direction: column;

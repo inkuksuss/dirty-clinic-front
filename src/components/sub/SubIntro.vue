@@ -1,43 +1,36 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, type PropType, ref } from 'vue';
 import { useStore } from '@/stores/store';
-import { type SubIntroScript } from '@/utils/types';
+import { type SubIntroType, SubPageType } from '@/utils/types';
+import ClinicImage from '@/components/common/ClinicImage.vue';
 
 export default defineComponent({
     name: 'SubIntro',
+    components: { ClinicImage },
     props: {
-        introScriptList: Array as PropType<SubIntroScript[]>
+        dataList: {
+            type: Array as PropType<SubIntroType[]>,
+            required: true
+        }
     },
     setup(props) {
         const store = useStore();
         const compWidth = computed(() => store.width);
+        const compIntroList = computed(() => props.dataList);
 
-        const scriptList = ref<SubIntroScript[]>([
-            { title: '전문 상담과\n예약 확정' },
-            { title: '해피콜과\n특이사항 체크' },
-            { title: '현장의 특이사항\n체크' },
-            { title: '알맞는 약품청소' },
-            { title: '고객님과 함께\n현장 검수 및 완료' }
-        ]);
-
-        onMounted(() => {
-            if (props.introScriptList && props.introScriptList.length > 0)
-                scriptList.value = props.introScriptList;
-        });
-
-        return { compWidth, scriptList };
+        return { compWidth, compIntroList };
     }
 });
 </script>
 
 <template>
     <!-- 430 -->
-    <div class="intro-wrapper w-full flex-center">
+    <div class="intro-wrapper w-full flex-center w-full">
         <div
             v-if="compWidth > 430"
-            class="intro-contents mt-[100px] mb-[80px] flex flex-col max-w-[--body-width] w-[73%]"
+            class="intro-contents mt-[100px] mb-[80px] flex flex-col max-w-[--body-width] w-[--body-ratio]"
         >
-            <div class="text-area mb-[30px]">
+            <div class="text-area w-[--body-width] mb-[30px]">
                 <div
                     class="text-main text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px]"
                 >
@@ -46,66 +39,39 @@ export default defineComponent({
                 <div
                     class="text-sub text-[--color-text-black] text-[18px] font-[500] leading-[26px]"
                 >
-                    5단계로 나눠진 특별한 기술을 체험해보세요.
+                    {{ compIntroList.length }}단계로 나눠진 더티클리닉만의 특별한 기술을
+                    체험해보세요.
                 </div>
             </div>
 
-            <div class="image-area relative w-full flex justify-between">
-                <div class="image-wrapper w-[17%] max-h-[150px] flex flex-col items-start">
-                    <div class="w-full max-w-[150px] max-h-[150px] z-30 relative">
-                        <img class="w-full h-full" src="@/assets/images/sub/intro_image1@1x.jpg" />
+            <div class="image-area w-full flex justify-between">
+                <div v-if="compIntroList.length < 7" class="w-full flex justify-between">
+                    <div v-for="(data, idx) in compIntroList" :key="idx" class="">
+                        <div class="image-wrapper w-full max-h-[150px]">
+                            <clinic-image class="w-full h-full rounded-[50%]" :src="data.src" />
+                        </div>
+                        <div
+                            class="mt-[20px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
+                        >
+                            {{ data.title }}
+                        </div>
                     </div>
                 </div>
-                <div class="image-wrapper w-[17%] flex flex-col items-start">
-                    <div class="w-full max-w-[150px] z-30">
-                        <img class="w-full h-full" src="@/assets/images/sub/intro_image2@1x.jpg" />
+                <div v-else class="two-line w-full grid grid-cols-6 grid-rows-2 gap-y-[40px]">
+                    <div
+                        v-for="(data, idx) in compIntroList"
+                        :key="idx"
+                        class="content-box flex flex-col items-center"
+                    >
+                        <div class="image-wrapper w-full max-w-[125px] max-h-[125px]">
+                            <clinic-image class="w-full h-full rounded-[50%]" :src="data.src" />
+                        </div>
+                        <div
+                            class="mt-[20px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
+                        >
+                            {{ data.title }}
+                        </div>
                     </div>
-                </div>
-                <div class="image-wrapper w-[17%] flex flex-col items-start">
-                    <div class="w-full max-w-[150px] max-h-[150px] z-30">
-                        <img class="w-full h-full" src="@/assets/images/sub/intro_image3@1x.jpg" />
-                    </div>
-                </div>
-                <div class="image-wrapper w-[17%] flex flex-col items-start">
-                    <div class="w-full max-w-[150px] max-h-[150px] z-30">
-                        <img class="w-full h-full" src="@/assets/images/sub/intro_image4@1x.jpg" />
-                    </div>
-                </div>
-                <div class="image-wrapper w-[17%] flex flex-col items-start">
-                    <div class="w-full max-w-[150px] max-h-[150px] z-30">
-                        <img class="w-full h-full" src="@/assets/images/sub/intro_image5@1x.jpg" />
-                    </div>
-                </div>
-                <div
-                    class="border-t-[1px] border-t-[--color-main-blue] absolute top-[50%] left-0 max-w-[--body-width] w-[100%] z-[-1]"
-                ></div>
-            </div>
-
-            <div class="flex justify-between mt-[30px]">
-                <div
-                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
-                >
-                    {{ scriptList[0].title }}
-                </div>
-                <div
-                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
-                >
-                    {{ scriptList[1].title }}
-                </div>
-                <div
-                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
-                >
-                    {{ scriptList[2].title }}
-                </div>
-                <div
-                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
-                >
-                    {{ scriptList[3].title }}
-                </div>
-                <div
-                    class="w-[17%] max-w-[150px] text-[--color-text-black] w-[150px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
-                >
-                    {{ scriptList[4].title }}
                 </div>
             </div>
         </div>
@@ -142,17 +108,17 @@ export default defineComponent({
                 <div
                     class="w-[25%] max-w-[80px] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
                 >
-                    {{ scriptList[0].title }}
+                    {{ compIntroList[0].title }}
                 </div>
                 <div
                     class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
                 >
-                    {{ scriptList[1].title }}
+                    {{ compIntroList[1].title }}
                 </div>
                 <div
                     class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
                 >
-                    {{ scriptList[2].title }}
+                    {{ compIntroList[2].title }}
                 </div>
             </div>
 
@@ -171,12 +137,12 @@ export default defineComponent({
                 <div
                     class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
                 >
-                    {{ scriptList[3].title }}
+                    {{ compIntroList[3].title }}
                 </div>
                 <div
                     class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
                 >
-                    {{ scriptList[4].title }}
+                    {{ compIntroList[4].title }}
                 </div>
             </div>
         </div>
