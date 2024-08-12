@@ -8,10 +8,11 @@ import SubPromotion from '@/components/sub/SubPromotion.vue';
 import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
-    SubIntroType,
+    type SubIntroType,
     SubPageType,
-    SubPromotionType,
-    SubServiceType
+    type SubPriceType,
+    type SubPromotionType,
+    type SubServiceType
 } from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
@@ -57,6 +58,13 @@ export default defineComponent({
             }
         ];
 
+        const priceList: SubPriceType[] = [
+            {
+                src: new URL('@/assets/images/sub/price/move_in.png', import.meta.url).href,
+              ext: '* 해당 견적은 확장형 기준으로 정확한 견적은 홈페이지 좌측하단의 견적보기를 확인하세요.'
+            }
+        ];
+
         const promotionList: SubPromotionType[] = [
             {
                 src: new URL('@/assets/images/sub/promotion/move_in1.png', import.meta.url).href
@@ -70,8 +78,7 @@ export default defineComponent({
             {
                 src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
                 title: '작업 인원',
-                desc: '전문교육을 받은 2명 이상의 작업자와\n' +
-                    '팀장이 함께 관리합니다.'
+                desc: '전문교육을 받은 2명 이상의 작업자와\n' + '팀장이 함께 관리합니다.'
             },
             {
                 src: new URL('@/assets/images/icons/map.svg', import.meta.url).href,
@@ -103,6 +110,7 @@ export default defineComponent({
 
         return {
             introList,
+          priceList,
             promotionList,
             serviceList,
             bannerScript,
@@ -120,7 +128,7 @@ export default defineComponent({
             title="어디까지 관리 되나요?"
             desc="새집의 보이지 않는 공사먼지와 유독물질을 최대한으로 억제합니다."
         ></sub-manage>
-        <sub-promotion :page-type="SubPageType.MOVE_IN" :data-list="promotionList"></sub-promotion>
+        <sub-promotion :page-type="SubPageType.MOVE_IN" :price-list="priceList" :prom-list="promotionList"></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>
         <sub-check-list></sub-check-list>
         <payment-button :click-handler="handleClickBtn"></payment-button>

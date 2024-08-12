@@ -25,18 +25,18 @@ export default defineComponent({
 
 <template>
     <!-- 430 -->
-    <div class="intro-wrapper w-full flex-center w-full">
+    <div class="intro-wrapper w-full flex-center">
         <div
             v-if="compWidth > 430"
             class="intro-contents mt-[100px] mb-[80px] flex flex-col max-w-[--body-width] w-[--body-ratio]"
         >
-            <div class="text-area w-[--body-width] mb-[30px]">
+            <div class="text-area mb-[30px]">
                 <div
                     class="text-main text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px]"
                 >
                     우리는 이렇게 청소합니다.
                 </div>
-                <div
+                <div v-if="compIntroList.length > 4"
                     class="text-sub text-[--color-text-black] text-[18px] font-[500] leading-[26px]"
                 >
                     {{ compIntroList.length }}단계로 나눠진 더티클리닉만의 특별한 기술을
@@ -44,20 +44,41 @@ export default defineComponent({
                 </div>
             </div>
 
-            <div class="image-area w-full flex justify-between">
-                <div v-if="compIntroList.length < 7" class="w-full flex justify-between">
+            <div class="image-area flex justify-between">
+                <div
+                    v-if="compIntroList.length < 7"
+                    class="w-full flex justify-between mb-[70px] gap-x-[20px]"
+                >
                     <div v-for="(data, idx) in compIntroList" :key="idx" class="">
-                        <div class="image-wrapper w-full max-h-[150px]">
-                            <clinic-image class="w-full h-full rounded-[50%]" :src="data.src" />
+                        <div class="image-wrapper relative">
+                            <clinic-image
+                                class="h-full rounded-[50%]"
+                                :class="[
+                                    compIntroList.length > 5
+                                        ? 'w-[125px]'
+                                        : compIntroList.length > 4
+                                          ? 'w-[150px]'
+                                          : 'w-[190px]'
+                                ]"
+                                :src="data.src"
+                            />
+                            <div
+                                class="absolute translate-x-[-50%] left-[50%] w-max mt-[20px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
+                            >
+                                {{ data.title }}
+                            </div>
                         </div>
-                        <div
-                            class="mt-[20px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"
-                        >
-                            {{ data.title }}
-                        </div>
+                        <!--                        <div-->
+                        <!--                            class="mt-[20px] text-[18px] font-[500] leading-[21px] text-center whitespace-pre-wrap"-->
+                        <!--                        >-->
+                        <!--                            {{ data.title }}-->
+                        <!--                        </div>-->
                     </div>
                 </div>
-                <div v-else class="two-line w-full grid grid-cols-6 grid-rows-2 gap-y-[40px]">
+                <div
+                    v-else
+                    class="two-line w-full grid grid-cols-6 grid-rows-2 gap-y-[40px] gap-x-[10px]"
+                >
                     <div
                         v-for="(data, idx) in compIntroList"
                         :key="idx"
@@ -92,13 +113,13 @@ export default defineComponent({
 
             <div class="first-row flex justify-between mx-[13px] relative gap-x-[30px]">
                 <div class="image-wrapper w-full w-[25%] max-w-[80px] z-30">
-                    <img class="w-full h-full" src="@/assets/images/sub/intro_image1@1x.jpg" />
+                    <img class="w-full h-full" src="/images/sub/intro_image1@1x.jpg" />
                 </div>
                 <div class="image-wrapper w-full w-[25%] max-w-[80px] z-30">
-                    <img class="w-full h-full" src="@/assets/images/sub/intro_image2@1x.jpg" />
+                    <img class="w-full h-full" src="/images/sub/intro_image2@1x.jpg" />
                 </div>
                 <div class="image-wrapper w-full w-[25%] max-w-[80px] z-30">
-                    <img class="w-full h-full" src="@/assets/images/sub/intro_image3@1x.jpg" />
+                    <img class="w-full h-full" src="/images/sub/intro_image3@1x.jpg" />
                 </div>
                 <div
                     class="blue-bar absolute border-t-[1px] border-t-[--color-main-blue] absolute top-[50%] left-[38px] max-w-[--body-width] w-[100%] z-[-1]"
@@ -124,10 +145,10 @@ export default defineComponent({
 
             <div class="second-row flex justify-center gap-x-[42px] relative mt-[15px]">
                 <div class="image-wrapper w-[25%] max-w-[80px] z-30">
-                    <img class="w-full h-full" src="@/assets/images/sub/intro_image4@1x.jpg" />
+                    <img class="w-full h-full" src="/images/sub/intro_image4@1x.jpg" />
                 </div>
                 <div class="image-wrapper w-[25%] max-w-[80px] z-30">
-                    <img class="w-full h-full" src="@/assets/images/sub/intro_image5@1x.jpg" />
+                    <img class="w-full h-full" src="/images/sub/intro_image5@1x.jpg" />
                 </div>
                 <div
                     class="blue-bar absolute border-t-[1px] border-t-[--color-main-blue] absolute top-[50%] right-[88px] max-w-[--body-width] w-[100%] z-[-1]"

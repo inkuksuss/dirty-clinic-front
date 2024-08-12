@@ -9,11 +9,6 @@ const router = createRouter({
             component: () => import('@/views/HomeView.vue')
         },
         {
-            path: '/sub',
-            name: 'sub',
-            component: () => import('@/views/sub/SubView.vue')
-        },
-        {
             path: '/moving-cleaning',
             name: 'movingCleaning',
             component: () => import('@/views/sub/MovingCleaningView.vue')
@@ -77,6 +72,76 @@ const router = createRouter({
             path: '/trauma-scene-cleaning',
             name: 'traumaSceneCleaning',
             component: () => import('@/views/sub/TraumaSceneCleaningView.vue')
+        },
+        {
+            path: '/trash-cleaning',
+            name: 'trashCleaning',
+            component: () => import('@/views/sub/TrashCleaningView.vue')
+        },
+        {
+            path: '/waste-cleaning',
+            name: 'wasteCleaning',
+            component: () => import('@/views/sub/WasteCleaningView.vue')
+        },
+        {
+            path: '/completion-cleaning',
+            name: 'completionCleaning',
+            component: () => import('@/views/sub/CompletionCleaningView.vue')
+        },
+        {
+            path: '/parking-cleaning',
+            name: 'parkingCleaning',
+            component: () => import('@/views/sub/ParkingCleaningView.vue')
+        },
+        {
+            path: '/wall-cleaning',
+            name: 'wallCleaning',
+            component: () => import('@/views/sub/WallCleaningView.vue')
+        },
+        {
+            path: '/factory-cleaning',
+            name: 'factoryCleaning',
+            component: () => import('@/views/sub/FactoryCleaningView.vue')
+        },
+        {
+            path: '/school-cleaning',
+            name: 'schoolCleaning',
+            component: () => import('@/views/sub/SchoolCleaningView.vue')
+        },
+        {
+            path: '/joint-cleaning',
+            name: 'jointCleaning',
+            component: () => import('@/views/sub/JointCleaningView.vue')
+        },
+        {
+            path: '/school-cleaning',
+            name: 'schoolCleaning',
+            component: () => import('@/views/sub/SchoolCleaningView.vue')
+        },
+        {
+            path: '/mold-cleaning',
+            name: 'moldCleaning',
+            component: () => import('@/views/sub/MoldCleaningView.vue')
+        },
+        {
+            path: '/wax-cleaning',
+            name: 'waxCleaning',
+            component: () => import('@/views/sub/WaxCleaningView.vue')
+        },
+        {
+            path: '/coating-cleaning',
+            name: 'coatingCleaning',
+            component: () => import('@/views/sub/CoatingCleaningView.vue')
+        },
+        {
+            path: '/grinding-cleaning',
+            name: 'grindingCleaning',
+            component: () => import('@/views/sub/GrindingCleaningView.vue')
+        },
+        {
+            path: '/appliances-cleaning',
+            name: 'appliancesCleaning',
+            component: () => import('@/views/sub/AppliancesCleaningView.vue')
         },
         {
             path: '/login',

@@ -2,28 +2,33 @@
 import { computed, defineComponent, nextTick, onMounted, ref, watch } from 'vue';
 import { useStore } from '@/stores/store';
 import Flicking from '@egjs/vue3-flicking';
+import ClinicImage from '@/components/common/ClinicImage.vue';
 
 type PromotionInfo = {
     title: string;
     description: string;
+    src: string;
 };
 
 export default defineComponent({
     name: 'HomePromotion',
-    components: { Flicking: Flicking },
+    components: { ClinicImage, Flicking: Flicking },
     setup() {
         const promList: PromotionInfo[] = [
             {
                 title: '입주 프로모션',
-                description: '가전/ 줄눈/ 코팅'
+                description: '가전/ 줄눈/ 코팅',
+                src: new URL('/images/home/promotion_1.png', import.meta.url).href
             },
             {
                 title: '공기질 시설관리',
-                description: '새집증후군/ 소독/<br class="break-m"/> 해충 방역'
+                description: '새집증후군/ 소독/<br class="break-m"/> 해충 방역',
+                src: new URL('../../assets/images/home/promotion_2.png', import.meta.url).href
             },
             {
                 title: '사업장 정기관리',
-                description: '왁스코팅/ 정기관리/<br class="break-m"/> 공기질 관리'
+                description: '왁스코팅/ 정기관리/<br class="break-m"/> 공기질 관리',
+                src: new URL('./assets/images/home/promotion_3.png', import.meta.url).href
             }
         ];
 
@@ -107,7 +112,7 @@ export default defineComponent({
                 :key="idx"
                 ref="contentList"
                 :style="{ width: contentWidth, minWidth: contentWidth }"
-                class="content relative"
+                class="content relative border-[3px] border-[#0082ff]"
             >
                 <div
                     class="w-full h-[44%] left-0 bottom-0 absolute bg-white opacity-[60%] z-0"
@@ -130,9 +135,10 @@ export default defineComponent({
         </Flicking>
         <div
             v-else
-            class="promotion-contents w-[--body-width] flex justify-between items-center pt-[68px] pb-[82px]"
+            class="promotion-contents max-w-[--body-width] w-[--body-ratio] flex justify-between items-center pt-[68px] pb-[82px]"
         >
-            <div v-for="(prom, idx) in promList" :key="idx" class="content w-[32%] relative">
+            <div v-for="(prom, idx) in promList" :key="idx" class="content w-[32%] relative border-[3px] border-[#0082ff]">
+                <clinic-image :src="prom.src"></clinic-image>
                 <div
                     class="w-full h-[44%] left-0 bottom-0 absolute bg-white opacity-[60%] z-0"
                 ></div>

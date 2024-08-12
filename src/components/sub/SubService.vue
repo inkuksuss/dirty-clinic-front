@@ -34,7 +34,7 @@ export default defineComponent({
             </div>
         </div>
         <div class="service-content">
-            <div class="service-area grid grid-rows-2 grid-cols-2 gap-[20px]" :class="[dataList.length === 3 ? 'third-grid' : '']">
+            <div class="service-area grid grid-cols-2 gap-[20px]" :class="[dataList.length === 3 ? 'third-grid' : '']">
                 <div
                     v-for="(data, index) in dataList"
                     :key="index"

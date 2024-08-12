@@ -23,13 +23,25 @@ export default defineComponent({
 
             if (compWidth.value >= ViewSize.DESKTOP) {
                 // 1200
-                href.value = compSrc.value.replace('.', '@2x.');
+                const lastIdx = compSrc.value.lastIndexOf('.');
+                href.value =
+                    compSrc.value.substring(0, lastIdx).replace('/@', '') +
+                    '@2x.' +
+                    compSrc.value.substring(lastIdx + 1, compSrc.value.length);
             } else if (compWidth.value < ViewSize.DESKTOP && compWidth.value > ViewSize.MOBILE) {
                 // 1199 ~ 768
-                href.value = compSrc.value.replace('.', '@2x.');
+                const lastIdx = compSrc.value.lastIndexOf('.');
+                href.value =
+                    compSrc.value.substring(0, lastIdx).replace('/@', '') +
+                    '@2x.' +
+                    compSrc.value.substring(lastIdx + 1, compSrc.value.length);
             } else {
                 // 767
-                href.value = compSrc.value.replace('.', '@1x.');
+                const lastIdx = compSrc.value.lastIndexOf('.');
+                href.value =
+                    compSrc.value.substring(0, lastIdx).replace('/@', '') +
+                    '@1x.' +
+                    compSrc.value.substring(lastIdx + 1, compSrc.value.length);
             }
         };
 

@@ -6,7 +6,7 @@ import SubService from '@/components/sub/SubService.vue';
 import SubCheckList from '@/components/sub/SubCheckList.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
 import SubBanner from '@/components/sub/SubBanner.vue';
-import { PopupType, SubIntroType, SubPageType, SubServiceType } from '@/utils/types';
+import { PopupType, type SubIntroType, SubPageType, type SubPriceType, type SubServiceType } from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 
@@ -46,6 +46,12 @@ export default defineComponent({
             }
         ];
 
+        const priceList: SubPriceType[] = [
+            {
+                src: new URL('@/assets/images/sub/price/window.png', import.meta.url).href
+            }
+        ];
+
         const serviceList: SubServiceType[] = [
             {
                 src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
@@ -71,6 +77,9 @@ export default defineComponent({
             }
         ];
 
+        const manageTitle =
+            '외부청소는 모든 청소업체가 하고 있지 않아요.\n더티클리닉은 어떻게 진행할까요?';
+
         const bannerScript = {
             title: '외창청소',
             desc: '차원이 다른 시야, 외창 청소는 더티클리닉에게 맡기세요.'
@@ -81,8 +90,10 @@ export default defineComponent({
 
         return {
             introList,
+            priceList,
             serviceList,
             bannerScript,
+            manageTitle,
             handleClickBtn,
             SubPageType
         };
@@ -94,8 +105,8 @@ export default defineComponent({
     <div class="sub-wrapper w-screen flex flex-col items-center justify-start">
         <sub-banner :title="bannerScript.title" :desc="bannerScript.desc"></sub-banner>
         <sub-intro :data-list="introList"></sub-intro>
-        <sub-manage :page-type=SubPageType.WINDOW desc="시공 후 분진제거를 중심적으로 청소합니다."></sub-manage>
-        <sub-promotion :page-type="SubPageType.WINDOW"></sub-promotion>
+        <sub-manage :title="manageTitle" :page-type="SubPageType.WINDOW"></sub-manage>
+        <sub-promotion :page-type="SubPageType.WINDOW" :price-list="priceList"></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>
         <sub-check-list></sub-check-list>
         <payment-button :click-handler="handleClickBtn"></payment-button>

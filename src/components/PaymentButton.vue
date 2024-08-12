@@ -56,7 +56,7 @@ export default defineComponent({
             @click="handleClickBtn"
         >
             <div class="w-[33px] h-[30px] mr-[10px]">
-                <img class="w-full h-full" src="@/assets/images/icons/calendar.png" />
+                <img class="w-full h-full" src="/images/icons/calendar.png" />
             </div>
             <div class="font-[600] text-[20px] leading-[26px] text-[--color-white]">
                 온라인 <br />

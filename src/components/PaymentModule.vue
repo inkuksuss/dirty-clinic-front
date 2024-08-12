@@ -174,14 +174,14 @@ export default defineComponent({
             class="flex justify-between items-center px-[10px] py-[10px] border-[1px]"
             @click="() => doPayment(kakaoPaymentBaseRequest)"
         >
-            <img class="w-[60px]" src="@/assets/images/payment/payment_kakao@1x.png" />
+            <img class="w-[60px]" src="/images/payment/payment_kakao@1x.png" />
             <span>카카오페이</span>
         </div>
         <div
             class="flex justify-between items-center px-[10px] py-[10px] border-[1px]"
             @click="() => doPayment(tossPaymentBaseRequest)"
         >
-            <img class="w-[60px]" src="@/assets/images/payment/payment_toss@1x.png" /><span
+            <img class="w-[60px]" src="/images/payment/payment_toss@1x.png" /><span
                 >토스페이먼츠</span
             >
         </div>

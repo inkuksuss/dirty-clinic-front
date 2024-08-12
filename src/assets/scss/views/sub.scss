@@ -3,7 +3,7 @@
 
     .banner-wrapper {
         .banner {
-            background-image: url('@/assets/images/sub/sub_banner@1x.jpg');
+            background-image: url('/images/sub/sub_banner@1x.jpg');
             background-size: cover;
 
             @include mobile {

@@ -1,5 +1,5 @@
 import { CONSTANTS } from '../../constants';
-import { type User } from '@/utils/types';
+import { SubPageType, type User } from '@/utils/types';
 
 export const getUuid = (): string => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

@@ -7,7 +7,7 @@
         height: calc(100vh - $header-height);
 
         .main-image {
-            background-image: url('@/assets/images/home/clinic_main@1x.jpg');
+            background-image: url('/images/home/clinic_main@2x.png');
             background-size: cover;
         }
 
@@ -44,26 +44,22 @@
     }
 
     .main-contents-wrapper {
-        width: 100%;
-
         .intro-wrapper {
             .text-area {
-                div:first-child {
-                    font-weight: 600;
-                    font-size: 24px;
-                    line-height: 29px;
-                }
-
-                div:last-child {
-                    font-weight: 400;
-                    font-size: 16px;
-                    line-height: 19px;
-                }
+                //div:first-child {
+                //    font-weight: 600;
+                //    font-size: 24px;
+                //    line-height: 29px;
+                //}
+                //
+                //div:last-child {
+                //    font-weight: 400;
+                //    font-size: 16px;
+                //    line-height: 19px;
+                //}
             }
             .image-area {
-                .first-intro,
-                .second-intro,
-                .third-intro {
+                .intro-box {
                     img {
                         aspect-ratio: 280 / 250;
                     }
@@ -120,19 +116,19 @@
         .promotion-wrapper {
             .promotion-contents {
                 .content {
-                    background-size: cover;
-
-                    &:first-child {
-                        background-image: url('@/assets/images/home/promotion_1@1x.png');
-                    }
-
-                    &:nth-child(2) {
-                        background-image: url('@/assets/images/home/promotion_2@1x.png');
-                    }
-
-                    &:last-child {
-                        background-image: url('@/assets/images/home/promotion_3@1x.png');
-                    }
+                    //background-size: cover;
+                    //
+                    //&:first-child {
+                    //    background-image: url('@/assets/images/home/promotion_1@1x.png');
+                    //}
+                    //
+                    //&:nth-child(2) {
+                    //    background-image: url('@/assets/images/home/promotion_2@1x.png');
+                    //}
+                    //
+                    //&:last-child {
+                    //    background-image: url('@/assets/images/home/promotion_3@1x.png');
+                    //}
 
                     aspect-ratio: 280 / 310;
                 }
@@ -155,15 +151,15 @@
                             margin-right: 15px;
 
                             &:first-child {
-                                background-image: url('@/assets/images/home/promotion_1@1x.png');
+                                background-image: url('/images/home/promotion_1@1x.png');
                             }
 
                             &:nth-child(2) {
-                                background-image: url('@/assets/images/home/promotion_2@1x.png');
+                                background-image: url('/images/home/promotion_2@1x.png');
                             }
 
                             &:last-child {
-                                background-image: url('@/assets/images/home/promotion_3@1x.png');
+                                background-image: url('/images/home/promotion_3@1x.png');
                             }
                         }
                     }
@@ -233,7 +229,18 @@
         .slider-wrapper {
             .slider-contents {
                 .image-container {
-                    aspect-ratio: 280 / 340;
+                    &:first-child {
+                        aspect-ratio: 267 / 321;
+                    }
+                    &:last-child {
+                        aspect-ratio: 222/ 320;
+                    }
+
+                    @include mobile {
+                        img {
+                            height: 173px;
+                        }
+                    }
                 }
             }
 

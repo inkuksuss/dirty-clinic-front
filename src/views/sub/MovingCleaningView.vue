@@ -10,6 +10,7 @@ import {
     PopupType,
     type SubIntroType,
     SubPageType,
+    type SubPriceType,
     type SubPromotionType,
     type SubServiceType
 } from '@/utils/types';
@@ -53,6 +54,13 @@ export default defineComponent({
             {
                 title: '고객님과 함께\n현장 검수 및 완료',
                 src: new URL('@/assets/images/sub/intro/kitchen.png', import.meta.url).href
+            }
+        ];
+
+        const priceList: SubPriceType[] = [
+            {
+                src: new URL('@/assets/images/sub/price/moving.png', import.meta.url).href,
+                ext: '* 해당 견적은 확장형 기준으로 정확한 견적은 홈페이지 좌측하단의 견적보기를 확인하세요.'
             }
         ];
 
@@ -101,6 +109,7 @@ export default defineComponent({
 
         return {
             introList,
+            priceList,
             promotionList,
             serviceList,
             bannerScript,
@@ -118,7 +127,11 @@ export default defineComponent({
             title="어디까지 관리 되나요?"
             desc="전 세입자의 흔적을 지워드립니다."
         ></sub-manage>
-        <sub-promotion :page-type="SubPageType.MOVING" :data-list="promotionList"></sub-promotion>
+        <sub-promotion
+            :page-type="SubPageType.MOVING"
+            :price-list="priceList"
+            :prom-list="promotionList"
+        ></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>
         <sub-check-list></sub-check-list>
         <payment-button :click-handler="handleClickBtn"></payment-button>

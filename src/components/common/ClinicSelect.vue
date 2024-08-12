@@ -62,7 +62,7 @@ export default defineComponent({
             >{{ placeHolder }}</span
         >
         <span class="select-place-holder" v-else>{{ selected }}</span>
-        <img class="select-arrow arrow" src="@/assets/images/icons/arrow_down.svg" alt="arrow" />
+        <img class="select-arrow arrow" src="/images/icons/arrow_down.svg" alt="arrow" />
         <transition name="slide-fade" mode="out-in" class="w-full">
             <div
                 v-if="isOpen"

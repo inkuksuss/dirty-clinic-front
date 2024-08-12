@@ -10,6 +10,7 @@ import {
     PopupType,
     type SubIntroType,
     SubPageType,
+    type SubPriceType,
     type SubPromotionType,
     type SubServiceType
 } from '@/utils/types';
@@ -53,6 +54,15 @@ export default defineComponent({
             {
                 title: '고객님과 함께\n현장 검수 및 완료',
                 src: new URL('@/assets/images/sub/intro/kitchen.png', import.meta.url).href
+            }
+        ];
+
+        const priceList: SubPriceType[] = [
+            {
+                src: new URL('@/assets/images/sub/price/office.png', import.meta.url).href,
+                ext:
+                    '* 외부창문, 화장실 청소 제외된 기본 단가입니다.\n' +
+                    '20평 이상의 경우나 바닥코팅, 시스템에어컨 청소 등 특수한 경우는 상담원과 상담이 필요합니다.'
             }
         ];
 
@@ -101,6 +111,7 @@ export default defineComponent({
 
         return {
             introList,
+            priceList,
             promotionList,
             serviceList,
             bannerScript,
@@ -118,7 +129,11 @@ export default defineComponent({
             title="어디까지 관리 되나요?"
             desc="입주청소와 동일하게 집안 전체를 청소합니다."
         ></sub-manage>
-        <sub-promotion :page-type="SubPageType.OFFICE" :data-list="promotionList"></sub-promotion>
+        <sub-promotion
+            :page-type="SubPageType.OFFICE"
+            :price-list="priceList"
+            :prom-list="promotionList"
+        ></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>
         <sub-check-list></sub-check-list>
         <payment-button :click-handler="handleClickBtn"></payment-button>

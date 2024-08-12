@@ -6,7 +6,7 @@ import SubService from '@/components/sub/SubService.vue';
 import SubCheckList from '@/components/sub/SubCheckList.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
 import SubBanner from '@/components/sub/SubBanner.vue';
-import { PopupType, SubIntroType, SubPageType, SubServiceType } from '@/utils/types';
+import { PopupType, type SubIntroType, SubPageType, type SubServiceType } from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 

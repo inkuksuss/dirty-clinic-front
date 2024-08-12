@@ -71,7 +71,6 @@ export default defineComponent({
                     { title: '거주대청소', dest: '/residential-cleaning' },
                     { title: '사무실청소', dest: '/office-cleaning' },
                     { title: '상가매장', dest: '/store-cleaning' },
-                    { title: '식당·후드청소', dest: '/restaurant-cleaning' },
                     { title: '공동구매', dest: '' }
                 ]
             },
@@ -85,14 +84,14 @@ export default defineComponent({
                 posStartX: 0,
                 subList: [
                     { title: '화재청소', dest: '/fire-cleaning' },
-                    { title: '쓰레기집청소', dest: '' },
+                    { title: '쓰레기집청소', dest: '/trash-cleaning' },
                     { title: '유품·고독사청소', dest: '/trauma-scene-cleaning' },
-                    { title: '폐기물처리', dest: '' },
-                    { title: '준공청소', dest: '' },
-                    { title: '주차장청소', dest: '' },
-                    { title: '건물외벽청소', dest: '' },
-                    { title: '공장청소', dest: '' },
-                    { title: '학교청소', dest: '' }
+                    { title: '폐기물처리', dest: '/waste-cleaning' },
+                    { title: '준공청소', dest: '/completion-cleaning' },
+                    { title: '주차장청소', dest: '/parking-cleaning' },
+                    { title: '건물외벽청소', dest: '/wall-cleaning' },
+                    { title: '공장청소', dest: '/factory-cleaning' },
+                    { title: '학교청소', dest: '/school-cleaning' }
                 ]
             },
             {
@@ -105,8 +104,9 @@ export default defineComponent({
                 posStartX: 0,
                 subList: [
                     { title: '탄성코트', dest: '' },
-                    { title: '줄눈시공', dest: '' },
-                    { title: '곰팡이제거·차단', dest: '' },
+                    { title: '줄눈시공', dest: '/joint-cleaning' },
+                    { title: '곰팡이제거·차단', dest: '/mold-cleaning' },
+                    { title: '식당·후드청소', dest: '/restaurant-cleaning' },
                     { title: '사전점검', dest: '' }
                 ]
             },
@@ -119,9 +119,9 @@ export default defineComponent({
                 posCenterX: 0,
                 posStartX: 0,
                 subList: [
-                    { title: '바닥왁스코팅', dest: '' },
-                    { title: '코팅', dest: '' },
-                    { title: '연마', dest: '' }
+                    { title: '바닥왁스코팅', dest: '/wax-cleaning' },
+                    { title: '코팅', dest: '/coating-cleaning' },
+                    { title: '연마', dest: '/grinding-cleaning' }
                 ]
             },
             {
@@ -133,10 +133,7 @@ export default defineComponent({
                 posCenterX: 0,
                 posStartX: 0,
                 subList: [
-                    { title: '에어컨', dest: '' },
-                    { title: '세탁기', dest: '' },
-                    { title: '냉장고', dest: '' },
-                    { title: '소파·매트리스', dest: '' }
+                    { title: '가전제품 청소', dest: '/appliances-cleaning' },
                 ]
             },
             {
@@ -321,7 +318,7 @@ export default defineComponent({
             <div class="logo-wrapper w-[133px] h-[41px]" @click="handleClickLogo">
                 <img
                     class="w-full h-full"
-                    src="@/assets/images/home/clinic_logo@1x.png"
+                    src="/images/home/clinic_logo@2x.png"
                     alt="main_logo"
                 />
             </div>
@@ -375,14 +372,14 @@ export default defineComponent({
             <div class="logo-wrapper w-[88px] h-[27px]">
                 <img
                     class="w-full h-full"
-                    src="@/assets/images/home/clinic_logo@1x.png"
+                    src="/images/home/clinic_logo@1x.png"
                     alt="main_logo"
                 />
             </div>
             <div class="btn-wrapper w-[40px] h-[40px]">
                 <img
                     class="w-full h-full"
-                    src="@/assets/images/home/test-img1@1x.jpg"
+                    src="/images/home/test-img1@1x.jpg"
                     alt="main_logo"
                 />
             </div>

@@ -3,14 +3,13 @@ import { defineComponent } from 'vue';
 import SubIntro from '@/components/sub/SubIntro.vue';
 import SubManage from '@/components/sub/SubManage.vue';
 import SubService from '@/components/sub/SubService.vue';
-import SubCheckList from '@/components/sub/SubCheckList.vue';
 import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
     SubPageType,
-    SubPromotionType,
-    SubServiceType
+    type SubPromotionType,
+    type SubServiceType
 } from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
@@ -25,7 +24,6 @@ export default defineComponent({
     components: {
         PaymentButton,
         SubBanner,
-        SubCheckList,
         SubService,
         SubPromotion,
         SubManage,
@@ -35,7 +33,7 @@ export default defineComponent({
         const store = useStore();
         const introList: SubIntroType[] = [
             {
-                title: '전문 상담과\n일정 안내',
+                title: '방문견적\n일정 안내',
                 src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
             },
             {
@@ -47,7 +45,7 @@ export default defineComponent({
                 src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
             },
             {
-                title: '철거',
+                title: '철거 공사',
                 src: new URL('@/assets/images/sub/intro/terminate.png', import.meta.url).href
             },
             {
@@ -67,7 +65,7 @@ export default defineComponent({
                 src: new URL('@/assets/images/sub/intro/suppression.png', import.meta.url).href
             },
             {
-                title: '복구공사',
+                title: '복구 공사',
                 src: new URL('@/assets/images/sub/intro/restore.png', import.meta.url).href
             },
             {
@@ -156,8 +154,8 @@ export default defineComponent({
             :main-img="manageImg"
             :page-type="SubPageType.FIRE"
         ></sub-manage>
-        <sub-promotion :page-type="SubPageType.FIRE" :data-list="promotionList"></sub-promotion>
-        <sub-service class="mt-[160px]" :data-list="serviceList"></sub-service>
+        <sub-promotion :page-type="SubPageType.FIRE" :prom-list="promotionList"></sub-promotion>
+        <sub-service :data-list="serviceList"></sub-service>
         <payment-button :click-handler="handleClickBtn"></payment-button>
     </div>
 </template>

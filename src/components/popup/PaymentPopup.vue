@@ -320,7 +320,7 @@ export default defineComponent({
                     >
                 </div>
                 <div @click="handleClickClose">
-                    <img src="@/assets/images/icons/x-btn.svg" />
+                    <img src="/images/icons/x-btn.svg" />
                 </div>
             </div>
             <div class="contents-area w-full h-full px-[5%] pb-[35px]">

@@ -9,10 +9,11 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import { useStore } from '@/stores/store';
 import {
     PopupType,
-    SubIntroType,
+    type SubIntroType,
     SubPageType,
-    SubPromotionType,
-    SubServiceType
+    type SubPriceType,
+    type SubPromotionType,
+    type SubServiceType
 } from '@/utils/types';
 import PaymentButton from '@/components/PaymentButton.vue';
 
@@ -54,6 +55,13 @@ export default defineComponent({
             {
                 title: '고객님과 함께\n현장 검수 및 완료',
                 src: new URL('@/assets/images/sub/intro/kitchen.png', import.meta.url).href
+            }
+        ];
+
+        const priceList: SubPriceType[] = [
+            {
+                src: new URL('@/assets/images/sub/price/residential.png', import.meta.url).href,
+                ext: '* 해당 견적은 확장형 기준으로 정확한 견적은 홈페이지 좌측하단의 견적보기를 확인하세요.'
             }
         ];
 
@@ -102,6 +110,7 @@ export default defineComponent({
 
         return {
             introList,
+            priceList,
             promotionList,
             serviceList,
             bannerScript,
@@ -121,7 +130,8 @@ export default defineComponent({
         ></sub-manage>
         <sub-promotion
             :page-type="SubPageType.RESIDENTIAL"
-            :data-list="promotionList"
+            :price-list="priceList"
+            :prom-list="promotionList"
         ></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>
         <sub-check-list></sub-check-list>

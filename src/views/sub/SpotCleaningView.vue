@@ -10,7 +10,8 @@ import {
     PopupType,
     type SubIntroType,
     SubPageType,
-    SubPromotionType,
+    type SubPriceType,
+    type SubPromotionType,
     type SubServiceType
 } from '@/utils/types';
 import { useStore } from '@/stores/store';
@@ -48,6 +49,29 @@ export default defineComponent({
             {
                 title: '고객님과 함께\n현장 검수 및 완료',
                 src: new URL('@/assets/images/sub/intro/kitchen.png', import.meta.url).href
+            }
+        ];
+
+        const priceList: SubPriceType[] = [
+            {
+                title: '창틀',
+                titleDesc: '* 전체 단가는 공실 기준입니다.',
+                src: new URL('@/assets/images/sub/price/spot_window.png', import.meta.url).href
+            },
+            {
+                title: '화장실',
+                titleDesc: '* 전체 단가는 공실 기준입니다.',
+                src: new URL('@/assets/images/sub/price/spot_bath.png', import.meta.url).href
+            },
+            {
+                title: '베란다',
+                titleDesc: '* 전체 단가는 공실 기준입니다.',
+                src: new URL('@/assets/images/sub/price/spot_veranda.png', import.meta.url).href
+            },
+            {
+                title: '주방',
+                titleDesc: '* 전체 단가는 공실 기준입니다.',
+                src: new URL('@/assets/images/sub/price/spot_kitchen.png', import.meta.url).href
             }
         ];
 
@@ -101,6 +125,7 @@ export default defineComponent({
 
         return {
             introList,
+            priceList,
             promotionList,
             serviceList,
             bannerScript,
@@ -117,8 +142,16 @@ export default defineComponent({
     <div class="sub-wrapper w-screen flex flex-col items-center justify-start">
         <sub-banner :title="bannerScript.title" :desc="bannerScript.desc"></sub-banner>
         <sub-intro :data-list="introList"></sub-intro>
-        <sub-manage :title="manageTitle" :desc="manageDesc" :page-type="SubPageType.SPOT"></sub-manage>
-        <sub-promotion :page-type="SubPageType.SPOT" :data-list="promotionList"></sub-promotion>
+        <sub-manage
+            :title="manageTitle"
+            :desc="manageDesc"
+            :page-type="SubPageType.SPOT"
+        ></sub-manage>
+        <sub-promotion
+            :page-type="SubPageType.SPOT"
+            :price-list="priceList"
+            :prom-list="promotionList"
+        ></sub-promotion>
         <sub-service
             main-title="궁금하신 내용을 한눈에 확인하세요."
             :data-list="serviceList"

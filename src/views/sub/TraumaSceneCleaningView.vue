@@ -3,49 +3,127 @@ import { defineComponent } from 'vue';
 import SubIntro from '@/components/sub/SubIntro.vue';
 import SubManage from '@/components/sub/SubManage.vue';
 import SubService from '@/components/sub/SubService.vue';
-import SubCheckList from '@/components/sub/SubCheckList.vue';
-import SubPromotion from '@/components/sub/SubPromotion.vue';
 import SubBanner from '@/components/sub/SubBanner.vue';
-import { PopupType } from '@/utils/types';
+import {
+    PopupType,
+    type SubIntroType,
+    SubPageType,
+    type SubPromotionType,
+    type SubServiceType
+} from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
+import SubPromotion from '@/components/sub/SubPromotion.vue';
 
 export default defineComponent({
+    computed: {
+        SubPageType() {
+            return SubPageType;
+        }
+    },
     components: {
         PaymentButton,
         SubBanner,
-        SubPromotion,
-        SubCheckList,
         SubService,
+        SubPromotion,
         SubManage,
         SubIntro
     },
     setup() {
         const store = useStore();
-        const serviceScriptList = [
+        const introList: SubIntroType[] = [
             {
-                title: '작업 인원',
-                desc: '전문 교육을 받은 1-3명의 작업자와\n팀장이 함께 관리합니다.'
+                title: '방문견적\n일정 안내',
+                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
             },
             {
-                title: '작업 가능 지역',
-                desc: '수도권 전지역 + 충청권에서 제공합니다.'
+                title: '현장실측 및\n청소 프로세스 안내',
+                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
             },
             {
-                title: '소요 시간',
-                desc: '4시간 전후로 최상의 서비스를 제공합니다.',
-                ext: '* 현장 상태에 따라 시간을 변동될 수 있습니다.'
+                title: '예약확정 및\n작업 준비',
+                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
             },
             {
-                title: 'AS 안내',
-                desc: '작업 종류 후 5일이내 1회 가능합니다.',
-                ext: '* 이사짐이 들어오거나 추가 시공의 경우 제한됨.'
+                title: '유품 정리',
+                src: new URL('@/assets/images/sub/intro/keepsake.png', import.meta.url).href
+            },
+            {
+                title: '폐기물 처리',
+                src: new URL('@/assets/images/sub/intro/trash.png', import.meta.url).href
+            },
+            {
+                title: '철거 공사',
+                src: new URL('@/assets/images/sub/intro/terminate.png', import.meta.url).href
+            },
+            {
+                title: '1차 탈취 및\n살균소독',
+                src: new URL('@/assets/images/sub/intro/disinfection.png', import.meta.url).href
+            },
+            {
+                title: '구역별\n전용약품 청소',
+                src: new URL('@/assets/images/sub/intro/medicine.png', import.meta.url).href
+            },
+            {
+                title: '2차 탈취 및\n향균소독',
+                src: new URL('@/assets/images/sub/intro/suppression.png', import.meta.url).href
+            },
+            {
+                title: '복구 공사',
+                src: new URL('@/assets/images/sub/intro/restore.png', import.meta.url).href
+            },
+            {
+                title: '공사 후 청소',
+                src: new URL('@/assets/images/sub/intro/basket.png', import.meta.url).href
+            },
+            {
+                title: '현장 검수 및\n피드백',
+                src: new URL('@/assets/images/sub/intro/document.png', import.meta.url).href
             }
         ];
 
+        const promotionList: SubPromotionType[] = [
+            {
+                src: new URL('@/assets/images/sub/promotion/fire.png', import.meta.url).href
+            }
+        ];
+
+        const serviceList: SubServiceType[] = [
+            {
+                src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
+                title: '시간 및 작업인원',
+                desc:
+                    '유품·고독사 청소 특성상 소요시간,\n' +
+                    '투입인원 및 AS규정은 달라질 수 있습니다.',
+                ext: '*현장에서 안내 도와드리겠습니다.'
+            },
+            {
+                src: new URL('@/assets/images/icons/map.svg', import.meta.url).href,
+                title: '작업 가능 지역',
+                desc: '전국 서비스 가능합니다.'
+            },
+            {
+                src: new URL('@/assets/images/icons/living_room.svg', import.meta.url).href,
+                title: '부가서비스',
+                desc: '청소 외에도 철거, \n' + '인테리어 등 부가서비스 가능합니다.'
+            },
+            {
+                src: new URL('@/assets/images/icons/headset.svg', import.meta.url).href,
+                title: '예약 방법',
+                desc: '마감기한, 작업 일정(주/야), 작업 인원\n' + '상관없이 항시 준비되어 있습니다.'
+            }
+        ];
+
+        const manageTitle = '유품·고독사 청소\n특성상 작업범위가 넓습니다.';
+        const manageDesc =
+            '전문인력이 현장실측 시\n' +
+            '고객님의 피해 상황과 작업환경을 고려해\n' +
+            '현장에서 안내해 드리고 있습니다.';
+        const manageImg = new URL('@/assets/images/sub/manage/keepsake.png', import.meta.url).href;
+
         const bannerScript = {
-            title: '고독사청소',
-            desc: '누군가는 해야할 일,\n유품정리·고독사 청소는 더티클리닉에 맡겨주세요.'
+            title: '유품·고독사 청소',
+            desc: '세심한 마음으로 기억을 정리하고 아픔을 청소하여 소중한 공간을 보존합니다.'
         };
 
         const handleClickBtn = () => {
@@ -53,7 +131,12 @@ export default defineComponent({
         };
 
         return {
-            serviceScriptList,
+            introList,
+            promotionList,
+            serviceList,
+            manageTitle,
+            manageDesc,
+            manageImg,
             bannerScript,
             handleClickBtn
         };
@@ -64,19 +147,15 @@ export default defineComponent({
 <template>
     <div class="sub-wrapper w-screen flex flex-col items-center justify-start">
         <sub-banner :title="bannerScript.title" :desc="bannerScript.desc"></sub-banner>
-        <sub-intro></sub-intro>
-        <sub-manage desc="시공 후 분진제거를 중심적으로 청소합니다."></sub-manage>
-        <sub-promotion
-            main-img="src/assets/images/home/test-img1@1x.jpg"
-            :sub-list="[
-                { img: 'src/assets/images/home/test-img1@1x.jpg' },
-                { img: 'src/assets/images/home/test-img1@1x.jpg' },
-                { img: 'src/assets/images/home/test-img1@1x.jpg' },
-                { img: 'src/assets/images/home/test-img1@1x.jpg' }
-            ]"
-        ></sub-promotion>
-        <sub-service :service-list="serviceScriptList"></sub-service>
-        <sub-check-list></sub-check-list>
+        <sub-intro :data-list="introList"></sub-intro>
+        <sub-manage
+            :title="manageTitle"
+            :desc="manageDesc"
+            :main-img="manageImg"
+            :page-type="SubPageType.KEEPSAKE"
+        ></sub-manage>
+        <sub-promotion :page-type="SubPageType.KEEPSAKE" :prom-list="promotionList"></sub-promotion>
+        <sub-service :data-list="serviceList"></sub-service>
         <payment-button :click-handler="handleClickBtn"></payment-button>
     </div>
 </template>

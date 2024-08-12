@@ -134,15 +134,24 @@ export enum SubPageType {
     WAX = 'WAX',
     COATING = 'COATING',
     GRINDING = 'GRINDING',
-    AIR = 'AIR',
-    WASHING_MACHINE = 'WASHING_MACHINE',
-    REFRIGERATOR = 'REFRIGERATOR',
-    SOFA = 'SOFA'
+    APPLIANCES = 'APPLIANCES'
 }
 
 export type SubIntroType = {
     src: string;
     title: string;
+};
+
+export type SubPriceType = {
+    mainTitle?: string;
+    mainSubTitle?: string;
+    title?: string;
+    subTitle?: string;
+    titleDesc?: string;
+    src: string;
+    ext?: string;
+    ext2?: string;
+    line?: boolean;
 };
 
 export type SubPromotionType = {

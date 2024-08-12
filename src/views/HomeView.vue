@@ -27,8 +27,9 @@ export default defineComponent({
 <template>
     <main class="main-wrapper">
         <div class="main-image-wrapper w-full flex justify-center items-center bg-black">
-            <div class="main-image w-full h-full flex justify-center items-center">
-                <div class="image-content w-[--body-width] h-[305px] flex flex-col justify-between">
+            <div class="main-image w-full h-full flex justify-center items-center relative">
+                <div class="absolute w-full h-full bg-[--color-black] opacity-[40%] z-0"></div>
+                <div class="image-content max-w-[--body-width] w-[--body-ratio] flex flex-col justify-between z-10">
                     <div class="text-area flex flex-col items-start">
                         <span
                             class="main-text text-[48px] font-[700] text-[--color-white] leading-[62px] mb-[10px]"
@@ -41,7 +42,7 @@ export default defineComponent({
                         >
                     </div>
                     <div
-                        class="payment-btn w-[255px] h-[65px] rounded-[80px] bg-[--color-main-blue] text-[--color-white] flex justify-center items-center text-[24px] font-[600] cursor-pointer"
+                        class="payment-btn w-[255px] h-[65px] rounded-[80px] bg-[--color-main-blue] text-[--color-white] flex justify-center items-center text-[24px] font-[600] cursor-pointer mt-[70px]"
                         @click="handleClickBtn"
                     >
                         온라인 예약하기

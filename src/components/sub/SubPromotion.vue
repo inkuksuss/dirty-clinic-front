@@ -4,13 +4,7 @@ import { useStore } from '@/stores/store';
 import Flicking from '@egjs/vue3-flicking';
 import { AutoPlay } from '@egjs/flicking-plugins';
 import ClinicImage from '@/components/common/ClinicImage.vue';
-import { SubPageType, type SubPromotionType } from '@/utils/types';
-
-type data = {
-    profile: string;
-    mainImg: string;
-    subList: SubPromotionType[];
-};
+import { SubPageType, type SubPriceType, type SubPromotionType } from '@/utils/types';
 
 export default defineComponent({
     name: 'SubPromotion',
@@ -20,8 +14,16 @@ export default defineComponent({
             type: String as PropType<SubPageType>,
             required: true
         },
-        dataList: {
+        priceList: {
+            type: Array as PropType<SubPriceType[]>,
+            required: false
+        },
+        promList: {
             type: Array as PropType<SubPromotionType[]>,
+            required: false
+        },
+        promLabel: {
+            type: String as PropType<string>,
             required: false
         }
     },
@@ -29,12 +31,33 @@ export default defineComponent({
         const store = useStore();
         const compIsMobile = computed(() => store.isMobile);
         const compPageType = computed(() => props.pageType);
-        const compDataList = computed(() => props.dataList);
+        const compPromLabel = computed(() => props.promLabel);
+        const priceDataList = ref<Array<SubPriceType>>([]);
+        const promDataList = ref<Array<SubPromotionType>>([]);
+
         const title = ref<string>();
         const desc = ref<string>();
         const autoPlay = new AutoPlay({ duration: 1000, direction: 'NEXT', stopOnHover: true });
+        const hasPriceList = [
+            SubPageType.ONE_ROOM,
+            SubPageType.SPOT,
+            SubPageType.WINDOW,
+            SubPageType.MOVE_IN,
+            SubPageType.MOVING,
+            SubPageType.INTERIOR,
+            SubPageType.RESIDENTIAL,
+            SubPageType.OFFICE,
+            SubPageType.STORE,
+            SubPageType.JOINT,
+            SubPageType.RESTAURANT,
+            SubPageType.APPLIANCES
+        ];
 
         onMounted(() => {
+            if (props.promList && props.promList.length > 0) promDataList.value = props.promList;
+            if (props.priceList && props.priceList.length > 0)
+                priceDataList.value = props.priceList;
+
             switch (compPageType.value) {
                 case SubPageType.REGULAR:
                     title.value = '정기 청소는 유선 상담을 통해 도와드리겠습니다.';
@@ -97,7 +120,7 @@ export default defineComponent({
                         '다양한 상황에 따라 표준화된 가격으로 안내드릴 수 없는 점 양해부탁드립니다.\n꼼꼼한 상담을 통해 가격을 안내드리겠습니다.';
                     break;
                 case SubPageType.COATING:
-                    title.value = '코팅 가격은 유선 상담을 통해 도와드리겠습니다.';
+                    title.value = '바닥왁스 코팅 가격은 유선 상담을 통해 도와드리겠습니다.';
                     desc.value =
                         '다양한 상황에 따라 표준화된 가격으로 안내드릴 수 없는 점 양해부탁드립니다.\n꼼꼼한 상담을 통해 가격을 안내드리겠습니다.';
                     break;
@@ -106,28 +129,39 @@ export default defineComponent({
                     desc.value =
                         '다양한 상황에 따라 표준화된 가격으로 안내드릴 수 없는 점 양해부탁드립니다.\n꼼꼼한 상담을 통해 가격을 안내드리겠습니다.';
                     break;
+                case SubPageType.APPLIANCES:
+                    title.value = '한눈에 보는 가격표로 쉽게 결정하세요.';
+                    desc.value = '에어컨, 냉장고, 소파, 매트리스 가격을 한번에 보세요.';
+                    break;
                 default:
                     title.value = '한눈에 보는 가격표로 쉽게 결정하세요.';
                     desc.value = '해당 청소 가격표를 노출하려고 합니다.';
             }
         });
 
-        const parseUrl = (url: string): string => {
-            return new URL(url, import.meta.url.replace('/src/components/sub', '')).href;
-        };
-
-        const noPriceList = [SubPageType.FIRE];
+        const specialClinicList = [
+            SubPageType.FIRE,
+            SubPageType.TRASH,
+            SubPageType.KEEPSAKE,
+            SubPageType.WASTE,
+            SubPageType.COMPLETION,
+            SubPageType.PARKING,
+            SubPageType.WALL,
+            SubPageType.FACTORY
+        ];
 
         return {
             compIsMobile,
-            compDataList,
+            priceDataList,
+            promDataList,
             plugins: [autoPlay],
             title,
             desc,
             SubPageType,
             compPageType,
-            noPriceList,
-            parseUrl
+            compPromLabel,
+            specialClinicList,
+            hasPriceList
         };
     }
 });
@@ -136,18 +170,12 @@ export default defineComponent({
 <template>
     <div
         class="promotion-wrapper w-full mt-[80px] flex justify-center"
-        :class="[
-            SubPageType.REGULAR === compPageType
-                ? 'mb-[50px]'
-                : noPriceList.includes(compPageType)
-                  ? 'mb-0'
-                  : 'mb-[160px]'
-        ]"
+        :class="[promDataList.length > 0 ? 'mb-[160px]' : 'mb-[80px]']"
     >
         <div v-if="!compIsMobile" class="promotion-content max-w-[--body-width] w-[--body-ratio]">
             <div
                 class="text-area"
-                :class="[noPriceList.includes(compPageType) ? 'mb-[50px]' : 'mb-[30px]']"
+                :class="[specialClinicList.includes(compPageType) ? 'mb-[50px]' : 'mb-[30px]']"
             >
                 <div
                     class="text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px]"
@@ -161,170 +189,65 @@ export default defineComponent({
                 </div>
             </div>
 
-            <!-- 원룸 -->
-            <div v-if="compPageType === SubPageType.ONE_ROOM">
-                <div class="w-full h-max mb-[50px]">
-                    <clinic-image
-                        :src="parseUrl('src/assets/images/sub/price/one_room.png')"
-                        class="w-full h-full"
-                    />
-                </div>
-            </div>
-            <!-- 부분 -->
-            <div v-else-if="compPageType === SubPageType.SPOT">
-                <div class="w-full">
-                    <div class="mb-[20px]">
-                        <span class="text-[32px] font-[700] leading-[38px] mr-[15px]">창틀</span>
-                        <span class="text-[16px] font-[500] leading-[26px] text-[--color-text-gray]"
-                            >*전체 단가는 공실 기준입니다.</span
-                        >
+            <div v-if="hasPriceList.includes(compPageType)" class="mb-[50px]">
+                <div v-for="(price, idx) in priceDataList" :key="idx" class="">
+                    <div v-if="price.mainTitle" class="text-[32px] font-[700] text-[--color-black]">{{ price.mainTitle }}</div>
+                    <div v-if="price.mainSubTitle" class="text-[18px] font-[500] text-[--color-black] mb-[40px]">{{ price.mainSubTitle }}</div>
+                    <div class="flex items-end">
+                        <div v-if="price.title" class="text-[32px] font-[700] mr-[15px]">
+                            {{ price.title }}
+                        </div>
+                        <span v-if="price.titleDesc" class="text-[16px] text-[--color-text-gray]">{{
+                            price.titleDesc
+                        }}</span>
                     </div>
-                    <div class="w-full h-max mb-[50px]">
-                        <clinic-image
-                            :src="parseUrl('src/assets/images/sub/price/spot_window.png')"
-                            class="w-full h-full"
-                        />
+                    <div
+                        v-if="price.subTitle"
+                        class="text-[18px] font-[500] text-[--color-black] mt-[15px]"
+                    >
+                        {{ price.subTitle }}
                     </div>
-                </div>
-                <div class="w-full">
-                    <div class="mb-[20px]">
-                        <span class="text-[32px] font-[700] leading-[38px] mr-[15px]">화장실</span>
-                        <span class="text-[16px] font-[500] leading-[26px] text-[--color-text-gray]"
-                            >*전체 단가는 공실 기준입니다.</span
-                        >
+                    <div
+                        class="w-full h-max"
+                        :class="[
+                            price.title ? 'mt-[20px]' : 'mt-0',
+                            priceDataList.length - 1 > idx
+                                ? price.ext
+                                    ? 'mb-[15px]'
+                                    : 'mb-[40px]'
+                                : 'mb-0'
+                        ]"
+                    >
+                        <clinic-image :src="price.src" class="w-full h-full" />
                     </div>
-                    <div class="w-full h-max mb-[50px]">
-                        <clinic-image
-                            :src="parseUrl('src/assets/images/sub/price/spot_bath.png')"
-                            class="w-full h-full"
-                        />
+                    <div
+                        v-if="price.ext"
+                        class="text-[16px] font-[500] text-[--color-text-gray] leading-[26px] mt-[15px] whitespace-pre-wrap"
+                        :class="[idx < priceDataList.length - 1 ? 'mb-[40px]' : '']"
+                    >
+                        {{ price.ext }}
                     </div>
-                </div>
-                <div class="w-full">
-                    <div class="mb-[20px]">
-                        <span class="text-[32px] font-[700] leading-[38px] mr-[15px]">베란다</span>
-                        <span class="text-[16px] font-[500] leading-[26px] text-[--color-text-gray]"
-                            >*전체 단가는 공실 기준입니다.</span
-                        >
+                    <div
+                        v-if="price.ext2"
+                        class="text-[16px] font-[500] text-[--color-text-gray] leading-[26px] mt-[15px] whitespace-pre-wrap"
+                    >
+                        {{ price.ext2 }}
                     </div>
-                    <div class="w-full h-max mb-[50px]">
-                        <clinic-image
-                            :src="parseUrl('src/assets/images/sub/price/spot_veranda.png')"
-                            class="w-full h-full"
-                        />
-                    </div>
+                    <div
+                        v-if="price.line"
+                        class="border-[--color-border-blue] border-b-[1px] pt-[20px] mb-[60px]"
+                    ></div>
                 </div>
-                <div class="w-full">
-                    <div class="mb-[20px]">
-                        <span class="text-[32px] font-[700] leading-[38px] mr-[15px]">주방</span>
-                        <span class="text-[16px] font-[500] leading-[26px] text-[--color-text-gray]"
-                            >*전체 단가는 공실 기준입니다.</span
-                        >
-                    </div>
-                    <div class="w-full h-max mb-[50px]">
-                        <clinic-image
-                            :src="parseUrl('src/assets/images/sub/price/spot_kitchen.png')"
-                            class="w-full h-full"
-                        />
-                    </div>
-                </div>
-            </div>
-            <!-- 외창 -->
-            <div v-else-if="compPageType === SubPageType.WINDOW">
-                <div class="w-full h-max">
-                    <clinic-image
-                        :src="parseUrl('src/assets/images/sub/price/window.png')"
-                        class="w-full h-full"
-                    />
-                </div>
-            </div>
-            <!-- 입주 -->
-            <div v-else-if="compPageType === SubPageType.MOVE_IN" class="mb-[50px]">
-                <div class="w-full h-max mb-[15px]">
-                    <clinic-image
-                        :src="parseUrl('src/assets/images/sub/price/move_in.png')"
-                        class="w-full h-full"
-                    />
-                </div>
-                <span class="text-[16px] font-[500] text-[--color-text-gray] leading-[26px]"
-                    >* 해당 견적은 확장형 기준으로 정확한 견적은 홈페이지 좌측하단의 견적보기를
-                    확인하세요.</span
-                >
-            </div>
-            <!-- 이사 -->
-            <div v-else-if="compPageType === SubPageType.MOVING" class="mb-[50px]">
-                <div class="w-full h-max mb-[15px]">
-                    <clinic-image
-                        :src="parseUrl('src/assets/images/sub/price/moving.png')"
-                        class="w-full h-full"
-                    />
-                </div>
-                <span class="text-[16px] font-[500] text-[--color-text-gray] leading-[26px]"
-                    >* 해당 견적은 확장형 기준으로 정확한 견적은 홈페이지 좌측하단의 견적보기를
-                    확인하세요.</span
-                >
-            </div>
-            <!-- 인테리어 -->
-            <div v-else-if="compPageType === SubPageType.INTERIOR" class="mb-[50px]">
-                <div class="w-full h-max mb-[15px]">
-                    <clinic-image
-                        :src="parseUrl('src/assets/images/sub/price/interior.png')"
-                        class="w-full h-full"
-                    />
-                </div>
-                <span class="text-[16px] font-[500] text-[--color-text-gray] leading-[26px]"
-                    >* 해당 견적은 확장형 기준으로 정확한 견적은 홈페이지 좌측하단의 견적보기를
-                    확인하세요.</span
-                >
-            </div>
-            <!-- 거주대청소 -->
-            <div v-else-if="compPageType === SubPageType.RESIDENTIAL" class="mb-[50px]">
-                <div class="w-full h-max mb-[15px]">
-                    <clinic-image
-                        :src="parseUrl('src/assets/images/sub/price/residential.png')"
-                        class="w-full h-full"
-                    />
-                </div>
-                <span class="text-[16px] font-[500] text-[--color-text-gray] leading-[26px]"
-                    >* 해당 견적은 확장형 기준으로 정확한 견적은 홈페이지 좌측하단의 견적보기를
-                    확인하세요.</span
-                >
-            </div>
-            <!-- 사무실 -->
-            <div v-else-if="compPageType === SubPageType.OFFICE" class="mb-[50px]">
-                <div class="w-full h-max mb-[15px]">
-                    <clinic-image
-                        :src="parseUrl('src/assets/images/sub/price/office.png')"
-                        class="w-full h-full"
-                    />
-                </div>
-                <span class="text-[16px] font-[500] text-[--color-text-gray] leading-[26px]"
-                    >* 외부창문, 화장실 청소 제외된 기본 단가입니다.<br />20평 이상의 경우나
-                    바닥코팅, 시스템에어컨 청소 등 특수한 경우는 상담원과 상담이 필요합니다.</span
-                >
-            </div>
-            <!-- 상가매장 -->
-            <div v-else-if="compPageType === SubPageType.STORE" class="mb-[50px]">
-                <div class="w-full h-max mb-[15px]">
-                    <clinic-image
-                        :src="parseUrl('src/assets/images/sub/price/store.png')"
-                        class="w-full h-full"
-                    />
-                </div>
-                <span class="text-[16px] font-[500] text-[--color-text-gray] leading-[26px]"
-                    >* 외부창문, 화장실 청소 제외된 기본 단가입니다.<br />20평 이상의 경우나
-                    바닥코팅, 시스템에어컨 청소 등 특수한 경우는 상담원과 상담이 필요합니다.</span
-                >
             </div>
 
             <!--박스-->
             <div class="sub-promotion-list w-full h-max flex justify-between">
                 <div
-                    v-if="compDataList && compDataList.length < 3"
+                    v-if="promDataList && promDataList.length < 3"
                     class="sub-promotion double inline-flex justify-between w-full h-max"
                 >
                     <div
-                        v-for="(prom, index) in compDataList"
+                        v-for="(prom, index) in promDataList"
                         :key="index"
                         class="promotion-box max-w-[430px] w-[49%] max-h-[180px] flex-center relative"
                     >
@@ -339,7 +262,7 @@ export default defineComponent({
                         :options="{ circular: true, panelsPerView: 2, renderOnlyVisible: true }"
                     >
                         <div
-                            v-for="(prom, index) in compDataList"
+                            v-for="(prom, index) in promDataList"
                             :key="index"
                             class="promotion-box w-[49%] flex-center relative mx-[10px]"
                         >
@@ -360,6 +283,12 @@ export default defineComponent({
                     </Flicking>
                 </div>
             </div>
+            <div
+                v-if="compPromLabel"
+                class="mt-[20px] text-[16px] font-[500] text-[--color-text-gray]"
+            >
+                {{ compPromLabel }}
+            </div>
         </div>
 
         <!-- isMobile -->
@@ -378,11 +307,11 @@ export default defineComponent({
 
             <div class="sub-promotion-list">
                 <div
-                    v-if="compDataList && compDataList.length === 1"
+                    v-if="promDataList && promDataList.length === 1"
                     class="sub-promotion single w-full max-h-[180px] h-max inline-flex"
                 >
                     <div class="promotion-box w-full max-h-[180px] relative">
-                        <img :src="compDataList[0].img" class="w-full max-h-[180px]" />
+<!--                        <img :src="promDataList[0].img" class="w-full max-h-[180px]" />-->
                         <div class="text-box w-[82%] h-[65%] absolute top-[17.5%] left-[6%]">
                             <div
                                 class="text-[--color-text-black] text-[18px] font-[500] leading-[21px]"
@@ -404,7 +333,7 @@ export default defineComponent({
                         :options="{ circular: true, panelsPerView: 1, renderOnlyVisible: false }"
                     >
                         <div
-                            v-for="(prom, index) in compDataList"
+                            v-for="(prom, index) in promDataList"
                             :key="index"
                             class="promotion-box max-w-[608px] w-full max-h-[180px] flex-center relative"
                         >

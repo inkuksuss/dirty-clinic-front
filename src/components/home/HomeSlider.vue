@@ -1,16 +1,25 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { AutoPlay } from '@egjs/flicking-plugins';
+import ClinicImage from '@/components/common/ClinicImage.vue';
 // import Flicking from '@egjs/vue3-flicking';
 
 export default defineComponent({
     name: 'HomeSlider',
+    components: { ClinicImage },
     // components: { Flicking: Flicking },
     setup() {
         const autoPlay = new AutoPlay({ duration: 1000, direction: 'NEXT', stopOnHover: true });
 
+        const firstImg = new URL('@/assets/images/home/slider_1.png', import.meta.url).href;
+        const secondImg = new URL('@/assets/images/home/slider_2.png', import.meta.url).href;
+        const firstSrc = ref<string>(firstImg);
+        const secondSrc = ref<string>(secondImg);
+
         return {
-            plugins: [autoPlay]
+            plugins: [autoPlay],
+            firstSrc,
+            secondSrc
         };
     }
 });
@@ -19,20 +28,22 @@ export default defineComponent({
 <template>
     <div class="slider-wrapper w-full flex justify-center">
         <div
-            class="slider-contents w-[--body-width] flex justify-between items-center"
+            class="slider-contents max-w-[--body-width] w-[--body-ratio] flex justify-between items-center"
         >
-            <div class="text-area w-[32%] pb-[20px]">
+            <div class="text-area w-[32%] pb-[20px] mr-[85px]">
                 <div class="w-full text-[48px] font-[700] leading-[57px]">
                     신뢰의 <br />
                     더티클리닉
                 </div>
             </div>
 
-            <div class="image-container first-image w-[32%]">
-                <img class="w-full h-full" src="@/assets/images/home/slider_1@1x.png" alt="slider_1" />
-            </div>
-            <div class="image-container second-image w-[32%]">
-                <img class="w-full h-full" src="@/assets/images/home/test-img2@1x.png" alt="slider_2" />
+            <div class="flex gap-x-[17px]">
+                <div class="image-container first-image">
+                    <clinic-image class="w-[267px]" :src="firstSrc"></clinic-image>
+                </div>
+                <div class="image-container second-image">
+                    <clinic-image class="w-[222px]" :src="secondSrc"></clinic-image>
+                </div>
             </div>
         </div>
     </div>

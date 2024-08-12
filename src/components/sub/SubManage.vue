@@ -158,7 +158,17 @@ export default defineComponent({
             else scriptList.value = defaultScript;
         };
 
-        const noHeaderList = [SubPageType.FIRE];
+        const specialClinicList = [
+            SubPageType.FIRE,
+            SubPageType.TRASH,
+            SubPageType.KEEPSAKE,
+            SubPageType.WASTE,
+            SubPageType.COMPLETION,
+            SubPageType.PARKING,
+            SubPageType.WALL,
+            SubPageType.FACTORY,
+            SubPageType.SCHOOL
+        ];
 
         onMounted(() => doOverwriteScript());
 
@@ -168,7 +178,7 @@ export default defineComponent({
             compDesc,
             compPageType,
             SubPageType,
-            noHeaderList,
+            specialClinicList,
             compMainImg,
             handleClick
         };
@@ -182,7 +192,7 @@ export default defineComponent({
         :class="[compPageType === SubPageType.SPOT ? 'pb-0' : 'pb-[85px]']"
     >
         <div class="manage-contents max-w-[--body-width] w-[--body-ratio] flex flex-col">
-            <div v-if="!noHeaderList.includes(compPageType)" class="text-area mb-[30px]">
+            <div v-if="compPageType && !specialClinicList.includes(compPageType)" class="text-area mb-[30px]">
                 <div
                     class="text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px] whitespace-pre-wrap"
                 >
@@ -204,7 +214,7 @@ export default defineComponent({
                     class="flex h-[80px] mx-[30px] py-[20px] items-center border-b-[1px] border-b-[--color-border-blue]"
                 >
                     <div class="flex-center w-[40px] h-[40px] bg-[--color-skyblue] mr-[20px]">
-                        <img src="@/assets/images/icons/window.svg" />
+                        <img src="/images/icons/window.svg" />
                     </div>
                     <span class="text-[--color-black] font-[600] text-[24px] leading-[26px]"
                         >창문을 전부다 탈거하고 진행하는 방법</span
@@ -261,9 +271,9 @@ export default defineComponent({
                     >
                 </div>
             </div>
-            <!-- 화재청소 -->
+            <!-- 특수 클리닉 -->
             <div
-                v-else-if="compPageType === SubPageType.FIRE"
+                v-else-if="compPageType && specialClinicList.includes(compPageType)"
                 class="w-full flex justify-between items-center"
             >
                 <div class="mr-[50px] min-w-[260px]">
@@ -284,6 +294,19 @@ export default defineComponent({
                 </div>
             </div>
 
+            <!-- 왁스 -->
+            <div
+                v-else-if="compPageType === SubPageType.WAX"
+                class="border-[1.5px] border-[--color-border-blue] flex p-[30px] bg-[--color-white] items-center"
+            >
+                <div
+                    class="bg-[--color-border-blue] w-[20px] h-[20px] rounded-[50%] mr-[10px]"
+                ></div>
+                <div class="text-[20px] font-[500] text-[--color-black]">
+                    데코타일, 아스타일, 디럭스타일, 피타일, PVC타일, XPE타일 등에 시공가능합니다.
+                </div>
+            </div>
+
             <div v-else class="list-area grid grid-cols-2 gap-[20px]">
                 <div
                     v-for="(info, idx) in scriptList"
@@ -299,7 +322,7 @@ export default defineComponent({
                             >{{ info.title }}</span
                         >
                     </div>
-                    <img class="arrow" src="@/assets/images/icons/arrow_down.svg" alt="arrow" />
+                    <img class="arrow" src="/images/icons/arrow_down.svg" alt="arrow" />
 
                     <transition name="slide-fade" mode="out-in" class="w-full">
                         <div
@@ -311,7 +334,7 @@ export default defineComponent({
                                 :key="new Date().getTime() + '_' + idx"
                                 class="info-box flex py-[15px] px-[30px]"
                             >
-                                <img class="mr-[10px]" src="@/assets/images/icons/check.svg" />
+                                <img class="mr-[10px]" src="/images/icons/check.svg" />
                                 <span
                                     class="mr-[10px] text-[--color-text-black] text-[20px] font-[500] leading-[26px]"
                                     >{{ content.main }}</span

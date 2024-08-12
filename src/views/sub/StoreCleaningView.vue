@@ -6,16 +6,23 @@ import SubService from '@/components/sub/SubService.vue';
 import SubCheckList from '@/components/sub/SubCheckList.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
 import SubBanner from '@/components/sub/SubBanner.vue';
-import {PopupType, SubIntroType, SubPageType, SubPromotionType, SubServiceType} from '@/utils/types';
+import {
+    PopupType,
+    type SubIntroType,
+    SubPageType,
+    type SubPriceType,
+    type SubPromotionType,
+    type SubServiceType
+} from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 
 export default defineComponent({
-  computed: {
-    SubPageType() {
-      return SubPageType;
-    }
-  },
+    computed: {
+        SubPageType() {
+            return SubPageType;
+        }
+    },
     components: {
         PaymentButton,
         SubBanner,
@@ -47,6 +54,15 @@ export default defineComponent({
             {
                 title: '고객님과 함께\n현장 검수 및 완료',
                 src: new URL('@/assets/images/sub/intro/kitchen.png', import.meta.url).href
+            }
+        ];
+
+        const priceList: SubPriceType[] = [
+            {
+                src: new URL('@/assets/images/sub/price/store.png', import.meta.url).href,
+                ext:
+                    '* 외부창문, 화장실 청소 제외된 기본 단가입니다.\n' +
+                    '20평 이상의 경우나 바닥코팅, 시스템에어컨 청소 등 특수한 경우는 상담원과 상담이 필요합니다.'
             }
         ];
 
@@ -95,6 +111,7 @@ export default defineComponent({
 
         return {
             introList,
+            priceList,
             promotionList,
             serviceList,
             bannerScript,
@@ -108,8 +125,14 @@ export default defineComponent({
     <div class="sub-wrapper w-screen flex flex-col items-center justify-start">
         <sub-banner :title="bannerScript.title" :desc="bannerScript.desc"></sub-banner>
         <sub-intro :data-list="introList"></sub-intro>
-        <sub-manage title="어디까지 관리 되나요?" desc="입주청소와 동힐하게 집안 전체를 청소합니다."></sub-manage>
-        <sub-promotion :page-type="SubPageType.STORE" :data-list="promotionList"
+        <sub-manage
+            title="어디까지 관리 되나요?"
+            desc="입주청소와 동힐하게 집안 전체를 청소합니다."
+        ></sub-manage>
+        <sub-promotion
+            :page-type="SubPageType.STORE"
+            :price-list="priceList"
+            :prom-list="promotionList"
         ></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>
         <sub-check-list></sub-check-list>
