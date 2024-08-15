@@ -286,11 +286,11 @@ export default defineComponent({
                         <div
                             class="bg-[--color-border-blue] w-[20px] h-[20px] rounded-[50%] mr-[10px]"
                         ></div>
-                        <span class="text-[--color-black] text-[20px] font-[500]"
+                        <span class="title text-[--color-black] text-[20px] font-[500]"
                             >에어컨, 세탁기, 냉장고</span
                         >
                     </div>
-                    <div class="pl-[30px] text-[--color-black] text-[20px] font-[500]">
+                    <div class="desc pl-[30px] text-[--color-black] text-[20px] font-[500]">
                         전문상담과 예약확정 > 제품 오작동 확인 및 전력차단 > 제품 분해 및 세척 >
                         제품 건조 및 재조립 ><br />제품 살균소독 > 고객님과 함께 현장검수(작동확인)
                         및 완료
@@ -301,11 +301,11 @@ export default defineComponent({
                         <div
                             class="bg-[--color-border-blue] w-[20px] h-[20px] rounded-[50%] mr-[10px]"
                         ></div>
-                        <span class="text-[--color-black] text-[20px] font-[500]"
+                        <span class="title text-[--color-black] text-[20px] font-[500]"
                             >매트리스, 소파</span
                         >
                     </div>
-                    <div class="pl-[30px] text-[--color-black] text-[20px] font-[500]">
+                    <div class="desc pl-[30px] text-[--color-black] text-[20px] font-[500]">
                         전문상담과 예약확정 > 재질확인 및 특수약품 도포 > 핸드폴리셔 작업(오염도 및
                         진드기 제거) ><br />
                         폐수 흡입 및 헹굼 > 천연향료 탈취작업 및 살균소독 > 고객님과 함께 현장검수

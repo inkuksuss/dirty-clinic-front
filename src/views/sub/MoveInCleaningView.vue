@@ -9,7 +9,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
-    SubManageType,
+    type SubManageType,
     SubPageType,
     type SubPriceType,
     type SubPromotionType,
@@ -98,7 +98,7 @@ export default defineComponent({
                     }
                 ],
                 icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
-            },
+            }
         ];
 
         const serviceList: SubServiceType[] = [

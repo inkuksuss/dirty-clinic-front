@@ -180,7 +180,7 @@ export default defineComponent({
             :page-type="SubPageType.JOINT"
             :manage-list="manageList"
         ></sub-manage>
-        <div class="max-w-[--body-width] w-[--body-ratio] my-[80px]">
+        <div class="joint-type-wrapper max-w-[--body-width] w-[--body-ratio] my-[80px]">
             <div class="mb-[30px] text-[32px] font-[700] text-[--color-black]">줄눈제 종류</div>
             <div class="border-[--color-border-blue] border-[1.5px] p-[30px]">
                 <div class="mb-[30px]">
@@ -188,9 +188,9 @@ export default defineComponent({
                         <div
                             class="bg-[--color-border-blue] w-[20px] h-[20px] rounded-[50%] mr-[10px]"
                         ></div>
-                        <span class="text-[--color-black] text-[20px] font-[500]">폴리우레아</span>
+                        <span class="title text-[--color-black] text-[20px] font-[500]">폴리우레아</span>
                     </div>
-                    <div class="pl-[30px] text-[--color-black] text-[20px] font-[500]">
+                    <div class="desc pl-[30px] text-[--color-black] text-[20px] font-[500]">
                         일반적으로 많이 사용하는 줄눈제로 케라폭시보다 금액이 저렴하고 다양한 색상
                         및 반짝이 펄로<br />인테리어 효과를 줍니다. 황변이나 백화현상 없이 반
                         영구적으로 사용 가능합니다.
@@ -201,9 +201,9 @@ export default defineComponent({
                         <div
                             class="bg-[--color-border-blue] w-[20px] h-[20px] rounded-[50%] mr-[10px]"
                         ></div>
-                        <span class="text-[--color-black] text-[20px] font-[500]">케라폭시</span>
+                        <span class="title text-[--color-black] text-[20px] font-[500]">케라폭시</span>
                     </div>
-                    <div class="pl-[30px] text-[--color-black] text-[20px] font-[500]">
+                    <div class="desc pl-[30px] text-[--color-black] text-[20px] font-[500]">
                         폴리우레아보다 금액이 2-3배 발생하지만 한번 시공 후 영구적인 수명, 강한
                         내구성을 바탕으로<br />난방이 들어오는 거실, 폴리상타일 및 대리석 등에 시공
                         시 효과적입니다.<br />

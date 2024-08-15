@@ -26,7 +26,6 @@
 
     .intro-wrapper {
         .intro-contents {
-
             @include tablet {
                 .image-area {
                     .grid-area {
@@ -292,6 +291,24 @@
                             @include mobile {
                                 flex-direction: column;
 
+                                .main {
+                                    @include sm {
+                                        font-size: 18px;
+                                    }
+                                }
+
+                                .sub {
+                                    font-size: 18px;
+
+                                    @include sm {
+                                        font-size: 16px;
+                                    }
+                                }
+
+                                .ext {
+                                    font-size: 14px;
+                                }
+
                                 .info-img-area {
                                     margin-top: 15px;
                                     min-width: 100%;
@@ -515,12 +532,29 @@
         }
     }
 
+    .joint-type-wrapper,
     .appliances-process-wrapper {
         @include mobile {
             width: calc(100% - 50px);
             max-width: 608px;
             margin-left: 25px;
             margin-right: 25px;
+
+            .title {
+                font-size: 20px;
+
+                @include sm {
+                    font-size: 18px;
+                }
+            }
+
+            .desc {
+                font-size: 18px;
+
+                @include sm {
+                    font-size: 16px;
+                }
+            }
         }
     }
 }

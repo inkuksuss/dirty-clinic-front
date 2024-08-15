@@ -7,7 +7,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
-    SubManageType,
+    type SubManageType,
     SubPageType,
     type SubPromotionType,
     type SubServiceType

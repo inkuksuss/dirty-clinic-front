@@ -10,7 +10,7 @@ import { useStore } from '@/stores/store';
 import {
     PopupType,
     type SubIntroType,
-    SubManageType,
+    type SubManageType,
     SubPageType,
     type SubPriceType,
     type SubPromotionType,

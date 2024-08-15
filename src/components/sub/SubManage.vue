@@ -250,17 +250,17 @@ export default defineComponent({
                                             class="w-[20px] h-[20px] min-w-[20px] bg-[--color-border-blue] rounded-[50%] mr-[10px] my-[3px]"
                                         ></div>
                                         <span
-                                            class="text-[--color-text-black] text-[20px] font-[500] leading-[26px] whitespace-pre-wrap"
+                                            class="main text-[--color-text-black] text-[20px] font-[500] leading-[26px] whitespace-pre-wrap"
                                             >{{ content.main }}</span
                                         >
                                     </div>
                                     <span
-                                        class="text-[--color-text-black] text-[20px] font-[500] leading-[26px] ml-[30px] whitespace-pre-wrap"
+                                        class="sub text-[--color-text-black] text-[20px] font-[500] leading-[26px] ml-[30px] whitespace-pre-wrap"
                                         v-if="content.sub"
                                         >{{ content.sub }}</span
                                     >
                                     <span
-                                        class="mt-[5px] text-[--color-text-gray] text-[16px] font-[500] leading-[26px] ml-[30px] whitespace-pre-wrap"
+                                        class="ext mt-[5px] text-[--color-text-gray] text-[16px] font-[500] leading-[26px] ml-[30px] whitespace-pre-wrap"
                                         v-if="content.ext"
                                         >{{ content.ext }}</span
                                     >
