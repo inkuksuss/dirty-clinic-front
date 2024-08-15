@@ -7,18 +7,18 @@
             background-size: cover;
 
             @include mobile {
-                padding-left: 25px;
-            }
+                .text-area {
+                    width: calc(100% - 50px);
 
-            div {
-                &:first-child {
-                    font-size: 36px;
-                    line-height: 43px;
-                }
+                    h1 {
+                        font-size: 36px;
+                        line-height: 43px;
+                    }
 
-                &:last-child {
-                    font-size: 16px;
-                    line-height: 19px;
+                    h3 {
+                        font-size: 16px;
+                        line-height: 19px;
+                    }
                 }
             }
         }
@@ -26,16 +26,57 @@
 
     .intro-wrapper {
         .intro-contents {
-            &.mobile {
-                width: calc(100% - 50px);
 
-                .text-area {
+            @include tablet {
+                .image-area {
+                    .grid-area {
+                        display: grid;
+                        grid-template-columns: repeat(3, 1fr);
+                        grid-row-gap: 20px;
+                        margin-bottom: 0;
+
+                        .image-wrapper {
+                            max-width: 150px;
+                        }
+                    }
+                }
+            }
+
+            @include mobile {
+                max-width: 608px;
+                width: 100%;
+                margin-left: 25px;
+                margin-right: 25px;
+
+                .image-area {
+                    .grid-area {
+                        display: grid;
+                        grid-template-columns: repeat(3, 1fr);
+                        grid-row-gap: 20px;
+                        margin-bottom: 0;
+
+                        .image-wrapper {
+                            max-width: 150px;
+                        }
+                    }
                 }
 
-                .first-row {
-                    .image-wrapper {
-                        aspect-ratio: 1 / 1;
+                .text-label {
+                    font-size: 16px;
+                }
+            }
+
+            @include sm {
+                .image-area {
+                    .grid-area {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        grid-row-gap: 15px;
                     }
+                }
+
+                .text-label {
+                    font-size: 16px;
                 }
             }
 
@@ -76,11 +117,94 @@
         }
 
         .manage-contents {
+            .special-clinic-wrapper {
+                @include mobile {
+                    flex-direction: column;
+                    align-items: start;
+
+                    .text-area {
+                        width: 100%;
+                        margin-bottom: 20px;
+                        min-width: 0;
+                    }
+                }
+            }
+
+            .window-clinic-wrapper {
+                @include mobile {
+                    .header-wrapper {
+                        margin-left: 20px;
+
+                        span {
+                            font-size: 20px;
+
+                            @include sm {
+                                font-size: 18px;
+                            }
+                        }
+                    }
+
+                    .body-wrapper {
+                        margin-left: 25px;
+
+                        span {
+                            &:first-child {
+                                font-size: 18px;
+                            }
+
+                            &:nth-child(2) {
+                                font-size: 14px;
+                            }
+
+                            @include sm {
+                                &:first-child {
+                                    font-size: 16px;
+                                }
+
+                                &:nth-child(2) {
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .regular-clinic-wrapper {
+                @include mobile {
+                    padding-left: 20px;
+                    padding-right: 10px;
+
+                    span {
+                        font-size: 18px;
+
+                        @include sm {
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+
+            .wax-clinic-wrapper {
+                @include mobile {
+                    padding-left: 20px;
+                    padding-right: 20px;
+
+                    .text-content {
+                        font-size: 18px;
+
+                        @include sm {
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+
             @include mobile {
                 display: flex;
                 justify-content: center;
                 max-width: 608px;
-                width: 100%;
+                width: calc(100% - 50px);
                 margin-left: 25px;
                 margin-right: 25px;
             }
@@ -95,7 +219,7 @@
                         }
                     }
 
-                    &:last-child {
+                    &:nth-child(2) {
                         @include mobile {
                             font-size: 16px;
                             font-weight: 400;
@@ -114,7 +238,6 @@
                     &.has-img {
                         grid-column: 1 / 3;
                     }
-
 
                     @include mobile {
                         width: 100%;
@@ -204,6 +327,7 @@
         .promotion-content {
             @include mobile {
                 width: calc(100% - 50px);
+                max-width: 608px;
             }
 
             .text-area {
@@ -388,6 +512,15 @@
             .check-btn {
                 margin-top: 30px;
             }
+        }
+    }
+
+    .appliances-process-wrapper {
+        @include mobile {
+            width: calc(100% - 50px);
+            max-width: 608px;
+            margin-left: 25px;
+            margin-right: 25px;
         }
     }
 }

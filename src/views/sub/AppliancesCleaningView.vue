@@ -278,7 +278,7 @@ export default defineComponent({
             :page-type="SubPageType.APPLIANCES"
             :manage-list="manageList"
         ></sub-manage>
-        <div class="max-w-[--body-width] w-[--body-ratio] mt-[80px]">
+        <div class="appliances-process-wrapper max-w-[--body-width] w-[--body-ratio] mt-[80px]">
             <div class="mb-[30px] text-[32px] font-[700] text-[--color-black]">청소 프로세스</div>
             <div class="border-[--color-border-blue] border-[1.5px] p-[30px]">
                 <div class="mb-[30px]">

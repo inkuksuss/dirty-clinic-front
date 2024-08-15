@@ -172,7 +172,7 @@ export default defineComponent({
         class="promotion-wrapper w-full mt-[80px] flex justify-center"
         :class="[promDataList.length > 0 ? 'mb-[160px]' : 'mb-[80px]']"
     >
-        <div v-if="!compIsMobile" class="promotion-content max-w-[--body-width] w-[--body-ratio]">
+        <div class="promotion-content max-w-[--body-width] w-[--body-ratio]">
             <div
                 class="text-area"
                 :class="[specialClinicList.includes(compPageType) ? 'mb-[50px]' : 'mb-[30px]']"
@@ -292,68 +292,68 @@ export default defineComponent({
         </div>
 
         <!-- isMobile -->
-        <div v-else class="promotion-content mobile max-w-[608px] w-full mx-[25px]">
-            <div class="text-area mb-[30px]">
-                <div class="text-[--color-text-black] text-[32px] font-[700] leading-[38px]">
-                    한눈에 보는 가격표를 쉽게 결정하세요.
-                </div>
-                <div class="text-[--color-text-black] text-[18px] font-[500] leading-[26px]">
-                    해당 장소 가격 노출
-                </div>
-            </div>
-            <div class="main-image w-full max-h-[430px] h-max mb-[20px]">
-                <!--                <img :src="mainImg" class="w-full h-full max-h-[430px]" />-->
-            </div>
+<!--        <div v-else class="promotion-content mobile max-w-[608px] w-full mx-[25px]">-->
+<!--            <div class="text-area mb-[30px]">-->
+<!--                <div class="text-[&#45;&#45;color-text-black] text-[32px] font-[700] leading-[38px]">-->
+<!--                    한눈에 보는 가격표를 쉽게 결정하세요.-->
+<!--                </div>-->
+<!--                <div class="text-[&#45;&#45;color-text-black] text-[18px] font-[500] leading-[26px]">-->
+<!--                    해당 장소 가격 노출-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="main-image w-full max-h-[430px] h-max mb-[20px]">-->
+<!--                &lt;!&ndash;                <img :src="mainImg" class="w-full h-full max-h-[430px]" />&ndash;&gt;-->
+<!--            </div>-->
 
-            <div class="sub-promotion-list">
-                <div
-                    v-if="promDataList && promDataList.length === 1"
-                    class="sub-promotion single w-full max-h-[180px] h-max inline-flex"
-                >
-                    <div class="promotion-box w-full max-h-[180px] relative">
-<!--                        <img :src="promDataList[0].img" class="w-full max-h-[180px]" />-->
-                        <div class="text-box w-[82%] h-[65%] absolute top-[17.5%] left-[6%]">
-                            <div
-                                class="text-[--color-text-black] text-[18px] font-[500] leading-[21px]"
-                            >
-                                더티클리닉의 꺠끗함을 만나보세요.
-                            </div>
-                            <div
-                                class="text-[--color-text-black] text-[32px] font-[700] leading-[38px]"
-                            >
-                                프로모션 50%
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div v-else class="sub-promotion w-full">
-                    <Flicking
-                        class="flicking-area flex overflow-hidden"
-                        :plugins="plugins"
-                        :options="{ circular: true, panelsPerView: 1, renderOnlyVisible: false }"
-                    >
-                        <div
-                            v-for="(prom, index) in promDataList"
-                            :key="index"
-                            class="promotion-box max-w-[608px] w-full max-h-[180px] flex-center relative"
-                        >
-                            <img :src="prom.src" class="w-full max-h-[180px]" />
-                            <div class="text-box w-[82%] h-[65%] absolute top-[22%] left-[9%]">
-                                <div
-                                    class="text-[--color-text-black] text-[18px] font-[500] leading-[21px]"
-                                >
-                                    더티클리닉의 꺠끗함을 만나보세요. {{ index }}
-                                </div>
-                                <div
-                                    class="text-[--color-text-black] text-[32px] font-[700] leading-[38px]"
-                                >
-                                    프로모션 50%
-                                </div>
-                            </div>
-                        </div>
-                    </Flicking>
-                </div>
-            </div>
-        </div>
+<!--            <div class="sub-promotion-list">-->
+<!--                <div-->
+<!--                    v-if="promDataList && promDataList.length === 1"-->
+<!--                    class="sub-promotion single w-full max-h-[180px] h-max inline-flex"-->
+<!--                >-->
+<!--                    <div class="promotion-box w-full max-h-[180px] relative">-->
+<!--&lt;!&ndash;                        <img :src="promDataList[0].img" class="w-full max-h-[180px]" />&ndash;&gt;-->
+<!--                        <div class="text-box w-[82%] h-[65%] absolute top-[17.5%] left-[6%]">-->
+<!--                            <div-->
+<!--                                class="text-[&#45;&#45;color-text-black] text-[18px] font-[500] leading-[21px]"-->
+<!--                            >-->
+<!--                                더티클리닉의 꺠끗함을 만나보세요.-->
+<!--                            </div>-->
+<!--                            <div-->
+<!--                                class="text-[&#45;&#45;color-text-black] text-[32px] font-[700] leading-[38px]"-->
+<!--                            >-->
+<!--                                프로모션 50%-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div v-else class="sub-promotion w-full">-->
+<!--                    <Flicking-->
+<!--                        class="flicking-area flex overflow-hidden"-->
+<!--                        :plugins="plugins"-->
+<!--                        :options="{ circular: true, panelsPerView: 1, renderOnlyVisible: false }"-->
+<!--                    >-->
+<!--                        <div-->
+<!--                            v-for="(prom, index) in promDataList"-->
+<!--                            :key="index"-->
+<!--                            class="promotion-box max-w-[608px] w-full max-h-[180px] flex-center relative"-->
+<!--                        >-->
+<!--                            <img :src="prom.src" class="w-full max-h-[180px]" />-->
+<!--                            <div class="text-box w-[82%] h-[65%] absolute top-[22%] left-[9%]">-->
+<!--                                <div-->
+<!--                                    class="text-[&#45;&#45;color-text-black] text-[18px] font-[500] leading-[21px]"-->
+<!--                                >-->
+<!--                                    더티클리닉의 꺠끗함을 만나보세요. {{ index }}-->
+<!--                                </div>-->
+<!--                                <div-->
+<!--                                    class="text-[&#45;&#45;color-text-black] text-[32px] font-[700] leading-[38px]"-->
+<!--                                >-->
+<!--                                    프로모션 50%-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </Flicking>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </template>

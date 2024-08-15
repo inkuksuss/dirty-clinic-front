@@ -20,7 +20,7 @@ export default defineComponent({
         },
         manageList: {
             type: Array as PropType<Array<SubManageType>>,
-            required: true
+            required: false
         },
         pageType: {
             type: String as PropType<SubPageType>,
@@ -63,9 +63,10 @@ export default defineComponent({
         ];
 
         onMounted(() => {
-            scriptList.value = props.manageList.map(
-                (m) => Object.assign({}, m, { isOpen: false }) as SubManageTypeView
-            );
+            if (props.manageList && props.manageList.length > 0)
+                scriptList.value = props.manageList.map(
+                    (m) => Object.assign({}, m, { isOpen: false }) as SubManageTypeView
+                );
         });
 
         return {
@@ -107,10 +108,10 @@ export default defineComponent({
             <!-- 외창청소 -->
             <div
                 v-if="compPageType === SubPageType.WINDOW"
-                class="w-full min-h-[228px] flex flex-col bg-[--color-white] border-[1.5px] border-[--color-border-blue]"
+                class="window-clinic-wrapper w-full min-h-[228px] flex flex-col bg-[--color-white] border-[1.5px] border-[--color-border-blue]"
             >
                 <div
-                    class="flex h-[80px] mx-[30px] py-[20px] items-center border-b-[1px] border-b-[--color-border-blue]"
+                    class="header-wrapper flex min-h-[80px] mx-[30px] py-[20px] items-center border-b-[1px] border-b-[--color-border-blue]"
                 >
                     <div class="flex-center w-[40px] h-[40px] bg-[--color-skyblue] mr-[20px]">
                         <img src="/assets/images/icons/window.svg" />
@@ -119,7 +120,7 @@ export default defineComponent({
                         >창문을 전부다 탈거하고 진행하는 방법</span
                     >
                 </div>
-                <div class="ml-[90px] mr-[30px] py-[30px] flex flex-col">
+                <div class="body-wrapper ml-[90px] mr-[30px] py-[30px] flex flex-col">
                     <span
                         class="text-[20px] text-[--color-black] font-[500] mb-[10px] leading-[26px]"
                         >창문이 무겁고 파손위험이 있어 전문성이 필요해요.<br />외부 오염물은
@@ -135,11 +136,11 @@ export default defineComponent({
             <!-- 정기청소 -->
             <div
                 v-else-if="compPageType === SubPageType.REGULAR"
-                class="w-full min-h-[224px] flex flex-col bg-[--color-white] border-[1.5px] border-[--color-border-blue] pl-[30px] py-[20px]"
+                class="regular-clinic-wrapper w-full min-h-[224px] flex flex-col bg-[--color-white] border-[1.5px] border-[--color-border-blue] pl-[30px] py-[20px]"
             >
-                <div class="flex items-center py-[10px]">
+                <div class="content flex items-center py-[10px]">
                     <div
-                        class="w-[20px] h-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
+                        class="content-mark w-[20px] h-[20px] min-w-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
                     ></div>
                     <span class="text-[20px] text-[--color-black] font-[500] leading-[26px]"
                         >사무실에 매일 쓰레기가 넘쳐 버릴 사람이 필요한 경우</span
@@ -147,7 +148,7 @@ export default defineComponent({
                 </div>
                 <div class="flex items-center py-[10px]">
                     <div
-                        class="w-[20px] h-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
+                        class="w-[20px] h-[20px] min-w-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
                     ></div>
                     <span class="text-[20px] text-[--color-black] font-[500] leading-[26px]"
                         >공간 불문 입주청소 이후 정기적인 관리가 필요하신 경우</span
@@ -155,7 +156,7 @@ export default defineComponent({
                 </div>
                 <div class="flex items-center py-[10px]">
                     <div
-                        class="w-[20px] h-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
+                        class="w-[20px] h-[20px] min-w-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
                     ></div>
                     <span class="text-[20px] text-[--color-black] font-[500] leading-[26px]"
                         >거주공간, 기숙사 등 정리정돈과 청소할 시간이 없는 경우</span
@@ -163,7 +164,7 @@ export default defineComponent({
                 </div>
                 <div class="flex items-center py-[10px]">
                     <div
-                        class="w-[20px] h-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
+                        class="w-[20px] h-[20px] min-w-[20px] rounded-[50%] bg-[--color-border-blue] mr-[10px]"
                     ></div>
                     <span class="text-[20px] text-[--color-black] font-[500] leading-[26px]"
                         >사람이 많이 다녀 주기적인 바닥청소와 코팅까지 필요하신 경우</span
@@ -173,9 +174,9 @@ export default defineComponent({
             <!-- 특수 클리닉 -->
             <div
                 v-else-if="compPageType && specialClinicList.includes(compPageType)"
-                class="w-full flex justify-between items-center"
+                class="special-clinic-wrapper w-full flex justify-between items-center"
             >
-                <div class="mr-[50px] min-w-[260px]">
+                <div class="text-area mr-[50px] min-w-[260px]">
                     <div
                         class="text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px] whitespace-pre-wrap"
                     >
@@ -196,12 +197,12 @@ export default defineComponent({
             <!-- 왁스 -->
             <div
                 v-else-if="compPageType === SubPageType.WAX"
-                class="border-[1.5px] border-[--color-border-blue] flex p-[30px] bg-[--color-white] items-center"
+                class="wax-clinic-wrapper border-[1.5px] border-[--color-border-blue] flex p-[30px] bg-[--color-white] items-center"
             >
                 <div
-                    class="bg-[--color-border-blue] w-[20px] h-[20px] rounded-[50%] mr-[10px]"
+                    class="bg-[--color-border-blue] w-[20px] h-[20px] rounded-[50%] mr-[10px] min-w-[20px]"
                 ></div>
-                <div class="text-[20px] font-[500] text-[--color-black]">
+                <div class="text-content text-[20px] font-[500] text-[--color-black]">
                     데코타일, 아스타일, 디럭스타일, 피타일, PVC타일, XPE타일 등에 시공가능합니다.
                 </div>
             </div>
@@ -265,7 +266,10 @@ export default defineComponent({
                                     >
                                 </div>
 
-                                <div v-if="content.imgSrc1 || content.imgSrc2" class="info-img-area flex gap-x-[15px] min-w-[170px]">
+                                <div
+                                    v-if="content.imgSrc1 || content.imgSrc2"
+                                    class="info-img-area flex gap-x-[15px] min-w-[170px]"
+                                >
                                     <div v-if="content.imgSrc1" class="flex flex-col items-center">
                                         <ClinicImage
                                             :src="content.imgSrc1"
