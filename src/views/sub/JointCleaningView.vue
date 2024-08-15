@@ -7,6 +7,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
+    type SubManageType,
     SubPageType,
     type SubPriceType,
     type SubPromotionType,
@@ -56,6 +57,47 @@ export default defineComponent({
             {
                 title: '현장 검수 및\n피드백',
                 src: new URL('@/assets/images/sub/intro/document.png', import.meta.url).href
+            }
+        ];
+
+        const manageList: SubManageType[] = [
+            {
+                title: '거실',
+                content: [
+                    { main: '폴리싱  타일 및 대리석등 백시멘트가 사용된 바닥 타일' },
+                    { main: '아트윌 벽면' }
+                ],
+                icon: new URL('@/assets/images/icons/window.svg', import.meta.url).href
+            },
+            {
+                title: '주방',
+                content: [
+                    { main: '싱크대 상판 및 싱크볼' },
+                    { main: '실리콘 테두리' },
+                    { main: '타일 벽면' }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            },
+            {
+                title: '화장실',
+                content: [
+                    { main: '바닥' },
+                    { main: '벽면' },
+                    { main: '샤워부스' },
+                    { main: '젠다이' },
+                    { main: '실리콘 테두리' }
+                ],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '현관',
+                content: [{ main: '바닥' }, { main: '테두리' }, { main: '실리콘' }],
+                icon: new URL('@/assets/images/icons/dustpan.svg', import.meta.url).href
+            },
+            {
+                title: '베란다',
+                content: [{ main: '바닥' }, { main: '테두리' }, { main: '실리콘' }],
+                icon: new URL('@/assets/images/icons/entrance.svg', import.meta.url).href
             }
         ];
 
@@ -118,6 +160,7 @@ export default defineComponent({
             introList,
             priceList,
             promotionList,
+            manageList,
             serviceList,
             manageDesc,
             bannerScript,
@@ -135,6 +178,7 @@ export default defineComponent({
             title="어디까지 관리 되나요?"
             :desc="manageDesc"
             :page-type="SubPageType.JOINT"
+            :manage-list="manageList"
         ></sub-manage>
         <div class="max-w-[--body-width] w-[--body-ratio] my-[80px]">
             <div class="mb-[30px] text-[32px] font-[700] text-[--color-black]">줄눈제 종류</div>

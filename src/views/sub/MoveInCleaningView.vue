@@ -9,6 +9,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
+    SubManageType,
     SubPageType,
     type SubPriceType,
     type SubPromotionType,
@@ -61,7 +62,7 @@ export default defineComponent({
         const priceList: SubPriceType[] = [
             {
                 src: new URL('@/assets/images/sub/price/move_in.png', import.meta.url).href,
-              ext: '* 해당 견적은 확장형 기준으로 정확한 견적은 홈페이지 좌측하단의 견적보기를 확인하세요.'
+                ext: '* 해당 견적은 확장형 기준으로 정확한 견적은 홈페이지 좌측하단의 견적보기를 확인하세요.'
             }
         ];
 
@@ -72,6 +73,32 @@ export default defineComponent({
             {
                 src: new URL('@/assets/images/sub/promotion/move_in1.png', import.meta.url).href
             }
+        ];
+
+        const manageList: SubManageType[] = [
+            {
+                title: '거실, 방',
+                content: [
+                    {
+                        main: '몰딩, 벽지 도배풀제거'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '화장실, 베란다',
+                content: [{ main: '벽, 바닥타일 백시멘트 전용 약품처리' }],
+                icon: new URL('@/assets/images/icons/bath_room.svg', import.meta.url).href
+            },
+            {
+                title: '주방',
+                content: [
+                    {
+                        main: '상하부장, 싱크대 밑 나무톱밥 및 분진 청소'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            },
         ];
 
         const serviceList: SubServiceType[] = [
@@ -110,8 +137,9 @@ export default defineComponent({
 
         return {
             introList,
-          priceList,
+            priceList,
             promotionList,
+            manageList,
             serviceList,
             bannerScript,
             handleClickBtn
@@ -127,8 +155,13 @@ export default defineComponent({
         <sub-manage
             title="어디까지 관리 되나요?"
             desc="새집의 보이지 않는 공사먼지와 유독물질을 최대한으로 억제합니다."
+            :manage-list="manageList"
         ></sub-manage>
-        <sub-promotion :page-type="SubPageType.MOVE_IN" :price-list="priceList" :prom-list="promotionList"></sub-promotion>
+        <sub-promotion
+            :page-type="SubPageType.MOVE_IN"
+            :price-list="priceList"
+            :prom-list="promotionList"
+        ></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>
         <sub-check-list></sub-check-list>
         <payment-button :click-handler="handleClickBtn"></payment-button>

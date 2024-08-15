@@ -9,6 +9,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
+    SubManageType,
     SubPageType,
     type SubPriceType,
     type SubPromotionType,
@@ -84,6 +85,84 @@ export default defineComponent({
             }
         ];
 
+        const manageList: SubManageType[] = [
+            {
+                title: '창틀 청소',
+                content: [
+                    {
+                        main: '방충망'
+                    },
+                    {
+                        main: '내부 유리창'
+                    },
+                    {
+                        main: '창틀'
+                    },
+                    {
+                        main: '샷시 프레임'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/window.svg', import.meta.url).href
+            },
+            {
+                title: '바닥 청소',
+                content: [
+                    {
+                        main: '전체 바닥청소',
+                        sub: '베란다 화장실 제외'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/dustpan.svg', import.meta.url).href
+            },
+            {
+                title: '주방 청소',
+                content: [
+                    {
+                        main: '주방 상하부장'
+                    },
+                    {
+                        main: '싱크대'
+                    },
+                    { main: '가스레인지' },
+                    {
+                        main: '인덕션'
+                    },
+                    {
+                        main: '후드망'
+                    },
+                    {
+                        main: '걸레받이'
+                    },
+                    {
+                        main: '타일벽면'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            },
+            {
+                title: '화장실 청소',
+                content: [{ main: '화장실 내부공간 전체' }],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '베란다 청소',
+                content: [
+                    { main: '바닥' },
+                    {
+                        main: '수전'
+                    },
+                    {
+                        main: '빨래걷이'
+                    },
+                    {
+                        main: '베란다 창고'
+                    },
+                    { main: '배수구' }
+                ],
+                icon: new URL('@/assets/images/icons/room.svg', import.meta.url).href
+            }
+        ];
+
         const serviceList: SubServiceType[] = [
             {
                 src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
@@ -131,6 +210,7 @@ export default defineComponent({
             bannerScript,
             SubPageType,
             manageTitle,
+            manageList,
             manageDesc,
             handleClickBtn
         };
@@ -146,6 +226,7 @@ export default defineComponent({
             :title="manageTitle"
             :desc="manageDesc"
             :page-type="SubPageType.SPOT"
+            :manage-list="manageList"
         ></sub-manage>
         <sub-promotion
             :page-type="SubPageType.SPOT"

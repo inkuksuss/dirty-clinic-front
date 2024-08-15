@@ -7,6 +7,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
+    SubManageType,
     SubPageType,
     type SubPriceType,
     type SubPromotionType,
@@ -82,6 +83,24 @@ export default defineComponent({
             }
         ];
 
+        const manageList: SubManageType[] = [
+            {
+                title: '주방',
+                content: [{ main: '싱크대 상판' }, { main: '아일랜드 식탁' }],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            },
+            {
+                title: '화장실',
+                content: [{ main: '선반 젠다이' }],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '거실·방·현관',
+                content: [{ main: '대리석/폴리싱타일 제질의 바닥, 아트윌 벽면' }],
+                icon: new URL('@/assets/images/icons/room.svg', import.meta.url).href
+            }
+        ];
+
         const serviceList: SubServiceType[] = [
             {
                 src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
@@ -121,6 +140,7 @@ export default defineComponent({
             priceList,
             promotionList,
             serviceList,
+            manageList,
             manageDesc,
             bannerScript,
             handleClickBtn
@@ -137,6 +157,7 @@ export default defineComponent({
             title="어디까지 관리 되나요?"
             :desc="manageDesc"
             :page-type="SubPageType.GRINDING"
+            :manage-list="manageList"
         ></sub-manage>
         <sub-promotion :page-type="SubPageType.GRINDING" :prom-list="promotionList"></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>

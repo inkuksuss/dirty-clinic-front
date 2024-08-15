@@ -96,7 +96,7 @@ export default defineComponent({
                                     class="description-button cursor-pointer pr-[20px]"
                                 >
                                     <img
-                                        src="/images/icons/arrow_down.svg"
+                                        src="/assets/images/icons/arrow_down.svg"
                                         class="w-full h-full rotate-[-90deg] w-[25px] h-[25px]"
                                     />
                                 </div>

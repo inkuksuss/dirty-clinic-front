@@ -320,7 +320,7 @@ export default defineComponent({
                     >
                 </div>
                 <div @click="handleClickClose">
-                    <img src="/images/icons/x-btn.svg" />
+                    <img src="/assets/images/icons/x-btn.svg" />
                 </div>
             </div>
             <div class="contents-area w-full h-full px-[5%] pb-[35px]">
@@ -331,7 +331,7 @@ export default defineComponent({
                     >
                         <img
                             class="w-[30px] h-[30px] mr-[10px]"
-                            src="@/assets/images/icons/apart.svg"
+                            src="/assets/images/icons/apart.svg"
                         />
                         <div class="text-[18px] font-[600] leading-[26px]">원룸 청소</div>
                     </div>
@@ -341,7 +341,7 @@ export default defineComponent({
                     >
                         <img
                             class="w-[30px] h-[30px] mr-[10px]"
-                            src="@/assets/images/icons/apart.svg"
+                            src="/assets/images/icons/apart.svg"
                         />
                         <div class="text-[18px] font-[600] leading-[26px]">거주 청소</div>
                     </div>
@@ -351,7 +351,7 @@ export default defineComponent({
                     >
                         <img
                             class="w-[30px] h-[30px] mr-[10px]"
-                            src="@/assets/images/icons/apart.svg"
+                            src="/assets/images/icons/apart.svg"
                         />
                         <div class="text-[18px] font-[600] leading-[26px]">
                             입주 청소<br />이사 청소
@@ -363,7 +363,7 @@ export default defineComponent({
                     >
                         <img
                             class="w-[30px] h-[30px] mr-[10px]"
-                            src="@/assets/images/icons/apart.svg"
+                            src="/assets/images/icons/apart.svg"
                         />
                         <div class="text-[18px] font-[600] leading-[26px]">사업장 청소</div>
                     </div>
@@ -374,7 +374,7 @@ export default defineComponent({
                 >
                     <img
                         class="py-[7.5px] w-[30px] h-full mr-[10px]"
-                        src="@/assets/images/icons/apart.svg"
+                        src="/assets/images/icons/apart.svg"
                     />
                     <div class="flex flex-col">
                         <span class="text-[18px] font-[600] leading-[26px]"
@@ -399,7 +399,7 @@ export default defineComponent({
                     >
                 </div>
                 <div @click="handleClickClose">
-                    <img src="@/assets/images/icons/x-btn.svg" />
+                    <img src="/assets/images/icons/x-btn.svg" />
                 </div>
             </div>
             <div
@@ -411,7 +411,7 @@ export default defineComponent({
                 >
                     <img
                         class="w-[30px] h-[30px] mr-[10px] my-[7px]"
-                        src="@/assets/images/icons/apart.svg"
+                        src="/assets/images/icons/apart.svg"
                     />
                     <div class="text-[18px] font-[600] leading-[22px] my-auto">아파트</div>
                 </div>
@@ -421,7 +421,7 @@ export default defineComponent({
                 >
                     <img
                         class="w-[30px] h-[30px] mr-[10px] my-[7px]"
-                        src="@/assets/images/icons/apart.svg"
+                        src="/assets/images/icons/apart.svg"
                     />
                     <div class="text-[18px] font-[600] leading-[22px] my-auto">
                         빌라<br />다세대 주택
@@ -433,7 +433,7 @@ export default defineComponent({
                 >
                     <img
                         class="w-[30px] h-[30px] mr-[10px] my-[7px]"
-                        src="@/assets/images/icons/apart.svg"
+                        src="/assets/images/icons/apart.svg"
                     />
                     <div class="text-[18px] font-[600] leading-[22px] my-auto">
                         오피스텔<br />주상복합
@@ -445,7 +445,7 @@ export default defineComponent({
                 >
                     <img
                         class="w-[30px] h-[30px] mr-[10px] my-[7px]"
-                        src="@/assets/images/icons/apart.svg"
+                        src="/assets/images/icons/apart.svg"
                     />
                     <div class="text-[18px] font-[600] leading-[22px] my-auto">주택</div>
                 </div>
@@ -481,7 +481,7 @@ export default defineComponent({
                     >
                 </div>
                 <div @click="handleClickClose">
-                    <img src="@/assets/images/icons/x-btn.svg" />
+                    <img src="/assets/images/icons/x-btn.svg" />
                 </div>
             </div>
             <div class="contents-area flex-col px-[5%] mb-[30px]">
@@ -557,7 +557,7 @@ export default defineComponent({
                     >
                 </div>
                 <div @click="handleClickClose">
-                    <img src="@/assets/images/icons/x-btn.svg" />
+                    <img src="/assets/images/icons/x-btn.svg" />
                 </div>
             </div>
             <div class="contents-area flex-col px-[5%] mb-[30px]">
@@ -633,7 +633,7 @@ export default defineComponent({
                     >
                 </div>
                 <div @click="handleClickClose">
-                    <img src="@/assets/images/icons/x-btn.svg" />
+                    <img src="/assets/images/icons/x-btn.svg" />
                 </div>
             </div>
             <div class="contents-area flex-col mx-[5%] border-b-[1px] border-[#96C8F6] pb-[5px]">
@@ -666,7 +666,7 @@ export default defineComponent({
             </div>
             <div class="mx-[5%]">
                 <div class="info-wrapper flex items-start mt-[15px]">
-                    <img class="w-[15px] h-[15px] mr-[5px]" src="@/assets/images/icons/info.svg" />
+                    <img class="w-[15px] h-[15px] mr-[5px]" src="/assets/images/icons/info.svg" />
                     <span class="text-[16px] font-[400] leading-[19px] text-[--color-text-gray]"
                         >고객님이 선택하신 서비스의 예상 금액입니다.<br />
                         현장 및 상세 예약 확인에 따라 금액이 변동될 수 있으며,<br />

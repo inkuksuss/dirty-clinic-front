@@ -1,7 +1,7 @@
 <script lang="ts">
-import { computed, defineComponent, onMounted, type PropType, ref } from 'vue';
+import { computed, defineComponent, onMounted, type PropType } from 'vue';
 import { useStore } from '@/stores/store';
-import { type SubIntroType, SubPageType } from '@/utils/types';
+import { type SubIntroType } from '@/utils/types';
 import ClinicImage from '@/components/common/ClinicImage.vue';
 
 export default defineComponent({
@@ -97,75 +97,75 @@ export default defineComponent({
             </div>
         </div>
 
-        <div v-else class="intro-contents mobile mt-[60px] pb-[60px]">
-            <div class="text-area mb-[30px]">
-                <div
-                    class="text-main text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px]"
-                >
-                    우리는 이렇게 청소합니다.
-                </div>
-                <div
-                    class="text-sub text-[--color-text-black] text-[18px] font-[500] leading-[26px]"
-                >
-                    5단계로 나눠진 특별한 기술을 체험해보세요.
-                </div>
-            </div>
+<!--        <div v-else class="intro-contents mobile mt-[60px] pb-[60px]">-->
+<!--            <div class="text-area mb-[30px]">-->
+<!--                <div-->
+<!--                    class="text-main text-[&#45;&#45;color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px]"-->
+<!--                >-->
+<!--                    우리는 이렇게 청소합니다.-->
+<!--                </div>-->
+<!--                <div-->
+<!--                    class="text-sub text-[&#45;&#45;color-text-black] text-[18px] font-[500] leading-[26px]"-->
+<!--                >-->
+<!--                    5단계로 나눠진 특별한 기술을 체험해보세요.-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="first-row flex justify-between mx-[13px] relative gap-x-[30px]">
-                <div class="image-wrapper w-full w-[25%] max-w-[80px] z-30">
-                    <img class="w-full h-full" src="/images/sub/intro_image1@1x.jpg" />
-                </div>
-                <div class="image-wrapper w-full w-[25%] max-w-[80px] z-30">
-                    <img class="w-full h-full" src="/images/sub/intro_image2@1x.jpg" />
-                </div>
-                <div class="image-wrapper w-full w-[25%] max-w-[80px] z-30">
-                    <img class="w-full h-full" src="/images/sub/intro_image3@1x.jpg" />
-                </div>
-                <div
-                    class="blue-bar absolute border-t-[1px] border-t-[--color-main-blue] absolute top-[50%] left-[38px] max-w-[--body-width] w-[100%] z-[-1]"
-                ></div>
-            </div>
-            <div class="first-text-row flex justify-between mx-[13px] mt-[10px]">
-                <div
-                    class="w-[25%] max-w-[80px] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
-                >
-                    {{ compIntroList[0].title }}
-                </div>
-                <div
-                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
-                >
-                    {{ compIntroList[1].title }}
-                </div>
-                <div
-                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
-                >
-                    {{ compIntroList[2].title }}
-                </div>
-            </div>
+<!--            <div class="first-row flex justify-between mx-[13px] relative gap-x-[30px]">-->
+<!--                <div class="image-wrapper w-full w-[25%] max-w-[80px] z-30">-->
+<!--                    <img class="w-full h-full" src="/assets/images/sub/intro_image1@1x.jpg" />-->
+<!--                </div>-->
+<!--                <div class="image-wrapper w-full w-[25%] max-w-[80px] z-30">-->
+<!--                    <img class="w-full h-full" src="/assets/images/sub/intro_image2@1x.jpg" />-->
+<!--                </div>-->
+<!--                <div class="image-wrapper w-full w-[25%] max-w-[80px] z-30">-->
+<!--                    <img class="w-full h-full" src="/assets/images/sub/intro_image3@1x.jpg" />-->
+<!--                </div>-->
+<!--                <div-->
+<!--                    class="blue-bar absolute border-t-[1px] border-t-[&#45;&#45;color-main-blue] absolute top-[50%] left-[38px] max-w-[&#45;&#45;body-width] w-[100%] z-[-1]"-->
+<!--                ></div>-->
+<!--            </div>-->
+<!--            <div class="first-text-row flex justify-between mx-[13px] mt-[10px]">-->
+<!--                <div-->
+<!--                    class="w-[25%] max-w-[80px] text-[&#45;&#45;color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"-->
+<!--                >-->
+<!--                    {{ compIntroList[0].title }}-->
+<!--                </div>-->
+<!--                <div-->
+<!--                    class="w-[25%] text-[&#45;&#45;color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"-->
+<!--                >-->
+<!--                    {{ compIntroList[1].title }}-->
+<!--                </div>-->
+<!--                <div-->
+<!--                    class="w-[25%] text-[&#45;&#45;color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"-->
+<!--                >-->
+<!--                    {{ compIntroList[2].title }}-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="second-row flex justify-center gap-x-[42px] relative mt-[15px]">
-                <div class="image-wrapper w-[25%] max-w-[80px] z-30">
-                    <img class="w-full h-full" src="/images/sub/intro_image4@1x.jpg" />
-                </div>
-                <div class="image-wrapper w-[25%] max-w-[80px] z-30">
-                    <img class="w-full h-full" src="/images/sub/intro_image5@1x.jpg" />
-                </div>
-                <div
-                    class="blue-bar absolute border-t-[1px] border-t-[--color-main-blue] absolute top-[50%] right-[88px] max-w-[--body-width] w-[100%] z-[-1]"
-                ></div>
-            </div>
-            <div class="second-text-row flex justify-center gap-x-[42px] mt-[10px]">
-                <div
-                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
-                >
-                    {{ compIntroList[3].title }}
-                </div>
-                <div
-                    class="w-[25%] text-[--color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"
-                >
-                    {{ compIntroList[4].title }}
-                </div>
-            </div>
-        </div>
+<!--            <div class="second-row flex justify-center gap-x-[42px] relative mt-[15px]">-->
+<!--                <div class="image-wrapper w-[25%] max-w-[80px] z-30">-->
+<!--                    <img class="w-full h-full" src="/assets/images/sub/intro_image4@1x.jpg" />-->
+<!--                </div>-->
+<!--                <div class="image-wrapper w-[25%] max-w-[80px] z-30">-->
+<!--                    <img class="w-full h-full" src="/assets/images/sub/intro_image5@1x.jpg" />-->
+<!--                </div>-->
+<!--                <div-->
+<!--                    class="blue-bar absolute border-t-[1px] border-t-[&#45;&#45;color-main-blue] absolute top-[50%] right-[88px] max-w-[&#45;&#45;body-width] w-[100%] z-[-1]"-->
+<!--                ></div>-->
+<!--            </div>-->
+<!--            <div class="second-text-row flex justify-center gap-x-[42px] mt-[10px]">-->
+<!--                <div-->
+<!--                    class="w-[25%] text-[&#45;&#45;color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"-->
+<!--                >-->
+<!--                    {{ compIntroList[3].title }}-->
+<!--                </div>-->
+<!--                <div-->
+<!--                    class="w-[25%] text-[&#45;&#45;color-text-black] w-[150px] text-[14px] font-[400] leading-[17px] text-center whitespace-pre-wrap"-->
+<!--                >-->
+<!--                    {{ compIntroList[4].title }}-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </template>

@@ -7,6 +7,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
+    SubManageType,
     SubPageType,
     type SubPriceType,
     type SubPromotionType,
@@ -82,6 +83,32 @@ export default defineComponent({
             }
         ];
 
+        const manageList: SubManageType[] = [
+            {
+                title: '마루코팅',
+                content: [{ main: '마루종류(원목,강마루 등)의 제질에 시공 가능합니다.' }],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '나노코팅',
+                content: [
+                    { main: '주방', sub: '싱크대 상판, 수전, 싱크볼, 스테인레스' },
+                    {
+                        main: '화장실',
+                        sub: '도기, 수전, 스테인레스, 변기, 거울, 젠다이, 샤워부스, 샤워기, 휴지걸이, 욕조'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            },
+            {
+                title: '타일코팅',
+                content: [
+                    { main: '타일종류(포쉐린, 세라믹, 바블타일 등)의 제질에 시공 가능합니다.' }
+                ],
+                icon: new URL('@/assets/images/icons/room.svg', import.meta.url).href
+            }
+        ];
+
         const serviceList: SubServiceType[] = [
             {
                 src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
@@ -118,6 +145,7 @@ export default defineComponent({
             introList,
             priceList,
             promotionList,
+            manageList,
             serviceList,
             manageDesc,
             bannerScript,
@@ -135,6 +163,7 @@ export default defineComponent({
             title="어디까지 관리 되나요?"
             :desc="manageDesc"
             :page-type="SubPageType.COATING"
+            :manage-list="manageList"
         ></sub-manage>
         <sub-promotion
             :page-type="SubPageType.COATING"

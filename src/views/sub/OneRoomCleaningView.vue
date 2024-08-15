@@ -12,7 +12,8 @@ import {
     type SubPromotionType,
     SubPageType,
     type SubServiceType,
-    type SubPriceType
+    type SubPriceType,
+    type SubManageType
 } from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
@@ -32,23 +33,23 @@ export default defineComponent({
         const introList: SubIntroType[] = [
             {
                 title: '전문 상담과\n예약 확정',
-                src: new URL('/src/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
             },
             {
                 title: '직영팀장님의\n사전 해피콜',
-                src: new URL('/src/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
             },
             {
                 title: '현장 투입 및\n특이사항 체크',
-                src: new URL('/src/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
             },
             {
                 title: '구역별\n알맞는 약품청소',
-                src: new URL('/src/assets/images/sub/intro/basket.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/basket.png', import.meta.url).href
             },
             {
                 title: '고객님과 함께\n현장 검수 및 완료',
-                src: new URL('/src/assets/images/sub/intro/kitchen.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/kitchen.png', import.meta.url).href
             }
         ];
 
@@ -61,6 +62,140 @@ export default defineComponent({
         const promotionList: SubPromotionType[] = [
             {
                 src: new URL('@/assets/images/sub/promotion/one_room1.png', import.meta.url).href
+            }
+        ];
+
+        const manageList: SubManageType[] = [
+            {
+                title: '거실',
+                content: [
+                    {
+                        main: '창문, 창틀 청소(외부창 제외)'
+                    },
+                    {
+                        main: '몰딩 부분 오염도 제거'
+                    },
+                    {
+                        main: '벽 먼지 제거'
+                    },
+                    {
+                        main: '콘센트 먼지 제거'
+                    },
+                    {
+                        main: '문 오염 제거'
+                    },
+                    {
+                        main: '바닥 오염 제거'
+                    },
+                    {
+                        main: '찌든때, 먼지 제거'
+                    },
+                    {
+                        main: '걸레받이 오염 제거'
+                    },
+                    {
+                        main: '서랍장 탈거 후 청소',
+                        sub: '바닥 자재 강마루일 경우 물청소x(파손대비)\n먼지 흡입 및 닦는 과정 반복',
+                        ext: '* 어느정도 먼지가 남아 있을 수 있습니다.'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '화장실, 욕실',
+                content: [
+                    {
+                        main: '선반장 청소'
+                    },
+                    {
+                        main: '거울, 유리부스 청소'
+                    },
+                    {
+                        main: '타일 벽 청소'
+                    },
+                    {
+                        main: '세면대 청소'
+                    },
+                    {
+                        main: '변기, 욕실 청소'
+                    },
+                    {
+                        main: '하수구 커버 분리, 세척 오염제거, 약품 살균, 소독'
+                    },
+                    {
+                        main: '환풍구 탈거 청소'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/bath_room.svg', import.meta.url).href
+            },
+            {
+                title: '주방',
+                content: [
+                    {
+                        main: '싱크대 내외부, 가스레인지 분해후 청소'
+                    },
+                    {
+                        main: '후드 망 탈거 후 청소'
+                    },
+                    { main: '주방 상하부장 내외부 청소' },
+                    {
+                        main: '서랍장 탈거 후 청소'
+                    },
+                    {
+                        main: '빌트인 냉장고, 세탁기, 오븐 등 가전제품 내부청소는 별도'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            },
+            {
+                title: '베란다, 다용도실',
+                content: [
+                    { main: '베란다 창문 청소', sub: '2,4 외부 창문 제외' },
+                    {
+                        main: '빨래건조대 청소',
+                        sub: '간단한 먼지제거'
+                    },
+                    {
+                        main: '베란다 바닥 오염 제거'
+                    },
+                    {
+                        main: '배수구 안쪽 부속품',
+                        sub: '탈거, 세척, 소독, 살균 건조순으로 작업'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/window.svg', import.meta.url).href
+            },
+            {
+                title: '방',
+                content: [
+                    { main: '창문, 창틀청소' },
+                    {
+                        main: '천장 몰딩 얼룩 및 먼지제거'
+                    },
+                    {
+                        main: '벽면 바닥먼지 제거',
+                        sub: '벽지가 실크일 경우 일부 얼룩 제거 가능'
+                    },
+                    {
+                        main: '전등 커버 탈거 후 청소',
+                        ext: '* 실크벽지, 페인트 오염도 제거는 현장판단'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/room.svg', import.meta.url).href
+            },
+            {
+                title: '현관',
+                content: [
+                    { main: '신발장, 수납장 탈거 후 청소' },
+                    {
+                        main: '벽면 먼지 제거'
+                    },
+                    {
+                        main: '천장 몰딩 얼룩 및 먼지제거',
+                        ext: '* 외부 창 불가능\n* 인체에 무해한 친환경 약품 사용\n* 청소하다 생긴 작업 쓰레기는 한곳에 모아드립니다.(폐기물, 쓰레기 처리는 추가요금 발생)'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/dustpan.svg', import.meta.url).href
             }
         ];
 
@@ -109,6 +244,7 @@ export default defineComponent({
             promotionList,
             bannerScript,
             SubPageType,
+            manageList,
             introList,
             manageTitle,
             manageDesc,
@@ -122,7 +258,7 @@ export default defineComponent({
     <div class="sub-wrapper w-screen flex flex-col items-center justify-start">
         <sub-banner :title="bannerScript.title" :desc="bannerScript.desc"></sub-banner>
         <sub-intro :data-list="introList"></sub-intro>
-        <sub-manage :title="manageTitle" :desc="manageDesc"></sub-manage>
+        <sub-manage :title="manageTitle" :desc="manageDesc" :manage-list="manageList"></sub-manage>
         <sub-promotion
             :page-type="SubPageType.ONE_ROOM"
             :price-list="priceList"

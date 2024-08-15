@@ -7,6 +7,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
+    SubManageType,
     SubPageType,
     type SubPriceType,
     type SubPromotionType,
@@ -125,6 +126,107 @@ export default defineComponent({
             }
         ];
 
+        const manageList: SubManageType[] = [
+            {
+                title: '에어컨',
+                content: [
+                    {
+                        main: '간단청소',
+                        sub: '필터, 날개, 필터 투입부, 겉면 세척 및 살균소독 관리'
+                    },
+                    {
+                        main: '분해청소',
+                        sub: '내부 분해 후 청소 및 살균소독 관리',
+                        ext: '* 액자형은 분해청소가 불가합니다.'
+                    },
+                    {
+                        main: '에어컨 청소주기',
+                        sub: '연 1회(사용 전 3-4월 또는 사용 후 10-11월)',
+                        ext: '* 고객님의 상황에 맞는 청소 주기는 현장에서 확인하여 조금 더 자세하게 설명해드립니다.'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            },
+            {
+                title: '세탁기',
+                content: [
+                    {
+                        main: '간단청소',
+                        sub: '세제 투입구, 내부통, 배수구, 겉면 세척 및 살균소독 관리'
+                    },
+                    {
+                        main: '분해청소',
+                        sub:
+                            '간단청소 + 세탁기 내부분해 후 곰팡이 및 ' +
+                            '오염물 제거, 통 내외부 살균 소독 처리'
+                    },
+                    {
+                        main: '세탁기 청소 주기',
+                        sub: '연 1회 (악취 발생 및 이물질이 나올 경우)',
+                        ext: '* 고객님의 상황에 맞는 청소 주기는 현장에서 확인하여 조금 더 자세하게 설명해드립니다.'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '냉장고',
+                content: [
+                    {
+                        main:
+                            '음식물 쓰레기 처리, 오염도 제거, 곰팡이 ' +
+                            '제거, 냉동칸 성애제거, 냉장고 하부 모터 ' +
+                            '먼지청소, 내부 탈취 및 살균소독'
+                    },
+                    {
+                        main: '냉장고 청소 주기',
+                        sub: '연 3-4회\n' + '(악취 발생 및 오염도 심할 경우)',
+                        ext: '* 고객님의 상황에 맞는 청소 주기는 현장에서 확인하여 조금 더 자세하게 설명해드립니다.'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            },
+            {
+                title: '소파',
+                content: [
+                    { main: '건식청소', sub: '먼지 및 분진, 진드기 제거, 살균 소독' },
+                    {
+                        main: '습식청소',
+                        sub: '먼지 및 분진, 진드기 제거, 얼룩 및 ' + '오염제거, 살균소독',
+                        ext:
+                            '* 각 재질마다 특성을 이해하고 알맞는 청소 방법을 ' +
+                            '진행해야 합니다.(천, 패브릭, 스웨이드, 알칸타라, ' +
+                            '아쿠아텍스, 인조가죽)'
+                    },
+                    {
+                        main: '소파 청소 주기',
+                        sub: '연 2회 (악취 발생 및 오염도 심할 경우)',
+                        ext: '* 고객님의 상황에 맞는 청소 주기는 현장에서 확인하여 조금 더 자세하게 설명해드립니다.'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '매트리스',
+                content: [
+                    { main: '건식청소', sub: '먼지 및 분진, 진드기 제거, 살균 소독' },
+                    {
+                        main: '습식청소',
+                        sub: '먼지 및 분진, 진드기 제거, 얼룩 및 ' + '오염제거, 살균소독',
+                        ext:
+                            '* 각 재질마다 특성을 이해하고 알맞는 청소 방법을 ' +
+                            '진행해야 합니다.(천, 패브릭, 스웨이드, 알칸타라, ' +
+                            '아쿠아텍스, 인조가죽)'
+                    },
+                    {
+                        main: '매트리스 청소 주기',
+                        sub: '연 4회 (악취 발생 및 오염도 심할 경우)',
+                        ext: '* 고객님의 상황에 맞는 청소 주기는 현장에서 확인하여 조금 더 자세하게 설명해드립니다.'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            }
+        ];
+
         const serviceList: SubServiceType[] = [
             {
                 src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
@@ -157,6 +259,7 @@ export default defineComponent({
             priceList,
             promotionList,
             serviceList,
+            manageList,
             manageDesc,
             bannerScript,
             handleClickBtn
@@ -173,6 +276,7 @@ export default defineComponent({
             title="어디까지 관리 되나요?"
             :desc="manageDesc"
             :page-type="SubPageType.APPLIANCES"
+            :manage-list="manageList"
         ></sub-manage>
         <div class="max-w-[--body-width] w-[--body-ratio] mt-[80px]">
             <div class="mb-[30px] text-[32px] font-[700] text-[--color-black]">청소 프로세스</div>

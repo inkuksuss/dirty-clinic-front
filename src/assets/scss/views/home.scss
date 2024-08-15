@@ -7,7 +7,7 @@
         height: calc(100vh - $header-height);
 
         .main-image {
-            background-image: url('/images/home/clinic_main@2x.png');
+            background-image: url('/assets/images/home/clinic_main@2x.png');
             background-size: cover;
         }
 
@@ -151,15 +151,15 @@
                             margin-right: 15px;
 
                             &:first-child {
-                                background-image: url('/images/home/promotion_1@1x.png');
+                                background-image: url('/assets/images/home/promotion_1@1x.png');
                             }
 
                             &:nth-child(2) {
-                                background-image: url('/images/home/promotion_2@1x.png');
+                                background-image: url('/assets/images/home/promotion_2@1x.png');
                             }
 
                             &:last-child {
-                                background-image: url('/images/home/promotion_3@1x.png');
+                                background-image: url('/assets/images/home/promotion_3@1x.png');
                             }
                         }
                     }

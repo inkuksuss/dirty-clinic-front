@@ -9,6 +9,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
+    SubManageType,
     SubPageType,
     type SubPriceType,
     type SubPromotionType,
@@ -73,6 +74,32 @@ export default defineComponent({
             }
         ];
 
+        const manageList: SubManageType[] = [
+            {
+                title: '거실, 방',
+                content: [
+                    {
+                        main: '몰딩, 벽지 도배풀제거'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '화장실, 베란다',
+                content: [{ main: '벽, 바닥타일 백시멘트 전용 약품처리' }],
+                icon: new URL('@/assets/images/icons/bath_room.svg', import.meta.url).href
+            },
+            {
+                title: '주방',
+                content: [
+                    {
+                        main: '상하부장, 싱크대 밑 나무톱밥 및 분진 청소'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            }
+        ];
+
         const serviceList: SubServiceType[] = [
             {
                 src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
@@ -111,6 +138,7 @@ export default defineComponent({
             introList,
             priceList,
             promotionList,
+            manageList,
             serviceList,
             bannerScript,
             handleClickBtn
@@ -126,6 +154,7 @@ export default defineComponent({
         <sub-manage
             title="어디까지 관리 되나요?"
             desc="전 세입자의 흔적을 지워드립니다."
+            :manage-list="manageList"
         ></sub-manage>
         <sub-promotion
             :page-type="SubPageType.MOVING"

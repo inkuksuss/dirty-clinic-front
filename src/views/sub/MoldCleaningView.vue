@@ -7,6 +7,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
+    SubManageType,
     SubPageType,
     type SubPromotionType,
     type SubServiceType
@@ -64,6 +65,37 @@ export default defineComponent({
             }
         ];
 
+        const manageList: SubManageType[] = [
+            {
+                title: '욕실',
+                content: [
+                    { main: '타일' },
+                    { main: '실리콘' },
+                    { main: '변기' },
+                    { main: '세면대' },
+                    { main: '욕조' },
+                    { main: '줄눈' },
+                    { main: '배수구' }
+                ],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '주방',
+                content: [
+                    { main: '싱크볼' },
+                    { main: '실리콘' },
+                    { main: '벽타일' },
+                    { main: '배수구' }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            },
+            {
+                title: '베란다',
+                content: [{ main: '타일' }, { main: '창틀 실리콘' }, { main: '줄눈' }],
+                icon: new URL('@/assets/images/icons/room.svg', import.meta.url).href
+            }
+        ];
+
         const serviceList: SubServiceType[] = [
             {
                 src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
@@ -104,6 +136,7 @@ export default defineComponent({
         return {
             introList,
             promotionList,
+            manageList,
             serviceList,
             manageTitle,
             manageDesc,
@@ -122,6 +155,7 @@ export default defineComponent({
             :title="manageTitle"
             :desc="manageDesc"
             :page-type="SubPageType.MOLD"
+            :manage-list="manageList"
         ></sub-manage>
         <sub-promotion :page-type="SubPageType.MOLD" :prom-list="promotionList"></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>

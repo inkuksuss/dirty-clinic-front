@@ -108,6 +108,21 @@ export type PaymentResultRequest = {
     errorMsg?: string;
 };
 
+export type SubManageType = {
+    title: string;
+    content: Array<{
+        main: string;
+        sub?: string;
+        ext?: string;
+        imgSrc1?: string;
+        imgSrc1Desc?: string;
+        imgSrc2?: string;
+        imgSrc2Desc?: string;
+    }>;
+    hasImg?: boolean;
+    icon: string;
+};
+
 export enum SubPageType {
     ONE_ROOM = 'ONE_ROOM',
     SPOT = 'SPOT',

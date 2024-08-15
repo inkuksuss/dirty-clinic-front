@@ -36,7 +36,7 @@ export default defineComponent({
                 <div class="contents-img-wrapper w-[135px] h-[135px] ml-[32px] mr-[70px] mt-[77px]">
                     <img
                         class="w-full h-full"
-                        src="/images/common/footer_logo@2x.png"
+                        src="/assets/images/common/footer_logo@2x.png"
                         alt="footer_logo"
                     />
                 </div>
@@ -86,7 +86,7 @@ export default defineComponent({
             <div class="contents-img-wrapper w-[80px] h-[80px] mt-[25px]">
                 <img
                     class="w-full h-full"
-                    src="/images/common/footer_logo@1x.png"
+                    src="/assets/images/common/footer_logo@1x.png"
                     alt="footer_logo"
                 />
             </div>

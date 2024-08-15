@@ -39,6 +39,7 @@ export default defineComponent({
 </script>
 
 <template>
+    <metainfo></metainfo>
     <clinic-header></clinic-header>
     <router-view />
     <clinic-footer></clinic-footer>

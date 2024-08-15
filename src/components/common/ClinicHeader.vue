@@ -132,9 +132,7 @@ export default defineComponent({
                 posEndX: 0,
                 posCenterX: 0,
                 posStartX: 0,
-                subList: [
-                    { title: '가전제품 청소', dest: '/appliances-cleaning' },
-                ]
+                subList: [{ title: '가전제품 청소', dest: '/appliances-cleaning' }]
             },
             {
                 id: 7,
@@ -178,6 +176,10 @@ export default defineComponent({
         ]);
 
         const handleClick = (sub: SubCategory) => {
+            if (!sub.dest || sub.dest === '') {
+                window.alert('현재 준비중인 페이지입니다.');
+                return;
+            }
             router.push(sub.dest);
         };
 
@@ -318,7 +320,7 @@ export default defineComponent({
             <div class="logo-wrapper w-[133px] h-[41px]" @click="handleClickLogo">
                 <img
                     class="w-full h-full"
-                    src="/images/home/clinic_logo@2x.png"
+                    src="/assets/images/home/clinic_logo@2x.png"
                     alt="main_logo"
                 />
             </div>
@@ -372,14 +374,14 @@ export default defineComponent({
             <div class="logo-wrapper w-[88px] h-[27px]">
                 <img
                     class="w-full h-full"
-                    src="/images/home/clinic_logo@1x.png"
+                    src="/assets/images/home/clinic_logo@1x.png"
                     alt="main_logo"
                 />
             </div>
             <div class="btn-wrapper w-[40px] h-[40px]">
                 <img
                     class="w-full h-full"
-                    src="/images/home/test-img1@1x.jpg"
+                    src="/assets/images/home/test-img1@1x.jpg"
                     alt="main_logo"
                 />
             </div>

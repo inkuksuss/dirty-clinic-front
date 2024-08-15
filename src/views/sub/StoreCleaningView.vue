@@ -9,6 +9,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
+    SubManageType,
     SubPageType,
     type SubPriceType,
     type SubPromotionType,
@@ -75,6 +76,65 @@ export default defineComponent({
             }
         ];
 
+        const manageList: SubManageType[] = [
+            {
+                title: '홀',
+                content: [
+                    {
+                        main: '벽, 가벽, 유리 파티션 먼지 청소'
+                    },
+                    {
+                        main: '유리창문, 창틀 청소'
+                    },
+                    {
+                        main: '각종 장식장, 선반, 싱크대 먼지 및 오염도 청소'
+                    },
+                    {
+                        main: '천장, 몰딩, 전등갓 등 먼지 청소'
+                    },
+                    {
+                        main: '현관, 신발장 청소'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '바닥 청소',
+                content: [
+                    { main: '데코타일, 장판, 마루 바닥종류에 알맞는 약품 청소' },
+                    {
+                        main: '필요시 마루광택기 기계 작업'
+                    },
+                    {
+                        main: '필요시 수지왁스 코팅'
+                    },
+                    {
+                        main: '걸레받이 오염도 밑 먼지 청소'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            },
+            {
+                title: '화장실',
+                content: [
+                    {
+                        main: '전체적인 물때 및 곰팡이 제거'
+                    },
+                    {
+                        main: '거울, 선반장 청소'
+                    },
+                    { main: '변기, 세면대, 타일, 바닥, 벽 청소' },
+                    {
+                        main: '하수구 세척 및 약품 소독'
+                    },
+                    {
+                        main: '환풍구 탈거 청소'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/bath_room.svg', import.meta.url).href
+            }
+        ];
+
         const serviceList: SubServiceType[] = [
             {
                 src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
@@ -113,6 +173,7 @@ export default defineComponent({
             introList,
             priceList,
             promotionList,
+            manageList,
             serviceList,
             bannerScript,
             handleClickBtn
@@ -128,6 +189,7 @@ export default defineComponent({
         <sub-manage
             title="어디까지 관리 되나요?"
             desc="입주청소와 동힐하게 집안 전체를 청소합니다."
+            :manage-list="manageList"
         ></sub-manage>
         <sub-promotion
             :page-type="SubPageType.STORE"

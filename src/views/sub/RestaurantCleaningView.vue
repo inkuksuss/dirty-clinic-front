@@ -8,6 +8,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
+    SubManageType,
     SubPageType,
     type SubPriceType,
     type SubServiceType
@@ -75,6 +76,52 @@ export default defineComponent({
             }
         ];
 
+        const manageList: SubManageType[] = [
+            {
+                title: '홀',
+                content: [
+                    { main: '벽, 가벽, 유리 파티션 먼지 청소' },
+                    { main: '유리창문, 창틀 청소' },
+                    { main: '각종 장식장, 선반, 싱크대 먼지 및 오염도 청소' },
+                    { main: '천장, 몰딩, 전등갓 등 먼지 청소' },
+                    { main: '현관, 신발장 청소' }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            },
+            {
+                title: '화장실',
+                content: [
+                    { main: '전체적인 물때 및 곰팡이 제거' },
+                    { main: '거울, 선반장 청소' },
+                    { main: '변기, 세면대, 타일, 바닥, 벽 청소' },
+                    { main: '하수구 세척 및 약품 소독' },
+                    { main: '환풍구 탈거 청소' }
+                ],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
+            {
+                title: '기름때청소',
+                content: [
+                    {
+                        main:
+                            '기름 때 청소는 \n' +
+                            '특성상 작업 범위가 넓고 많은 수작업이 필요합니다.\n' +
+                            '강력한 전용약품, 최신식 장비와 청소전문 인력으로 ' +
+                            '고객님의 요청사항과 작업환경을 고려해 ' +
+                            '현장에서 안내해드리고 있습니다.',
+                        imgSrc1: new URL('@/assets/images/sub/manage/oil1.png', import.meta.url)
+                            .href,
+                        imgSrc1Desc: '홀청소',
+                        imgSrc2: new URL('@/assets/images/sub/manage/oil2.png', import.meta.url)
+                            .href,
+                        imgSrc2Desc: '후드 청소'
+                    }
+                ],
+                hasImg: true,
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
+            }
+        ];
+
         const serviceList: SubServiceType[] = [
             {
                 src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
@@ -96,7 +143,7 @@ export default defineComponent({
                 src: new URL('@/assets/images/icons/headset.svg', import.meta.url).href,
                 title: 'AS 안내',
                 desc: '작업 종료 후 5일이내  1회 가능합니다.',
-              ext: '*이사짐이 들어오거나 추가 시공의 경우 제한됨.'
+                ext: '*이사짐이 들어오거나 추가 시공의 경우 제한됨.'
             }
         ];
 
@@ -119,6 +166,7 @@ export default defineComponent({
             introList,
             priceList,
             serviceList,
+            manageList,
             bannerScript,
             manageDesc,
             handleClickBtn
@@ -135,6 +183,7 @@ export default defineComponent({
             title="어디까지 관리 되나요?"
             :desc="manageDesc"
             :page-type="SubPageType.RESTAURANT"
+            :manage-list="manageList"
         ></sub-manage>
         <sub-promotion :page-type="SubPageType.RESTAURANT" :price-list="priceList"></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>

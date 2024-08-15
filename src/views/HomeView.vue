@@ -8,10 +8,15 @@ import { useStore } from '@/stores/store';
 import { PopupType } from '@/utils/types';
 import PaymentButton from '@/components/PaymentButton.vue';
 import HomeService from '@/components/home/HomeService.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     components: { HomeService, PaymentButton, HomePromotion, HomeIntro, HomeScroll, homeSlider },
     setup() {
+        useMeta({
+            title: '더치클리닉',
+            description: '더치클리닉 메인 페이지입니다.'
+        });
         const store = useStore();
         const handleClickBtn = () => {
             store.setOpenPopup(PopupType.PAYMENT);
@@ -29,7 +34,9 @@ export default defineComponent({
         <div class="main-image-wrapper w-full flex justify-center items-center bg-black">
             <div class="main-image w-full h-full flex justify-center items-center relative">
                 <div class="absolute w-full h-full bg-[--color-black] opacity-[40%] z-0"></div>
-                <div class="image-content max-w-[--body-width] w-[--body-ratio] flex flex-col justify-between z-10">
+                <div
+                    class="image-content max-w-[--body-width] w-[--body-ratio] flex flex-col justify-between z-10"
+                >
                     <div class="text-area flex flex-col items-start">
                         <span
                             class="main-text text-[48px] font-[700] text-[--color-white] leading-[62px] mb-[10px]"
@@ -38,7 +45,8 @@ export default defineComponent({
                         <span
                             class="sub-text text-[38px] font-[600] text-[--color-white] leading-[49px]"
                             >우리는 청결의 미학을 실현하는 <br class="break-m" />
-                            전문기업<br class="break-d" /> 더티클리닉입니다.</span
+                            전문기업<br class="break-d" />
+                            더티클리닉입니다.</span
                         >
                     </div>
                     <div
