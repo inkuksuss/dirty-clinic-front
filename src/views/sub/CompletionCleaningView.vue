@@ -14,6 +14,7 @@ import {
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -30,37 +31,42 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 특수클리닉 - 준공청소',
+            description:
+                '전문적이고 성실한 태도로 건축물의 완성도를 높이고, 깨끗한 환경을 조성합니다.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '방문견적\n일정안내',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '현장실측 및\n청소 프로세스 안내',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '예약확정 및\n작업준비',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '고소작업대 및\n' + '현장별 특수장비 투입',
-                src: new URL('@/assets/images/sub/intro/equipment.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/equipment.webp', import.meta.url).href
             },
             {
                 title: '구역별 알맞은\n' + '약품 청소',
-                src: new URL('@/assets/images/sub/intro/medicine.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/medicine.webp', import.meta.url).href
             },
             {
                 title: '현장 검수 및\n피드백',
-                src: new URL('@/assets/images/sub/intro/document.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/document.webp', import.meta.url).href
             }
         ];
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/fire.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/fire.webp', import.meta.url).href
             }
         ];
 
@@ -82,7 +88,7 @@ export default defineComponent({
         const manageDesc =
             '전문인력이 현장실측 시 고객님의 피해상황과\n' +
             '작업환경을 고려해 현장에서 안내해 드리고 있습니다.';
-        const manageImg = new URL('@/assets/images/sub/manage/completion.png', import.meta.url)
+        const manageImg = new URL('@/assets/images/sub/manage/completion.webp', import.meta.url)
             .href;
 
         const bannerScript = {

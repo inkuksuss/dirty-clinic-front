@@ -114,7 +114,7 @@ export default defineComponent({
                     class="header-wrapper flex min-h-[80px] mx-[30px] py-[20px] items-center border-b-[1px] border-b-[--color-border-blue]"
                 >
                     <div class="flex-center w-[40px] h-[40px] bg-[--color-skyblue] mr-[20px]">
-                        <img src="/assets/images/icons/window.svg" />
+                        <img src="/assets/images/icons/window.svg" alt="창문 아이콘" />
                     </div>
                     <span class="text-[--color-black] font-[600] text-[24px] leading-[26px]"
                         >창문을 전부다 탈거하고 진행하는 방법</span

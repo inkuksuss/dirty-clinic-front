@@ -3,10 +3,11 @@
 
     .banner-wrapper {
         .banner {
-            background-image: url('/assets/images/sub/sub_banner@1x.jpg');
+            background-image: url('/assets/images/sub/sub_banner@2x.webp');
             background-size: cover;
 
             @include mobile {
+                background-image: url('/assets/images/sub/sub_banner@1x.webp');
                 .text-area {
                     width: calc(100% - 50px);
 

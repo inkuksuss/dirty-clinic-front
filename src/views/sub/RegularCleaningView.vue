@@ -9,6 +9,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import { PopupType, type SubIntroType, SubPageType, type SubServiceType } from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     components: {
@@ -21,27 +22,31 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 간편클리닉 - 정기청소',
+            description: '주기적인 관리가 필요하신가요? 정기 청소는 더티클리닉에게 맡겨주세요.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '전문 상담과\n예약 확정',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '직영팀장님의\n사전 해피콜',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '현장 투입 및\n특이사항 체크',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '구역별\n알맞는 약품청소',
-                src: new URL('@/assets/images/sub/intro/basket.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/basket.webp', import.meta.url).href
             },
             {
                 title: '고객님과 함께\n현장 검수 및 완료',
-                src: new URL('@/assets/images/sub/intro/kitchen.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/kitchen.webp', import.meta.url).href
             }
         ];
 
@@ -69,7 +74,8 @@ export default defineComponent({
             desc: '주기적인 관리가 필요하신가요? 정기 청소는 더티클리닉에게 맡겨주세요.'
         };
 
-        const manageTitle = "정기적인 서비스가 필요하신가요?\n한개라도 해당되시는 고객님들은 상담을 받아보세요.";
+        const manageTitle =
+            '정기적인 서비스가 필요하신가요?\n한개라도 해당되시는 고객님들은 상담을 받아보세요.';
 
         const handleClickBtn = () => {
             store.setOpenPopup(PopupType.PAYMENT);
@@ -80,7 +86,7 @@ export default defineComponent({
             serviceList,
             bannerScript,
             SubPageType,
-          manageTitle,
+            manageTitle,
             handleClickBtn
         };
     }

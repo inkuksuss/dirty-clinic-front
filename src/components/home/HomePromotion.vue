@@ -18,17 +18,17 @@ export default defineComponent({
             {
                 title: '입주 프로모션',
                 description: '가전/ 줄눈/ 코팅',
-                src: new URL('@/assets/images/home/promotion_1.png', import.meta.url).href
+                src: new URL('@/assets/images/home/promotion_1.webp', import.meta.url).href
             },
             {
                 title: '공기질 시설관리',
                 description: '새집증후군/ 소독/<br class="break-m"/> 해충 방역',
-                src: new URL('@/assets/images/home/promotion_2.png', import.meta.url).href
+                src: new URL('@/assets/images/home/promotion_2.webp', import.meta.url).href
             },
             {
                 title: '사업장 정기관리',
                 description: '왁스코팅/ 정기관리/<br class="break-m"/> 공기질 관리',
-                src: new URL('@/assets/images/home/promotion_3.png', import.meta.url).href
+                src: new URL('@/assets/images/home/promotion_3.webp', import.meta.url).href
             }
         ];
 

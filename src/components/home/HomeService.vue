@@ -25,7 +25,7 @@ export default defineComponent({
                     '새로운 시작을 응원하듯, 쾌적하고 편안한 환경을 제공하여\n' +
                     '첫 입주의 기쁨을 더해줍니다.',
                 link: '',
-                src: new URL('@/assets/images/home/service_1.png', import.meta.url).href
+                src: new URL('@/assets/images/home/service_1.webp', import.meta.url).href
             },
             {
                 title: '사업장 청소',
@@ -33,7 +33,7 @@ export default defineComponent({
                     '매장의 이미지와  브랜드 가치를 지키기 위한 마음가짐으로\n' +
                     '고객들이 안심하고 머무를 수 있는 공간을 선사합니다.',
                 link: '',
-                src: new URL('@/assets/images/home/service_2.png', import.meta.url).href
+                src: new URL('@/assets/images/home/service_2.webp', import.meta.url).href
             },
             {
                 title: '준공청소',
@@ -41,7 +41,7 @@ export default defineComponent({
                     '전문적이고 성실한 태도로 건축물의 완성도를 높이고,\n' +
                     '깨끗한 환경을 조성합니다.',
                 link: '',
-                src: new URL('@/assets/images/home/service_3.png', import.meta.url).href
+                src: new URL('@/assets/images/home/service_3.webp', import.meta.url).href
             },
             {
                 title: '화재청소',
@@ -49,7 +49,7 @@ export default defineComponent({
                     '화재 피해 현장 재건 및 기반 마련을 위해,\n' +
                     '더티클리닉만의 철저한 현장관리 프로세스를 보장합니다.',
                 link: '',
-                src: new URL('@/assets/images/home/service_4.png', import.meta.url).href
+                src: new URL('@/assets/images/home/service_4.webp', import.meta.url).href
             }
         ];
 
@@ -98,6 +98,7 @@ export default defineComponent({
                                     <img
                                         src="/assets/images/icons/arrow_down.svg"
                                         class="w-full h-full rotate-[-90deg] w-[25px] h-[25px]"
+                                        alt="arrow"
                                     />
                                 </div>
                             </div>

@@ -320,7 +320,7 @@ export default defineComponent({
             <div class="logo-wrapper w-[133px] h-[41px]" @click="handleClickLogo">
                 <img
                     class="w-full h-full"
-                    src="/assets/images/home/clinic_logo@2x.png"
+                    src="/assets/images/home/clinic_logo@2x.webp"
                     alt="main_logo"
                 />
             </div>
@@ -374,14 +374,14 @@ export default defineComponent({
             <div class="logo-wrapper w-[88px] h-[27px]">
                 <img
                     class="w-full h-full"
-                    src="/assets/images/home/clinic_logo@1x.png"
+                    src="/assets/images/home/clinic_logo@1x.webp"
                     alt="main_logo"
                 />
             </div>
             <div class="btn-wrapper w-[40px] h-[40px]">
                 <img
                     class="w-full h-full"
-                    src="/assets/images/home/test-img1@1x.jpg"
+                    src="/assets/images/home/test-img1@1x.webp"
                     alt="main_logo"
                 />
             </div>

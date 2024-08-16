@@ -8,13 +8,14 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
-    SubManageType,
+    type SubManageType,
     SubPageType,
     type SubPriceType,
     type SubServiceType
 } from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -31,39 +32,44 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 전문시공 - 식당 후드 청소',
+            description:
+                '고객님의 식사를 위해 식당·후드 청소는 주기적으로 실시되어야 하며, 그것이 우리의 책임과 의무입니다.'
+        });
         const store = useStore();
 
         const introList: SubIntroType[] = [
             {
                 title: '견적요청 및\n전문 상담',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '일정조정 및\n예약확정',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '투입 전 해피콜\n및 사전정보 확인',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '투입 후 현장\n' + '특이사항 확인 및\n' + '색상 선택',
-                src: new URL('@/assets/images/sub/intro/checklist.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/checklist.webp', import.meta.url).href
             },
             {
                 title: '구역별\n' + '알맞은 약품청소\n' + '및 기계작업',
-                src: new URL('@/assets/images/sub/intro/joint.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/joint.webp', import.meta.url).href
             },
             {
                 title: '현장 검수 및\n체크리스트 작성',
-                src: new URL('@/assets/images/sub/intro/document.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/document.webp', import.meta.url).href
             }
         ];
 
         const priceList: SubPriceType[] = [
             {
                 title: '상가 매장 청소',
-                src: new URL('@/assets/images/sub/price/restaurant_store.png', import.meta.url)
+                src: new URL('@/assets/images/sub/price/restaurant_store.webp', import.meta.url)
                     .href,
                 ext: '* 20평 이상의 경우나 시스템에어컨, 주방 집기, 냉장고 청소 등 특수한 경우는 상담원과 상담이 필요합니다.'
             },
@@ -71,7 +77,8 @@ export default defineComponent({
                 title: '후드 기름때 청소',
                 subTitle:
                     '가로 후드 사이즈: 초소형 1m 이하, 소형 1.5m 이하, 중형 1.5-2m, 대형 2.5m 이상',
-                src: new URL('@/assets/images/sub/price/restaurant_hood.png', import.meta.url).href,
+                src: new URL('@/assets/images/sub/price/restaurant_hood.webp', import.meta.url)
+                    .href,
                 ext: '* 기본 출장비가 포함되어 있는 금액으로 입주청소와 함께 진행 시 금액할인이 있습니다.'
             }
         ];
@@ -109,10 +116,10 @@ export default defineComponent({
                             '강력한 전용약품, 최신식 장비와 청소전문 인력으로 ' +
                             '고객님의 요청사항과 작업환경을 고려해 ' +
                             '현장에서 안내해드리고 있습니다.',
-                        imgSrc1: new URL('@/assets/images/sub/manage/oil1.png', import.meta.url)
+                        imgSrc1: new URL('@/assets/images/sub/manage/oil1.webp', import.meta.url)
                             .href,
                         imgSrc1Desc: '홀청소',
-                        imgSrc2: new URL('@/assets/images/sub/manage/oil2.png', import.meta.url)
+                        imgSrc2: new URL('@/assets/images/sub/manage/oil2.webp', import.meta.url)
                             .href,
                         imgSrc2Desc: '후드 청소'
                     }

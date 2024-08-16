@@ -17,6 +17,7 @@ import {
 } from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -34,33 +35,37 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 전문클리닉 - 사무실청소',
+            description: '쾌적한 공간에 맞는 업무효율, 사무실 청소는 더티클리닉에게 맡겨주세요.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '전문 상담과\n예약 확정',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '직영팀장님의\n사전 해피콜',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '현장 투입 및\n특이사항 체크',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '구역별\n알맞는 약품청소',
-                src: new URL('@/assets/images/sub/intro/basket.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/basket.webp', import.meta.url).href
             },
             {
                 title: '고객님과 함께\n현장 검수 및 완료',
-                src: new URL('@/assets/images/sub/intro/kitchen.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/kitchen.webp', import.meta.url).href
             }
         ];
 
         const priceList: SubPriceType[] = [
             {
-                src: new URL('@/assets/images/sub/price/office.png', import.meta.url).href,
+                src: new URL('@/assets/images/sub/price/office.webp', import.meta.url).href,
                 ext:
                     '* 외부창문, 화장실 청소 제외된 기본 단가입니다.\n' +
                     '20평 이상의 경우나 바닥코팅, 시스템에어컨 청소 등 특수한 경우는 상담원과 상담이 필요합니다.'
@@ -69,10 +74,10 @@ export default defineComponent({
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/move_in1.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/move_in1.webp', import.meta.url).href
             },
             {
-                src: new URL('@/assets/images/sub/promotion/move_in1.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/move_in1.webp', import.meta.url).href
             }
         ];
 

@@ -7,7 +7,7 @@ import SubBanner from '@/components/sub/SubBanner.vue';
 import {
     PopupType,
     type SubIntroType,
-    SubManageType,
+    type SubManageType,
     SubPageType,
     type SubPriceType,
     type SubPromotionType,
@@ -16,6 +16,7 @@ import {
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -32,84 +33,88 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 가전클리닉 - 가전제품 청소',
+            description: '고객님과 가족의 건강을 위하여, 곁에 있는 작은 것부터 깨끗하게 청소합니다.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '에어컨 청소',
-                src: new URL('@/assets/images/sub/intro/aircon.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/aircon.webp', import.meta.url).href
             },
             {
                 title: '세탁기 청소',
-                src: new URL('@/assets/images/sub/intro/washing_machine.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/washing_machine.webp', import.meta.url).href
             },
             {
                 title: '냉장고 청소',
-                src: new URL('@/assets/images/sub/intro/refri.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/refri.webp', import.meta.url).href
             },
             {
                 title: '소파, 매트리스 청소',
-                src: new URL('@/assets/images/sub/intro/sofa.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/sofa.webp', import.meta.url).href
             }
         ];
 
         const priceList: SubPriceType[] = [
             {
                 title: '에어컨',
-                src: new URL('@/assets/images/sub/price/aircon.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/aircon.webp', import.meta.url).href
             },
             {
                 title: '에어컨 완전 분해 청소',
-                src: new URL('@/assets/images/sub/price/aircon2.png', import.meta.url).href,
+                src: new URL('@/assets/images/sub/price/aircon2.webp', import.meta.url).href,
                 line: true
             },
             {
                 mainTitle: '냉장고',
                 mainSubTitle: '* 정리정돈 및 물건 있는 경우는 기본금에 추가금이 발생됩니다.',
                 title: '가정용 일반 냉장고',
-                src: new URL('@/assets/images/sub/price/common_refri.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/common_refri.webp', import.meta.url).href
             },
             {
                 title: '김치냉장고',
-                src: new URL('@/assets/images/sub/price/kimchi_refri.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/kimchi_refri.webp', import.meta.url).href
             },
             {
                 title: '업소용',
-                src: new URL('@/assets/images/sub/price/market_refri.png', import.meta.url).href,
+                src: new URL('@/assets/images/sub/price/market_refri.webp', import.meta.url).href,
                 line: true
             },
             {
                 title: '소파',
-                src: new URL('@/assets/images/sub/price/sofa.png', import.meta.url).href,
+                src: new URL('@/assets/images/sub/price/sofa.webp', import.meta.url).href,
                 ext: '* 기본 출장비: 10만원 (10만원 미만의 단가일때 해당합니다.)'
             },
             {
                 title: '매트리스',
                 titleDesc: '*건식 청소',
-                src: new URL('@/assets/images/sub/price/matrix.png', import.meta.url).href,
+                src: new URL('@/assets/images/sub/price/matrix.webp', import.meta.url).href,
                 ext: '* 기본 출장비: 10만원 (10만원 미만의 단가일때 해당합니다.)'
             },
             {
                 title: '매트리스',
                 titleDesc: '*습식 청소',
-                src: new URL('@/assets/images/sub/price/matrix2.png', import.meta.url).href,
+                src: new URL('@/assets/images/sub/price/matrix2.webp', import.meta.url).href,
                 ext: '* 기본 출장비: 10만원 (10만원 미만의 단가일때 해당합니다.)',
                 line: true
             },
             {
                 title: '통돌이 세탁기',
-                src: new URL('@/assets/images/sub/price/washing.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/washing.webp', import.meta.url).href
             },
             {
                 title: '드럼 세탁기',
-                src: new URL('@/assets/images/sub/price/drum_washing.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/drum_washing.webp', import.meta.url).href
             },
             {
                 title: '트윈워시 세탁기',
-                src: new URL('@/assets/images/sub/price/twin_washing.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/twin_washing.webp', import.meta.url).href
             },
             {
                 title: '플렉스 워시/ 유아용/ 빌트인 세탁기',
-                src: new URL('@/assets/images/sub/price/flex_washing.png', import.meta.url).href,
+                src: new URL('@/assets/images/sub/price/flex_washing.webp', import.meta.url).href,
                 ext:
                     '* 건조기는 물을 사용하는 제품이 아니라 분해세척이 필요 없습니다. 필터 세척이면 충분합니다.\n' +
                     '(건조기 청소 단독사용 불가, 세탁기 청소 진행시 건조기 청소 경우 3만원 추가)',
@@ -119,10 +124,10 @@ export default defineComponent({
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/joint.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/joint.webp', import.meta.url).href
             },
             {
-                src: new URL('@/assets/images/sub/promotion/joint.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/joint.webp', import.meta.url).href
             }
         ];
 

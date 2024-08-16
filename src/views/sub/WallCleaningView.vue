@@ -14,6 +14,7 @@ import {
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -30,37 +31,42 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 특수클리닉 - 외벽청소',
+            description:
+                '환경과 이미지를 한번에. 건물의 미적 가치와 지역의 환경미 증진에 이바지합니다.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '방문견적\n일정 안내',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '현장실측 및\n청소 프로세스 안내',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '예약확정 및\n작업준비',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '고소작업대 및\n' + '현장별 특수장비 투입',
-                src: new URL('@/assets/images/sub/intro/equipment.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/equipment.webp', import.meta.url).href
             },
             {
                 title: '약품처리 후 고압세척\n' + '및 고소작업',
-                src: new URL('@/assets/images/sub/intro/wash.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/wash.webp', import.meta.url).href
             },
             {
                 title: '현장 검수 및\n피드백',
-                src: new URL('@/assets/images/sub/intro/document.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/document.webp', import.meta.url).href
             }
         ];
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/fire.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/fire.webp', import.meta.url).href
             }
         ];
 
@@ -68,7 +74,9 @@ export default defineComponent({
             {
                 src: new URL('@/assets/images/icons/people.svg', import.meta.url).href,
                 title: '시간 및 작업인원',
-                desc: '건물 외벽 청소 특성상 소요시간,\n' + '투입인원 및 AS규정은 달라질 수 있습니다.',
+                desc:
+                    '건물 외벽 청소 특성상 소요시간,\n' +
+                    '투입인원 및 AS규정은 달라질 수 있습니다.',
                 ext: '*현장에서 안내 도와드리겠습니다.'
             },
             {
@@ -87,7 +95,7 @@ export default defineComponent({
         const manageDesc =
             '전문인력이 현장실측 시 고객님의 피해상황과\n' +
             '작업환경을 고려해 현장에서 안내해 드리고 있습니다.';
-        const manageImg = new URL('@/assets/images/sub/manage/wall.png', import.meta.url).href;
+        const manageImg = new URL('@/assets/images/sub/manage/wall.webp', import.meta.url).href;
 
         const bannerScript = {
             title: '건물외벽 청소',

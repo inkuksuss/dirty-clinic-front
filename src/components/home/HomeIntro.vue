@@ -5,6 +5,7 @@ import ClinicImage from '@/components/common/ClinicImage.vue';
 
 type data = {
     src: string;
+    mobileSrc: string;
     filterSrc: string;
     title: string;
     desc: string;
@@ -19,8 +20,9 @@ export default defineComponent({
 
         const dataList = ref<data[]>([
             {
-                src: new URL('@/assets/images/home/intro_1.png', import.meta.url).href,
-                filterSrc: new URL('@/assets/images/home/intro_1_filter.png', import.meta.url).href,
+                src: new URL('@/assets/images/home/intro_1.webp', import.meta.url).href,
+                mobileSrc: new URL('@/assets/images/home/intro_1_mobile@2x.webp', import.meta.url).href,
+                filterSrc: new URL('@/assets/images/home/intro_1_filter.webp', import.meta.url).href,
                 title: '현장사업수행팀',
                 desc:
                     '본사 체계적인 교육 프로세스 이수\n' +
@@ -28,8 +30,9 @@ export default defineComponent({
                     '수도권 전지역에 분포되어 발빠른 대응'
             },
             {
-                src: new URL('@/assets/images/home/intro_2.png', import.meta.url).href,
-                filterSrc: new URL('@/assets/images/home/intro_2_filter.png', import.meta.url).href,
+                src: new URL('@/assets/images/home/intro_2.webp', import.meta.url).href,
+                mobileSrc: new URL('@/assets/images/home/intro_2_mobile@2x.webp', import.meta.url).href,
+                filterSrc: new URL('@/assets/images/home/intro_2_filter.webp', import.meta.url).href,
                 title: '고객지원팀',
                 desc:
                     '친절한 상담과 정확한 견적\n' +
@@ -37,8 +40,9 @@ export default defineComponent({
                     '방문견적 및 현장에 대한 높은 이해'
             },
             {
-                src: new URL('@/assets/images/home/intro_3.png', import.meta.url).href,
-                filterSrc: new URL('@/assets/images/home/intro_3_filter.png', import.meta.url).href,
+                src: new URL('@/assets/images/home/intro_3.webp', import.meta.url).href,
+                mobileSrc: new URL('@/assets/images/home/intro_3_mobile@2x.webp', import.meta.url).href,
+                filterSrc: new URL('@/assets/images/home/intro_3_filter.webp', import.meta.url).href,
                 title: '연구개발팀',
                 desc:
                     '자체 제작된 교육 프로세스\n' +
@@ -74,7 +78,11 @@ export default defineComponent({
                 :key="idx"
                 class="intro-box content relative w-[32%]"
             >
-                <clinic-image class="w-full" :src="data.src"></clinic-image>
+                <img v-if="compIsMobile" :src="data.mobileSrc" alt="더티클리닉 부서소개">
+                <clinic-image v-else
+                    class="w-full"
+                    :src="compIsMobile ? data.mobileSrc : data.src"
+                ></clinic-image>
                 <div class="hover-filter absolute left-0 top-0 w-full h-full hidden">
                     <div
                         v-if="compIsMobile"

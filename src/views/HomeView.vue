@@ -14,8 +14,8 @@ export default defineComponent({
     components: { HomeService, PaymentButton, HomePromotion, HomeIntro, HomeScroll, homeSlider },
     setup() {
         useMeta({
-            title: '더치클리닉',
-            description: '더치클리닉 메인 페이지입니다.'
+            title: '더티클리닉',
+            description: '더티클리닉 메인 페이지입니다.'
         });
         const store = useStore();
         const handleClickBtn = () => {

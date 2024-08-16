@@ -7,15 +7,17 @@ import SubCheckList from '@/components/sub/SubCheckList.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
 import SubBanner from '@/components/sub/SubBanner.vue';
 import {
-  PopupType,
-  type SubIntroType, SubManageType,
-  SubPageType,
-  type SubPriceType,
-  type SubPromotionType,
-  type SubServiceType
+    PopupType,
+    type SubIntroType,
+    type SubManageType,
+    SubPageType,
+    type SubPriceType,
+    type SubPromotionType,
+    type SubServiceType
 } from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -33,71 +35,75 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 전문클리닉 - 인테리어청소',
+            description: '인테리어의 완성은 청소!, 인테리어청소는 더티클리닉에게 맡겨주세요.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '전문 상담과\n예약 확정',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '직영팀장님의\n사전 해피콜',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '현장 투입 및\n특이사항 체크',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '구역별\n알맞는 약품청소',
-                src: new URL('@/assets/images/sub/intro/basket.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/basket.webp', import.meta.url).href
             },
             {
                 title: '고객님과 함께\n현장 검수 및 완료',
-                src: new URL('@/assets/images/sub/intro/kitchen.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/kitchen.webp', import.meta.url).href
             }
         ];
 
         const priceList: SubPriceType[] = [
             {
-                src: new URL('@/assets/images/sub/price/interior.png', import.meta.url).href,
+                src: new URL('@/assets/images/sub/price/interior.webp', import.meta.url).href,
                 ext: '* 해당 견적은 확장형 기준으로 정확한 견적은 홈페이지 좌측하단의 견적보기를 확인하세요.'
             }
         ];
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/move_in1.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/move_in1.webp', import.meta.url).href
             },
             {
-                src: new URL('@/assets/images/sub/promotion/move_in1.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/move_in1.webp', import.meta.url).href
             }
         ];
 
-      const manageList: SubManageType[] = [
-        {
-          title: '거실, 방',
-          content: [
+        const manageList: SubManageType[] = [
             {
-              main: '몰딩, 벽지 도배풀제거'
-            }
-          ],
-          icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
-        },
-        {
-          title: '화장실, 베란다',
-          content: [{ main: '벽, 바닥타일 백시멘트 전용 약품처리' }],
-          icon: new URL('@/assets/images/icons/bath_room.svg', import.meta.url).href
-        },
-        {
-          title: '주방',
-          content: [
+                title: '거실, 방',
+                content: [
+                    {
+                        main: '몰딩, 벽지 도배풀제거'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/brush.svg', import.meta.url).href
+            },
             {
-              main: '상하부장, 싱크대 밑 나무톱밥 및 분진 청소'
+                title: '화장실, 베란다',
+                content: [{ main: '벽, 바닥타일 백시멘트 전용 약품처리' }],
+                icon: new URL('@/assets/images/icons/bath_room.svg', import.meta.url).href
+            },
+            {
+                title: '주방',
+                content: [
+                    {
+                        main: '상하부장, 싱크대 밑 나무톱밥 및 분진 청소'
+                    }
+                ],
+                icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
             }
-          ],
-          icon: new URL('@/assets/images/icons/kitchen.svg', import.meta.url).href
-        }
-      ];
+        ];
 
         const serviceList: SubServiceType[] = [
             {

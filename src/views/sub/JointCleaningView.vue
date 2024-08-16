@@ -16,6 +16,7 @@ import {
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -32,31 +33,36 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 전문시공 - 줄눈시공',
+            description:
+                '청결과 디자인을 동시에, 최신장비와 재료로 고객님께 최고의 품질을 제공합니다.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '견적요청 및\n전문 상담',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '일정조정 및\n예약확정',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '투입 전 해피콜\n및 사전정보 확인',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '투입 후 현장\n' + '특이사항 확인 및\n' + '색상 선택',
-                src: new URL('@/assets/images/sub/intro/checklist.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/checklist.webp', import.meta.url).href
             },
             {
                 title: '보양작업 및\n' + '줄눈시공',
-                src: new URL('@/assets/images/sub/intro/joint.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/joint.webp', import.meta.url).href
             },
             {
                 title: '현장 검수 및\n피드백',
-                src: new URL('@/assets/images/sub/intro/document.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/document.webp', import.meta.url).href
             }
         ];
 
@@ -104,23 +110,23 @@ export default defineComponent({
         const priceList: SubPriceType[] = [
             {
                 title: '화장실',
-                src: new URL('@/assets/images/sub/price/joint_bath.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/joint_bath.webp', import.meta.url).href
             },
             {
                 title: '주방',
                 titleDesc: '* 신축 기준',
-                src: new URL('@/assets/images/sub/price/joint_kitchen.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/joint_kitchen.webp', import.meta.url).href
             },
             {
                 title: '베란다',
                 titleDesc: '* 신축 기준',
-                src: new URL('@/assets/images/sub/price/joint_veranda.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/joint_veranda.webp', import.meta.url).href
             }
         ];
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/joint.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/joint.webp', import.meta.url).href
             }
         ];
 
@@ -149,7 +155,7 @@ export default defineComponent({
 
         const bannerScript = {
             title: '줄눈시공',
-            desc: '학생들의 건강과 안전에 책임을 다하여 안정적이고 편리한 환경을 제공합니다.'
+            desc: '청결과 디자인을 동시에, 최신장비와 재료로 고객님께 최고의 품질을 제공합니다.'
         };
 
         const handleClickBtn = () => {
@@ -188,7 +194,9 @@ export default defineComponent({
                         <div
                             class="bg-[--color-border-blue] w-[20px] h-[20px] rounded-[50%] mr-[10px]"
                         ></div>
-                        <span class="title text-[--color-black] text-[20px] font-[500]">폴리우레아</span>
+                        <span class="title text-[--color-black] text-[20px] font-[500]"
+                            >폴리우레아</span
+                        >
                     </div>
                     <div class="desc pl-[30px] text-[--color-black] text-[20px] font-[500]">
                         일반적으로 많이 사용하는 줄눈제로 케라폭시보다 금액이 저렴하고 다양한 색상
@@ -201,7 +209,9 @@ export default defineComponent({
                         <div
                             class="bg-[--color-border-blue] w-[20px] h-[20px] rounded-[50%] mr-[10px]"
                         ></div>
-                        <span class="title text-[--color-black] text-[20px] font-[500]">케라폭시</span>
+                        <span class="title text-[--color-black] text-[20px] font-[500]"
+                            >케라폭시</span
+                        >
                     </div>
                     <div class="desc pl-[30px] text-[--color-black] text-[20px] font-[500]">
                         폴리우레아보다 금액이 2-3배 발생하지만 한번 시공 후 영구적인 수명, 강한

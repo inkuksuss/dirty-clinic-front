@@ -11,8 +11,8 @@ export default defineComponent({
     setup() {
         const autoPlay = new AutoPlay({ duration: 1000, direction: 'NEXT', stopOnHover: true });
 
-        const firstImg = new URL('@/assets/images/home/slider_1.png', import.meta.url).href;
-        const secondImg = new URL('@/assets/images/home/slider_2.png', import.meta.url).href;
+        const firstImg = new URL('@/assets/images/home/slider_1.webp', import.meta.url).href;
+        const secondImg = new URL('@/assets/images/home/slider_2.webp', import.meta.url).href;
         const firstSrc = ref<string>(firstImg);
         const secondSrc = ref<string>(secondImg);
 
@@ -28,21 +28,21 @@ export default defineComponent({
 <template>
     <div class="slider-wrapper w-full flex justify-center">
         <div
-            class="slider-contents max-w-[--body-width] w-[--body-ratio] flex justify-between items-center"
+            class="slider-contents max-w-[--body-width] w-[--body-ratio] flex justify-start items-center"
         >
-            <div class="text-area w-[32%] pb-[20px] mr-[85px]">
+            <div class="text-area w-[32%] pb-[20px] mr-[85px] min-w-[210px]">
                 <div class="w-full text-[48px] font-[700] leading-[57px]">
                     신뢰의 <br />
                     더티클리닉
                 </div>
             </div>
 
-            <div class="flex gap-x-[17px]">
-                <div class="image-container first-image">
-                    <clinic-image class="w-[267px]" :src="firstSrc"></clinic-image>
+            <div class="img-area flex gap-x-[17px]">
+                <div class="image-container first-image w-[53%]">
+                    <clinic-image class="max-w-[267px] w-full" :src="firstSrc"></clinic-image>
                 </div>
-                <div class="image-container second-image">
-                    <clinic-image class="w-[222px]" :src="secondSrc"></clinic-image>
+                <div class="image-container second-image w-[46%]">
+                    <clinic-image class="max-w-[222px] w-full" :src="secondSrc"></clinic-image>
                 </div>
             </div>
         </div>

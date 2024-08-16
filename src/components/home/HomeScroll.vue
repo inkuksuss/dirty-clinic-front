@@ -15,24 +15,24 @@ export default defineComponent({
                     <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_1@1x.png"
+                            src="/assets/images/home/brand_1@1x.webp"
                             alt="brand_1"
                         />
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_1@1x.png"
+                            src="/assets/images/home/brand_1@1x.webp"
                             alt="brand_1"
                         />
                     </div>
                     <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_1@1x.png"
+                            src="/assets/images/home/brand_1@1x.webp"
                             alt="brand_1"
                         />
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_1@1x.png"
+                            src="/assets/images/home/brand_1@1x.webp"
                             alt="brand_1"
                         />
                     </div>
@@ -41,24 +41,24 @@ export default defineComponent({
                     <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_2@1x.png"
+                            src="/assets/images/home/brand_2@1x.webp"
                             alt="brand_1"
                         />
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_2@1x.png"
+                            src="/assets/images/home/brand_2@1x.webp"
                             alt="brand_1"
                         />
                     </div>
                     <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_2@1x.png"
+                            src="/assets/images/home/brand_2@1x.webp"
                             alt="brand_1"
                         />
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_2@1x.png"
+                            src="/assets/images/home/brand_2@1x.webp"
                             alt="brand_1"
                         />
                     </div>
@@ -67,24 +67,24 @@ export default defineComponent({
                     <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_3@1x.png"
+                            src="/assets/images/home/brand_3@1x.webp"
                             alt="brand_1"
                         />
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_3@1x.png"
+                            src="/assets/images/home/brand_3@1x.webp"
                             alt="brand_1"
                         />
                     </div>
                     <div class="img-wrapper absolute w-[1336px] h-[60px] absolute flex">
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_3@1x.png"
+                            src="/assets/images/home/brand_3@1x.webp"
                             alt="brand_1"
                         />
                         <img
                             class="w-full h-full"
-                            src="/assets/images/home/brand_3@1x.png"
+                            src="/assets/images/home/brand_3@1x.webp"
                             alt="brand_1"
                         />
                     </div>

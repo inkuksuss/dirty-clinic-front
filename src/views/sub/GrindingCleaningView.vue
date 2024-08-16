@@ -16,6 +16,7 @@ import {
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -32,54 +33,59 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '연마',
+            description:
+                '연마 작업으로만 복구되는 것이 있습니다. 전문가의 손길로 최고의 퀄리티를 보장합니다.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '견적요청 및\n전문 상담',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '일정조정 및\n예약확정',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '투입 전 해피콜\n및 사전정보 확인',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '투입 후 현장\n' + '특이사항 확인 및\n' + '색상 선택',
-                src: new URL('@/assets/images/sub/intro/checklist.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/checklist.webp', import.meta.url).href
             },
             {
                 title: '구역별 작업 진행',
-                src: new URL('@/assets/images/sub/intro/basket.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/basket.webp', import.meta.url).href
             },
             {
                 title: '현장 검수 및\n피드백',
-                src: new URL('@/assets/images/sub/intro/document.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/document.webp', import.meta.url).href
             }
         ];
 
         const priceList: SubPriceType[] = [
             {
                 title: '화장실',
-                src: new URL('@/assets/images/sub/price/joint_bath.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/joint_bath.webp', import.meta.url).href
             },
             {
                 title: '주방',
                 titleDesc: '* 신축 기준',
-                src: new URL('@/assets/images/sub/price/joint_kitchen.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/joint_kitchen.webp', import.meta.url).href
             },
             {
                 title: '베란다',
                 titleDesc: '* 신축 기준',
-                src: new URL('@/assets/images/sub/price/joint_veranda.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/price/joint_veranda.webp', import.meta.url).href
             }
         ];
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/joint.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/joint.webp', import.meta.url).href
             }
         ];
 

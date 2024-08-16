@@ -15,6 +15,7 @@ import {
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -31,37 +32,42 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 전문시공 - 곰팡이제거, 차단',
+            description:
+                '전문적이고 친환경적인 시공 작업으로 우리 신체의 호흡기와 알레르기 유발을 보호합니다.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '견적요청 및\n전문 상담',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '일정조정 및\n예약확정',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '투입 전 해피콜\n및 사전정보 확인',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '투입 후 현장\n' + '특이사항 확인 및\n' + '공유',
-                src: new URL('@/assets/images/sub/intro/checklist.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/checklist.webp', import.meta.url).href
             },
             {
                 title: '구역별 작업진행',
-                src: new URL('@/assets/images/sub/intro/basket.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/basket.webp', import.meta.url).href
             },
             {
                 title: '현장 검수 및\n피드백',
-                src: new URL('@/assets/images/sub/intro/document.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/document.webp', import.meta.url).href
             }
         ];
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/fire.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/fire.webp', import.meta.url).href
             }
         ];
 

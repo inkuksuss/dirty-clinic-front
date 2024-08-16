@@ -17,6 +17,7 @@ import {
 } from '@/utils/types';
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -34,43 +35,47 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 전문클리닉 - 이사청소',
+            description: '내집의 분위기를 새집처럼, 이사 청소는 더티클리닉에게 맡겨주세요.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '전문 상담과\n예약 확정',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '직영팀장님의\n사전 해피콜',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '현장 투입 및\n특이사항 체크',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '구역별\n알맞는 약품청소',
-                src: new URL('@/assets/images/sub/intro/basket.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/basket.webp', import.meta.url).href
             },
             {
                 title: '고객님과 함께\n현장 검수 및 완료',
-                src: new URL('@/assets/images/sub/intro/kitchen.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/kitchen.webp', import.meta.url).href
             }
         ];
 
         const priceList: SubPriceType[] = [
             {
-                src: new URL('@/assets/images/sub/price/moving.png', import.meta.url).href,
+                src: new URL('@/assets/images/sub/price/moving.webp', import.meta.url).href,
                 ext: '* 해당 견적은 확장형 기준으로 정확한 견적은 홈페이지 좌측하단의 견적보기를 확인하세요.'
             }
         ];
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/move_in1.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/move_in1.webp', import.meta.url).href
             },
             {
-                src: new URL('@/assets/images/sub/promotion/move_in1.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/move_in1.webp', import.meta.url).href
             }
         ];
 

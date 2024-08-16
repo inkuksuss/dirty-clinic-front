@@ -36,8 +36,8 @@ export default defineComponent({
                 <div class="contents-img-wrapper w-[135px] h-[135px] ml-[32px] mr-[70px] mt-[77px]">
                     <img
                         class="w-full h-full"
-                        src="/assets/images/common/footer_logo@2x.png"
-                        alt="footer_logo"
+                        src="/assets/images/common/footer_logo@2x.webp"
+                        alt="더티클리닉 큰 푸터"
                     />
                 </div>
                 <div class="contents-body-wrapper pt-[60px]">
@@ -86,8 +86,8 @@ export default defineComponent({
             <div class="contents-img-wrapper w-[80px] h-[80px] mt-[25px]">
                 <img
                     class="w-full h-full"
-                    src="/assets/images/common/footer_logo@1x.png"
-                    alt="footer_logo"
+                    src="/assets/images/common/footer_logo@1x.webp"
+                    alt="더티클리닉 작은 푸터"
                 />
             </div>
             <div class="contents-description-wrapper flex flex-col mt-[30px]">

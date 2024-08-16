@@ -7,7 +7,7 @@
         height: calc(100vh - $header-height);
 
         .main-image {
-            background-image: url('/assets/images/home/clinic_main@2x.png');
+            background-image: url('/assets/images/home/clinic_main@2x.webp');
             background-size: cover;
         }
 
@@ -151,15 +151,15 @@
                             margin-right: 15px;
 
                             &:first-child {
-                                background-image: url('/assets/images/home/promotion_1@1x.png');
+                                background-image: url('/assets/images/home/promotion_1@1x.webp');
                             }
 
                             &:nth-child(2) {
-                                background-image: url('/assets/images/home/promotion_2@1x.png');
+                                background-image: url('/assets/images/home/promotion_2@1x.webp');
                             }
 
                             &:last-child {
-                                background-image: url('/assets/images/home/promotion_3@1x.png');
+                                background-image: url('/assets/images/home/promotion_3@1x.webp');
                             }
                         }
                     }
@@ -228,17 +228,25 @@
 
         .slider-wrapper {
             .slider-contents {
-                .image-container {
-                    &:first-child {
-                        aspect-ratio: 267 / 321;
-                    }
-                    &:last-child {
-                        aspect-ratio: 222/ 320;
-                    }
+                .img-area {
+                    //max-width: calc(100% - 300px);
 
-                    @include mobile {
-                        img {
-                            height: 173px;
+                    .image-container {
+                        &:first-child {
+                            img {
+                                aspect-ratio: 267 / 321;
+                            }
+                        }
+                        &:last-child {
+                            img {
+                                aspect-ratio: 222 / 320;
+                            }
+                        }
+
+                        @include mobile {
+                            img {
+                                height: 173px;
+                            }
                         }
                     }
                 }
@@ -249,29 +257,19 @@
 
                 .slider-contents {
                     width: 100%;
-                    display: grid;
-                    grid-template-areas:
-                        'header header'
-                        'a b';
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
 
                     .text-area {
                         width: 100%;
-                        grid-area: header;
+                        //margin-left: 0px;
 
                         div {
-                            padding-left: 5%;
                             font-weight: 700;
                             font-size: 38px;
                             line-height: 45px;
                         }
-                    }
-
-                    .first-image {
-                        grid-area: a;
-                    }
-
-                    .second-image {
-                        grid-area: b;
                     }
 
                     .image-container {

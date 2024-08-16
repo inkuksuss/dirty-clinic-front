@@ -14,6 +14,7 @@ import {
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -30,61 +31,66 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 특수클리닉 - 화재청소',
+            description:
+                '화재 피해 현장 재건 및 기반 마련을 위해, 더티클리닉만의 철저한 현장관리 프로세스를 보장합니다.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '방문견적\n일정 안내',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '현장실측 및\n청소 프로세스 안내',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '예약확정 및\n작업 준비',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '철거 공사',
-                src: new URL('@/assets/images/sub/intro/terminate.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/terminate.webp', import.meta.url).href
             },
             {
                 title: '폐기물 처리',
-                src: new URL('@/assets/images/sub/intro/trash.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/trash.webp', import.meta.url).href
             },
             {
                 title: '1차 탈취 및\n살균소독',
-                src: new URL('@/assets/images/sub/intro/disinfection.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/disinfection.webp', import.meta.url).href
             },
             {
                 title: '약품 처리 및\n고압세척',
-                src: new URL('@/assets/images/sub/intro/wash.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/wash.webp', import.meta.url).href
             },
             {
                 title: '2차 소독 및\n화재 냄새 억제',
-                src: new URL('@/assets/images/sub/intro/suppression.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/suppression.webp', import.meta.url).href
             },
             {
                 title: '복구 공사',
-                src: new URL('@/assets/images/sub/intro/restore.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/restore.webp', import.meta.url).href
             },
             {
                 title: '공사 후 청소',
-                src: new URL('@/assets/images/sub/intro/basket.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/basket.webp', import.meta.url).href
             },
             {
                 title: '현장 검수 및\n체크리스트 작성',
-                src: new URL('@/assets/images/sub/intro/checklist.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/checklist.webp', import.meta.url).href
             },
             {
                 title: '보험관련\n서류 안내',
-                src: new URL('@/assets/images/sub/intro/document.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/document.webp', import.meta.url).href
             }
         ];
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/fire.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/fire.webp', import.meta.url).href
             }
         ];
 
@@ -117,7 +123,7 @@ export default defineComponent({
             '전문인력이 현장실측 시\n' +
             '고객님의 피해 상황과 작업환경을 고려해\n' +
             '현장에서 안내해 드리고 있습니다.';
-        const manageImg = new URL('@/assets/images/sub/manage/fire.png', import.meta.url).href;
+        const manageImg = new URL('@/assets/images/sub/manage/fire.webp', import.meta.url).href;
 
         const bannerScript = {
             title: '화재청소',

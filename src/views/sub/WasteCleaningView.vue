@@ -14,6 +14,7 @@ import {
 import { useStore } from '@/stores/store';
 import PaymentButton from '@/components/PaymentButton.vue';
 import SubPromotion from '@/components/sub/SubPromotion.vue';
+import { useMeta } from 'vue-meta';
 
 export default defineComponent({
     computed: {
@@ -30,37 +31,42 @@ export default defineComponent({
         SubIntro
     },
     setup() {
+        useMeta({
+            title: '더티클리닉 - 특수클리닉 - 폐기물처리',
+            description:
+                '더티클리닉은 정부의 규제를 준수하고 환경보호 및 안전을 최우선으로 고려합니다.'
+        });
         const store = useStore();
         const introList: SubIntroType[] = [
             {
                 title: '견적 요청 및\n전문 상담',
-                src: new URL('@/assets/images/sub/intro/phone.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/phone.webp', import.meta.url).href
             },
             {
                 title: '일정 조정 및\n예약 확정',
-                src: new URL('@/assets/images/sub/intro/note.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/note.webp', import.meta.url).href
             },
             {
                 title: '투입 전 해피콜\n및 사전정보 확인',
-                src: new URL('@/assets/images/sub/intro/people.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
                 title: '투입 후 현장 특이사항\n' + '확인 및 공유',
-                src: new URL('@/assets/images/sub/intro/checklist.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/checklist.webp', import.meta.url).href
             },
             {
                 title: '폐기물 상차\n' + '및 수거',
-                src: new URL('@/assets/images/sub/intro/trash.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/trash.webp', import.meta.url).href
             },
             {
                 title: '현장 검수 및\n피드백',
-                src: new URL('@/assets/images/sub/intro/document.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/intro/document.webp', import.meta.url).href
             }
         ];
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/fire.png', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/fire.webp', import.meta.url).href
             }
         ];
 
@@ -84,7 +90,7 @@ export default defineComponent({
 
         const manageTitle = '세상에 존재하는\n' + '모든 쓰레기 처리 가능합니다.';
         const manageDesc = '전문 인력이 정확한 규모와 견적 안내해 드리고 있습니다.';
-        const manageImg = new URL('@/assets/images/sub/manage/waste.png', import.meta.url).href;
+        const manageImg = new URL('@/assets/images/sub/manage/waste.webp', import.meta.url).href;
 
         const bannerScript = {
             title: '폐기물 처리',
