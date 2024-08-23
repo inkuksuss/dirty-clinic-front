@@ -18,3 +18,31 @@
         }
     }
 }
+
+.mobile-menu {
+    .header-body {
+        .title-wrapper {
+            .arrow-wrapper {
+                &.active {
+                    animation: openSpin 0.25s linear;
+                    transform: rotate(-180deg);
+                }
+
+                //transform: rotate(0deg);
+                //animation: closeSpin 0.25s linear;
+            }
+        }
+    }
+
+    .slide-fade-enter-active,
+    .slide-fade-leave-active {
+        transition: all 0.25s;
+        max-height: 300px;
+    }
+
+    .slide-fade-enter-from,
+    .slide-fade-leave-to {
+        opacity: 0;
+        max-height: 0;
+    }
+}

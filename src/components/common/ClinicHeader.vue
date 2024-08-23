@@ -3,25 +3,12 @@ import { computed, defineComponent, onMounted, onUnmounted, ref, watch } from 'v
 import { useRouter } from 'vue-router';
 import vClickOutside from 'click-outside-vue3';
 import { useStore } from '@/stores/store';
-
-type Category = {
-    id: number;
-    title: string;
-    isSelect: boolean;
-    isReady: boolean;
-    posStartX: number;
-    posCenterX: number;
-    posEndX: number;
-    subList: Array<SubCategory>;
-};
-
-type SubCategory = {
-    title: string;
-    dest: string;
-};
+import MobileMenu from '@/components/popup/MobileMenu.vue';
+import { type HeaderCategoryType, type SubHeaderType } from '@/utils/types';
 
 export default defineComponent({
     name: 'ClinicHeader',
+    components: { MobileMenu },
     directives: {
         clickOutside: vClickOutside.directive
     },
@@ -37,12 +24,14 @@ export default defineComponent({
         const isScroll = ref<boolean>(false);
         const compWidth = computed(() => store.width);
         const compIsMobile = computed(() => store.isMobile);
+        const mobileIsOpen = ref<boolean>(false);
 
-        const categoryList = ref<Array<Category>>([
+        const headerList = ref<Array<HeaderCategoryType>>([
             {
                 id: 1,
                 title: '간편클리닉',
                 isSelect: false,
+                mobileIsSelect: false,
                 isReady: false,
                 posEndX: 0,
                 posCenterX: 0,
@@ -60,6 +49,7 @@ export default defineComponent({
                 id: 2,
                 title: '전문클리닉',
                 isSelect: false,
+                mobileIsSelect: false,
                 isReady: false,
                 posEndX: 0,
                 posCenterX: 0,
@@ -78,6 +68,7 @@ export default defineComponent({
                 id: 3,
                 title: '특수클리닉',
                 isSelect: false,
+                mobileIsSelect: false,
                 isReady: false,
                 posEndX: 0,
                 posCenterX: 0,
@@ -98,6 +89,7 @@ export default defineComponent({
                 id: 4,
                 title: '전문시공',
                 isSelect: false,
+                mobileIsSelect: false,
                 isReady: false,
                 posEndX: 0,
                 posCenterX: 0,
@@ -114,6 +106,7 @@ export default defineComponent({
                 id: 5,
                 title: '연마/코팅',
                 isSelect: false,
+                mobileIsSelect: false,
                 isReady: false,
                 posEndX: 0,
                 posCenterX: 0,
@@ -128,6 +121,7 @@ export default defineComponent({
                 id: 6,
                 title: '가전클리닉',
                 isSelect: false,
+                mobileIsSelect: false,
                 isReady: false,
                 posEndX: 0,
                 posCenterX: 0,
@@ -138,6 +132,7 @@ export default defineComponent({
                 id: 7,
                 title: '공기질클리닉',
                 isSelect: false,
+                mobileIsSelect: false,
                 isReady: false,
                 posEndX: 0,
                 posCenterX: 0,
@@ -153,6 +148,7 @@ export default defineComponent({
                 id: 8,
                 title: '아카데미',
                 isSelect: false,
+                mobileIsSelect: false,
                 isReady: false,
                 posEndX: 0,
                 posCenterX: 0,
@@ -163,6 +159,7 @@ export default defineComponent({
                 id: 9,
                 title: '커뮤니티',
                 isSelect: false,
+                mobileIsSelect: false,
                 isReady: false,
                 posEndX: 0,
                 posCenterX: 0,
@@ -175,7 +172,7 @@ export default defineComponent({
             }
         ]);
 
-        const handleClick = (sub: SubCategory) => {
+        const handleClick = (sub: SubHeaderType) => {
             if (!sub.dest || sub.dest === '') {
                 window.alert('현재 준비중인 페이지입니다.');
                 return;
@@ -191,7 +188,7 @@ export default defineComponent({
                 let startPos = 0;
                 for (let i = 0; i < childrenElement.length; i++) {
                     const child = childrenElement.item(i) as Element;
-                    const category = categoryList.value.find(
+                    const category = headerList.value.find(
                         (category) => `category-${category.id}` === child.id
                     );
                     if (category) {
@@ -204,18 +201,18 @@ export default defineComponent({
             }
         };
 
-        const handleMouseEnter = (category: Category) => {
+        const handleMouseEnter = (category: HeaderCategoryType) => {
             isOpen.value = true;
             if (currEl.value && currEl.value.id === 'category-' + category.id) return;
 
             let prevCategory;
-            for (let i = 0; i < categoryList.value.length; i++) {
-                if (categoryList.value[i].isSelect) {
-                    prevCategory = categoryList.value[i];
+            for (let i = 0; i < headerList.value.length; i++) {
+                if (headerList.value[i].isSelect) {
+                    prevCategory = headerList.value[i];
                 }
-                categoryList.value[i].isSelect = false;
-                if (categoryList.value[i].id === category.id) {
-                    categoryList.value[i].isSelect = true;
+                headerList.value[i].isSelect = false;
+                if (headerList.value[i].id === category.id) {
+                    headerList.value[i].isSelect = true;
                 }
             }
 
@@ -252,7 +249,7 @@ export default defineComponent({
             isOpen.value = false;
             prevEl.value = null;
             currEl.value = null;
-            categoryList.value.forEach((v) => {
+            headerList.value.forEach((v) => {
                 v.isSelect = false;
                 v.isReady = false;
             });
@@ -262,10 +259,14 @@ export default defineComponent({
             router.push('/');
         };
 
+        const handleChangeMobileMenu = () => {
+            mobileIsOpen.value = !mobileIsOpen.value;
+        };
+
         const handleTransitionEnd = (_: TransitionEvent) => {
             if (currEl.value) {
                 const targetId = currEl.value.id.replace('category-', '');
-                for (const cate of categoryList.value) {
+                for (const cate of headerList.value) {
                     if (cate.id === Number(targetId)) {
                         cate.isReady = true;
                     } else {
@@ -273,6 +274,12 @@ export default defineComponent({
                     }
                 }
             }
+        };
+
+        const handleChangeMobileIsSelect = (id: number, value: boolean): void => {
+            headerList.value.forEach(h => h.mobileIsSelect = false);
+            const findHeader = headerList.value.find((h) => h.id === id);
+            if (findHeader) findHeader.mobileIsSelect = value;
         };
 
         const handleScroll = () => {
@@ -296,15 +303,18 @@ export default defineComponent({
 
         return {
             compIsMobile,
-            categoryList,
+            headerList,
             categoryWrapperElement,
             isOpen,
             isScroll,
             moveEl,
+            mobileIsOpen,
             handleClick,
             handleMouseEnter,
             handleMouseLeave,
-            handleClickLogo
+            handleChangeMobileMenu,
+            handleClickLogo,
+            handleChangeMobileIsSelect
         };
     }
 });
@@ -334,7 +344,7 @@ export default defineComponent({
                     class="category-body absolute bg-white top-[--header-height] w-[150px] pt-[22.5px] pb-[22.5px] border-[1px] border-[--color-border-blue] flex flex-col"
                     :class="[isOpen ? 'flex' : 'hidden', isScroll ? 'border-t-[0]' : '']"
                 >
-                    <div v-for="(category, idx) in categoryList" :key="idx" class="w-full h-full">
+                    <div v-for="(category, idx) in headerList" :key="idx" class="w-full h-full">
                         <div v-if="category.isReady" class="w-full h-full">
                             <div
                                 class="title-wrapper w-full flex-center py-[7.5px] hover:text-[--color-hover]"
@@ -355,7 +365,7 @@ export default defineComponent({
                 <div
                     :id="`category-${category.id}`"
                     class="category-contents inline-flex justify-end items-center h-full pl-[15px] pr-[15px]"
-                    v-for="category in categoryList"
+                    v-for="category in headerList"
                     :key="category.title"
                     @mouseenter="() => handleMouseEnter(category)"
                 >
@@ -371,20 +381,26 @@ export default defineComponent({
             v-else
             class="px-[20px] bg-[--color-white] h-[--header-height] flex justify-between items-center fixed top-0 left-0 w-screen z-40"
         >
-            <div class="logo-wrapper w-[88px] h-[27px]">
+            <div class="logo-wrapper w-[88px] h-[27px]" @click="handleClickLogo">
                 <img
                     class="w-full h-full"
                     src="/assets/images/home/clinic_logo@1x.webp"
                     alt="main_logo"
                 />
             </div>
-            <div class="btn-wrapper w-[40px] h-[40px]">
+            <div class="btn-wrapper w-[40px] h-full flex-center" @click="handleChangeMobileMenu">
                 <img
-                    class="w-full h-full"
-                    src="/assets/images/home/test-img1@1x.webp"
+                    class="w-[30px] h-[22px]"
+                    src="/assets/images/icons/menu.svg"
                     alt="main_logo"
                 />
             </div>
         </div>
+        <mobile-menu
+            v-if="mobileIsOpen"
+            :data-list="headerList"
+            :change-is-select-handler="handleChangeMobileIsSelect"
+            :change-menu-handler="handleChangeMobileMenu"
+        ></mobile-menu>
     </header>
 </template>

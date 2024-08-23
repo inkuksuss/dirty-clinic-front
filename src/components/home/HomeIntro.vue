@@ -7,6 +7,7 @@ type data = {
     src: string;
     mobileSrc: string;
     filterSrc: string;
+    mobileFilterSrc;
     title: string;
     desc: string;
 };
@@ -21,8 +22,14 @@ export default defineComponent({
         const dataList = ref<data[]>([
             {
                 src: new URL('@/assets/images/home/intro_1.webp', import.meta.url).href,
-                mobileSrc: new URL('@/assets/images/home/intro_1_mobile@2x.webp', import.meta.url).href,
-                filterSrc: new URL('@/assets/images/home/intro_1_filter.webp', import.meta.url).href,
+                filterSrc: new URL('@/assets/images/home/intro_1_filter.webp', import.meta.url)
+                    .href,
+                mobileSrc: new URL('@/assets/images/home/intro_1_mobile@2x.webp', import.meta.url)
+                    .href,
+                mobileFilterSrc: new URL(
+                    '@/assets/images/home/intro_1_mobile_filter@2x.webp',
+                    import.meta.url
+                ).href,
                 title: '현장사업수행팀',
                 desc:
                     '본사 체계적인 교육 프로세스 이수\n' +
@@ -31,8 +38,14 @@ export default defineComponent({
             },
             {
                 src: new URL('@/assets/images/home/intro_2.webp', import.meta.url).href,
-                mobileSrc: new URL('@/assets/images/home/intro_2_mobile@2x.webp', import.meta.url).href,
-                filterSrc: new URL('@/assets/images/home/intro_2_filter.webp', import.meta.url).href,
+                mobileSrc: new URL('@/assets/images/home/intro_2_mobile@2x.webp', import.meta.url)
+                    .href,
+                mobileFilterSrc: new URL(
+                    '@/assets/images/home/intro_2_mobile_filter@2x.webp',
+                    import.meta.url
+                ).href,
+                filterSrc: new URL('@/assets/images/home/intro_2_filter.webp', import.meta.url)
+                    .href,
                 title: '고객지원팀',
                 desc:
                     '친절한 상담과 정확한 견적\n' +
@@ -41,8 +54,14 @@ export default defineComponent({
             },
             {
                 src: new URL('@/assets/images/home/intro_3.webp', import.meta.url).href,
-                mobileSrc: new URL('@/assets/images/home/intro_3_mobile@2x.webp', import.meta.url).href,
-                filterSrc: new URL('@/assets/images/home/intro_3_filter.webp', import.meta.url).href,
+                mobileSrc: new URL('@/assets/images/home/intro_3_mobile@2x.webp', import.meta.url)
+                    .href,
+                filterSrc: new URL('@/assets/images/home/intro_3_filter.webp', import.meta.url)
+                    .href,
+                mobileFilterSrc: new URL(
+                    '@/assets/images/home/intro_3_mobile_filter@2x.webp',
+                    import.meta.url
+                ).href,
                 title: '연구개발팀',
                 desc:
                     '자체 제작된 교육 프로세스\n' +
@@ -78,43 +97,17 @@ export default defineComponent({
                 :key="idx"
                 class="intro-box content relative w-[32%]"
             >
-                <img v-if="compIsMobile" :src="data.mobileSrc" alt="더티클리닉 부서소개">
-                <clinic-image v-else
+                <img v-if="compIsMobile" :src="data.mobileSrc" alt="더티클리닉 부서소개" />
+                <clinic-image
+                    v-else
                     class="w-full"
                     :src="compIsMobile ? data.mobileSrc : data.src"
                 ></clinic-image>
                 <div class="hover-filter absolute left-0 top-0 w-full h-full hidden">
-                    <div
-                        v-if="compIsMobile"
-                        class="m-hover-filter w-full h-full flex flex-col items-center justify-center"
-                    >
-                        <div
-                            class="w-full text-center font-[600] font-[20px] leading-[24px] text-[--color-white] mb-[10px] whitespace-pre-wrap"
-                        >
-                            {{ data.title }}
-                        </div>
-                        <div
-                            class="w-full text-center font-[400] font-[16px] leading-[19px] text-[--color-white] whitespace-pre-wrap"
-                        >
-                            {{ data.desc }}
-                        </div>
+                    <div v-if="compIsMobile" class="w-full h-full">
+                        <img :src="data.mobileFilterSrc" :alt="`부서${idx}`" />
                     </div>
                     <div v-else class="w-full h-full">
-                        <!--                        <div-->
-                        <!--                            class="relative w-full h-full flex flex-col justify-center items-center"-->
-                        <!--                        >-->
-                        <!--                            <div class="text-[&#45;&#45;color-white] text-[24px] font-[700] mb-[15px] z-10">-->
-                        <!--                                {{ data.title }}-->
-                        <!--                            </div>-->
-                        <!--                            <div class="w-[20%] h-[5px] bg-[&#45;&#45;color-white] mb-[20px] z-10"></div>-->
-                        <!--                            <div class="text-[&#45;&#45;color-white] text-[18px] font-[500] z-10 text-center whitespace-pre-wrap">-->
-                        <!--                                {{ data.desc }}-->
-                        <!--                            </div>-->
-                        <!--                            <div-->
-                        <!--                                class="absolute w-full h-full top-0 left-0 bg-[&#45;&#45;color-black] opacity-40 z-0"-->
-                        <!--                            ></div>-->
-                        <!--                        </div>-->
-
                         <clinic-image :src="data.filterSrc" class="w-full"></clinic-image>
                     </div>
                 </div>

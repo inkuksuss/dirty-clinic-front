@@ -15,7 +15,7 @@ export default defineComponent({
     setup() {
         useMeta({
             title: '더티클리닉',
-            description: '더티클리닉 메인 페이지입니다.'
+            description: '우리는 청결의 미학을 실현하는 전문기업 더티클리닉입니다.'
         });
         const store = useStore();
         const handleClickBtn = () => {

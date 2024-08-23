@@ -51,7 +51,7 @@ export default defineComponent({
                 src: new URL('@/assets/images/sub/intro/people.webp', import.meta.url).href
             },
             {
-                title: '투입 후 현장 특이사항\n' + '확인 및 공유',
+                title: '투입 후\n현장 특이사항\n' + '확인 및 공유',
                 src: new URL('@/assets/images/sub/intro/checklist.webp', import.meta.url).href
             },
             {

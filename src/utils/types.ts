@@ -234,3 +234,20 @@ export type PaymentData = {
     targetDate: string | null;
     targetTime: string | null;
 };
+
+export type HeaderCategoryType = {
+    id: number;
+    title: string;
+    isSelect: boolean;
+    mobileIsSelect: boolean;
+    isReady: boolean;
+    posStartX: number;
+    posCenterX: number;
+    posEndX: number;
+    subList: Array<SubHeaderType>;
+};
+
+export type SubHeaderType = {
+    title: string;
+    dest: string;
+};

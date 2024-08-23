@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
         'Content-Type': 'application/json'
     }
 });
-axiosInstance.defaults.withCredentials = true;
+// axiosInstance.defaults.withCredentials = true;
 
 axiosInstance.interceptors.request.use(
     function (config) {
