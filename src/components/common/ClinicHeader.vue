@@ -15,7 +15,6 @@ export default defineComponent({
     setup() {
         const store = useStore();
         const router = useRouter();
-
         const categoryWrapperElement = ref<HTMLDivElement | null>(null);
         const isOpen = ref<boolean>(false);
         const prevEl = ref<HTMLDivElement | null>(null);
@@ -260,6 +259,7 @@ export default defineComponent({
         };
 
         const handleChangeMobileMenu = () => {
+            headerList.value.forEach(h => h.mobileIsSelect = false);
             mobileIsOpen.value = !mobileIsOpen.value;
         };
 
@@ -288,6 +288,12 @@ export default defineComponent({
 
         watch(compWidth, () => {
             calculateElementWidth();
+        });
+
+        watch(compIsMobile, (next, prev) => {
+          if (!next && prev) {
+            mobileIsOpen.value = false;
+          }
         });
 
         onMounted(() => {

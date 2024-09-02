@@ -149,6 +149,7 @@
                             background-size: cover;
                             aspect-ratio: 150 / 180;
                             margin-right: 15px;
+                            width: 40vw;
 
                             &:first-child {
                                 background-image: url('/assets/images/home/promotion_1@1x.webp');
@@ -168,6 +169,16 @@
         }
 
         .service-wrapper {
+            .service-contents {
+                .contents-wrapper {
+                    div {
+                        .service-img {
+                            aspect-ratio: 430 / 300;
+                        }
+                    }
+                }
+            }
+
             @include mobile {
                 width: $mobile-body-width;
                 margin-top: 80px;
@@ -196,8 +207,9 @@
                         gap: 0 10px;
 
                         div {
-                            img {
+                            .service-img {
                                 margin-bottom: 20px;
+                                aspect-ratio: 158 / 110;
                             }
 
                             .description {
@@ -228,24 +240,26 @@
 
         .slider-wrapper {
             .slider-contents {
-                .img-area {
-                    //max-width: calc(100% - 300px);
+                @media (min-width: 1200px) {
+                    padding-left: calc((100vw - $body-width) / 2);
+                }
 
+                .img-area {
                     .image-container {
                         &:first-child {
                             img {
                                 aspect-ratio: 267 / 321;
                             }
                         }
-                        &:last-child {
+                        &:nth-child(2) {
                             img {
                                 aspect-ratio: 222 / 320;
                             }
                         }
 
-                        @include mobile {
+                        &:last-child {
                             img {
-                                height: 173px;
+                                aspect-ratio: 222 / 320;
                             }
                         }
                     }
@@ -260,6 +274,7 @@
                     display: flex;
                     flex-direction: column;
                     align-items: flex-start;
+                    padding-left: 15px;
 
                     .text-area {
                         width: 100%;
@@ -272,8 +287,26 @@
                         }
                     }
 
-                    .image-container {
-                        width: 100%;
+                    .flicking-viewport {
+                        .flicking-camera {
+                            display: flex;
+
+                            .image-container {
+                                &:first-child {
+                                    width: 38.5vw;
+                                }
+
+                                &:nth-child(2) {
+                                    width: 32vw;
+                                    margin-left: 5px;
+                                    margin-right: 5px;
+                                }
+
+                                &:last-child {
+                                    width: 32vw;
+                                }
+                            }
+                        }
                     }
                 }
             }

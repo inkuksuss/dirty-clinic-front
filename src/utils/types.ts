@@ -223,8 +223,9 @@ export type ProductResponse = {
 };
 
 export type PaymentData = {
-    roomType: RoomType;
-    clinicType: ClinicType;
+    serviceId: number | null;
+    roomId: number | null;
+    structureId: number | null;
     footage: number | null;
     toiletCnt: number | null;
     expansion: 'N' | 'Y' | null;
@@ -233,6 +234,7 @@ export type PaymentData = {
     phoneNumber: string | null;
     targetDate: string | null;
     targetTime: string | null;
+    address: string | null;
 };
 
 export type HeaderCategoryType = {
@@ -250,4 +252,10 @@ export type HeaderCategoryType = {
 export type SubHeaderType = {
     title: string;
     dest: string;
+};
+
+export type CommonCodeType = {
+    id: number;
+    name: string;
+    CommonCodeType: string;
 };

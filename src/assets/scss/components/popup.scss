@@ -1,5 +1,30 @@
 .popup-wrapper {
     .popup-payment {
+        .contents-area {
+            &.service-page {
+                .content {
+                    &:first-child {
+                        margin-right: 5px;
+                    }
+
+                    &:nth-child(2) {
+                        margin-left: 5px;
+                    }
+
+                    &:nth-child(3) {
+                        grid-row: 2 / 3;
+                        grid-column: 1 / 4;
+                    }
+
+                    &:last-child {
+                        grid-row: 3 / 3;
+                        grid-column: 1 / 4;
+                    }
+                }
+            }
+
+        }
+
         div {
             &.payment-product {
                 .head-area {
@@ -13,21 +38,20 @@
                 }
             }
 
-          &.payment-room {
-            .head-area {
-            }
-            .contents-area {
-              .first-row {
-
-              }
-
-              .content {
-                img {
-                  aspect-ratio: 40 / 40;
+            &.payment-room {
+                .head-area {
                 }
-              }
+                .contents-area {
+                    .first-row {
+                    }
+
+                    .content {
+                        img {
+                            aspect-ratio: 40 / 40;
+                        }
+                    }
+                }
             }
-          }
         }
     }
 }

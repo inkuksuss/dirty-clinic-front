@@ -7,7 +7,7 @@ type data = {
     src: string;
     mobileSrc: string;
     filterSrc: string;
-    mobileFilterSrc;
+    mobileFilterSrc: string;
     title: string;
     desc: string;
 };

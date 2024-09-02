@@ -36,58 +36,12 @@ export default defineComponent({
         const compIsMobile = computed(() => store.isMobile);
         const compWidth = computed(() => store.width);
         const contentList = ref<HTMLDivElement[]>();
-        const contentWidth = ref<string>();
-        const viewportWidth = ref<string>();
-        const isReady = ref<boolean>(false);
-        const wRatio = 0.4;
-
-        const handleChangeViewWidth = () => {
-            if (!compIsMobile.value) return;
-            if (!contentList.value || contentList.value?.length < 1) return;
-
-            const w = compWidth.value * wRatio;
-            contentWidth.value = w + 'px';
-        };
-
-        const initContentWidth = () => {
-            const w = compWidth.value * wRatio;
-            contentWidth.value = w + 'px';
-        };
-
-        const initViewportWidth = () => {
-            const gap = 15;
-            const calcValue =
-                (contentWidth.value ? Number(contentWidth.value?.replace('px', '')) : 0) * 3 +
-                gap * 4;
-
-            viewportWidth.value = calcValue + 'px';
-        };
-
-        onMounted(() => {
-            if (compIsMobile.value) {
-                initContentWidth();
-                initViewportWidth();
-                nextTick(() => {
-                    isReady.value = true;
-                });
-            }
-        });
-
-        watch(compWidth, () => {
-            handleChangeViewWidth();
-            nextTick(() => {
-                isReady.value = compIsMobile.value;
-            });
-        });
 
         return {
             promList,
             compWidth,
             compIsMobile,
             contentList,
-            contentWidth,
-            viewportWidth,
-            isReady
         };
     }
 });
@@ -96,10 +50,8 @@ export default defineComponent({
 <template>
     <div class="promotion-wrapper w-full bg-[#e8f4ff] flex justify-center items-center">
         <Flicking
-            v-if="compIsMobile && isReady"
-            id="promotion-contents"
+            v-if="compIsMobile"
             class="promotion-contents flex justify-between items-center py-[16%] overflow-hidden"
-            :style="{ width: viewportWidth }"
             :options="{
                 bound: true,
                 panelsPerView: -1,
@@ -110,8 +62,6 @@ export default defineComponent({
             <div
                 v-for="(prom, idx) in promList"
                 :key="idx"
-                ref="contentList"
-                :style="{ width: contentWidth, minWidth: contentWidth }"
                 class="content relative border-[3px] border-[#0082ff]"
             >
                 <div

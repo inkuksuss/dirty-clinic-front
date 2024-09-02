@@ -1,8 +1,9 @@
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 import { useStore } from '@/stores/store';
 import {
     ClinicType,
+    type CommonCodeType,
     type PaymentData,
     PopupType,
     type ProductResponse,
@@ -34,10 +35,15 @@ export default defineComponent({
         const username = ref<string | undefined>();
         const phoneNumber = ref<string | undefined>();
         const targetTime = ref<string | undefined>();
+        const address = ref<string | undefined>();
         const targetDate = ref<Date>(new Date());
         const balanceAmount = ref<number>(0);
         const depositAmount = ref<number>(0);
         const productResponse = ref<ProductResponse>();
+        const serviceList = ref<CommonCodeType[]>([]);
+        const buildingList = ref<CommonCodeType[]>([]);
+        const structureList = ref<SelectType[]>([]);
+        const structureId = ref<string>('');
 
         const handleChangeFootage = (v: string) => {
             footage.value = v;
@@ -64,6 +70,11 @@ export default defineComponent({
             paymentData.value.phoneNumber = v;
         };
 
+        const handleChangeAddress = (v: string) => {
+            address.value = v;
+            paymentData.value.address = v;
+        };
+
         const handleChangeDate = (v: Date) => {
             targetDate.value = v;
             paymentData.value.targetDate = moment(targetDate.value).format('YYYY-MM-DD');
@@ -74,8 +85,9 @@ export default defineComponent({
         };
 
         const paymentData = ref<PaymentData>({
-            roomType: RoomType.NO_SELECT,
-            clinicType: ClinicType.NO_SELECT,
+            roomId: null,
+            serviceId: null,
+            structureId: null,
             footage: null,
             toiletCnt: null,
             expansion: null,
@@ -83,7 +95,8 @@ export default defineComponent({
             username: null,
             phoneNumber: null,
             targetDate: null,
-            targetTime: null
+            targetTime: null,
+            address: null
         });
 
         const popupPage = ref<number>(1);
@@ -96,34 +109,59 @@ export default defineComponent({
             store.setOpenPopup(null);
         };
 
-        const handleSelectRoom = (v: RoomType) => {
-            paymentData.value.roomType = v;
+        const handleSelectBuilding = (place: CommonCodeType) => {
+            paymentData.value.roomId = place.id;
         };
 
         const setSelectValue = (v: string | undefined) => {
             paymentData.value.expansion = v as 'N' | 'Y';
         };
 
-        const handleSelectClinic = (v: ClinicType) => {
-            paymentData.value.clinicType = v;
-            if (v === ClinicType.BUSINESS_CLINIC || v === ClinicType.SPECIAL_CLINIC) {
-                window.alert('관리자에게 문의해주세요.');
-            } else {
-                popupPage.value = 2;
-            }
+        const setSelectStructure = (value: string | undefined) => {
+            if (!value) return;
+            paymentData.value.structureId = parseInt(value, 10);
+            structureId.value = value;
+        };
+
+        const handleSelectService = (service: CommonCodeType) => {
+            getApiInstance()
+                .get('/common/summary?type=building_type')
+                .then((res) => {
+                    if (res.data.code === 0) {
+                        buildingList.value = res.data.data;
+                        paymentData.value.serviceId = service.id;
+                        popupPage.value = 2;
+                    }
+                })
+                .catch((e) => console.log(e));
         };
 
         const handleNext = () => {
             switch (popupPage.value) {
                 case 2: {
-                    if (paymentData.value.roomType === RoomType.NO_SELECT) {
+                    if (paymentData.value.roomId === null) {
                         window.alert('장소를 신청해주세요.');
                         return;
                     }
-                    popupPage.value++;
+                    getApiInstance()
+                        .get('/common/summary?type=structure_type')
+                        .then((res) => {
+                            if (res.data.code === 0) {
+                                structureList.value = res.data.data.map((v: CommonCodeType) => {
+                                    return { value: v.id.toString(), name: v.name };
+                                });
+                                popupPage.value++;
+                            }
+                        })
+                        .catch((e) => console.log(e));
                     break;
                 }
                 case 3: {
+                    if (!paymentData.value.structureId) {
+                        window.alert('구조를 입력해주세요.');
+                        return;
+                    }
+
                     if (!paymentData.value.footage) {
                         window.alert('공급면적을 입력해주세요.');
                         return;
@@ -172,6 +210,11 @@ export default defineComponent({
                         return;
                     }
 
+                    if (!paymentData.value.address || !address.value) {
+                        window.alert('주소를 입력해주세요.');
+                        return;
+                    }
+
                     getProductInfo();
                     break;
                 }
@@ -185,8 +228,8 @@ export default defineComponent({
         const handlePrev = () => {
             switch (popupPage.value) {
                 case 2: {
-                    paymentData.value.clinicType = ClinicType.NO_SELECT;
-                    paymentData.value.roomType = RoomType.NO_SELECT;
+                    paymentData.value.serviceId = null;
+                    paymentData.value.roomId = null;
                     popupPage.value--;
                     break;
                 }
@@ -199,11 +242,12 @@ export default defineComponent({
                     verandaCnt.value = undefined;
                     expansion.value = '';
                     toiletCnt.value = undefined;
-                    paymentData.value.roomType = RoomType.NO_SELECT;
+                    paymentData.value.roomId = null;
                     popupPage.value--;
                     break;
                 }
                 case 4: {
+                    paymentData.value.structureId = null;
                     paymentData.value.footage = null;
                     paymentData.value.toiletCnt = null;
                     paymentData.value.expansion = null;
@@ -212,6 +256,7 @@ export default defineComponent({
                     paymentData.value.phoneNumber = null;
                     paymentData.value.targetDate = null;
                     paymentData.value.targetTime = null;
+                    paymentData.value.address = null;
                     footage.value = undefined;
                     verandaCnt.value = undefined;
                     expansion.value = '';
@@ -220,6 +265,7 @@ export default defineComponent({
                     phoneNumber.value = undefined;
                     targetDate.value = new Date();
                     targetTime.value = undefined;
+                    address.value = undefined;
                     popupPage.value--;
                     break;
                 }
@@ -228,10 +274,12 @@ export default defineComponent({
                     paymentData.value.phoneNumber = null;
                     paymentData.value.targetDate = null;
                     paymentData.value.targetTime = null;
+                    paymentData.value.address = null;
                     username.value = undefined;
                     phoneNumber.value = undefined;
                     targetDate.value = new Date();
                     targetTime.value = undefined;
+                    address.value = undefined;
                     popupPage.value--;
                     break;
                 }
@@ -240,15 +288,16 @@ export default defineComponent({
 
         const getProductInfo = async () => {
             const data = {
+                serviceId: paymentData.value.serviceId,
+                structureId: paymentData.value.structureId,
                 toiletCount: paymentData.value.toiletCnt,
                 verandaCount: paymentData.value.verandaCnt,
                 footage: paymentData.value.footage,
-                clinicType: paymentData.value.clinicType,
                 expansion: paymentData.value.expansion
             };
             console.log(data);
             getApiInstance()
-                .post('/product/getDetail', data)
+                .post('/product/detail', data)
                 .then((res) => {
                     if (res.data.code === 0) {
                         productResponse.value = {
@@ -271,6 +320,17 @@ export default defineComponent({
                 .catch((err) => console.log(err));
         };
 
+        onMounted(() => {
+            getApiInstance()
+                .get('/common/summary?type=service_type')
+                .then((res) => {
+                    if (res.data.code === 0) {
+                        serviceList.value = res.data.data;
+                    }
+                })
+                .catch((e) => console.log(e));
+        });
+
         return {
             paymentData,
             compPopupType,
@@ -288,12 +348,18 @@ export default defineComponent({
             targetDate,
             productResponse,
             ClinicType,
+            serviceList,
+            buildingList,
+            structureList,
+            structureId,
+            address,
+            setSelectStructure,
             handleNext,
             handlePrev,
             handleClickBg,
             handleClickClose,
-            handleSelectClinic,
-            handleSelectRoom,
+            handleSelectService,
+            handleSelectBuilding,
             handleChangeFootage,
             handleChangeToilet,
             handleChangeVeranda,
@@ -301,6 +367,7 @@ export default defineComponent({
             handleChangePhone,
             handleChangeDate,
             handleChangeTime,
+            handleChangeAddress,
             setSelectValue
         };
     }
@@ -310,7 +377,7 @@ export default defineComponent({
 <template>
     <div class="popup-payment absolute max-w-[460px] w-[38%] min-h-[535px] bg-white z-50 p-[15px]">
         <div v-if="popupPage === 1" class="payment-product">
-            <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
+            <div class="head-area max-w-[430px] flex justify-between pl-[20px]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
                         >원하는 클리닉을 선택하세요.</span
@@ -323,71 +390,36 @@ export default defineComponent({
                     <img src="/assets/images/icons/x-btn.svg" alt="닫기" />
                 </div>
             </div>
-            <div class="contents-area w-full h-full px-[5%] pb-[35px]">
-                <div class="w-full h-full grid grid-rows-2 grid-cols-2 gap-[10px]">
+            <div class="contents-area service-page w-full h-full px-[20px] pb-[35px]">
+                <div class="w-full h-full grid grid-cols-2">
                     <div
-                        class="content max-w-[185px] h-[90px] flex items-center border-[--color-border-blue] border-[1.5px] px-[10%]"
-                        @click="() => handleSelectClinic(ClinicType.ONE_ROOM_CLINIC)"
+                        v-for="(service, idx) in serviceList"
+                        :key="`service-${idx}`"
+                        class="content h-[90px] flex items-center border-[--color-border-blue] border-[1.5px] pl-[20px] pr-[10px] mb-[10px]"
+                        @click="() => handleSelectService(service)"
                     >
                         <img
                             class="w-[30px] h-[30px] mr-[10px]"
                             src="/assets/images/icons/apart.svg"
                             alt="아파트 아이콘"
                         />
-                        <div class="text-[18px] font-[600] leading-[26px]">원룸 청소</div>
-                    </div>
-                    <div
-                        class="content max-w-[185px] h-[90px] flex items-center border-[--color-border-blue] border-[1.5px] px-[10%]"
-                        @click="() => handleSelectClinic(ClinicType.RESIDENTIAL_CLINIC)"
-                    >
-                        <img
-                            class="w-[30px] h-[30px] mr-[10px]"
-                            src="/assets/images/icons/apart.svg"
-                            alt="아파트 아이콘"
-                        />
-                        <div class="text-[18px] font-[600] leading-[26px]">거주 청소</div>
-                    </div>
-                    <div
-                        class="content max-w-[185px] h-[90px] flex items-center border-[--color-border-blue] border-[1.5px] px-[10%]"
-                        @click="() => handleSelectClinic(ClinicType.MOVE_IN_OR_MOVING_CLINIC)"
-                    >
-                        <img
-                            class="w-[30px] h-[30px] mr-[10px]"
-                            src="/assets/images/icons/apart.svg"
-                            alt="아파트 아이콘"
-                        />
-                        <div class="text-[18px] font-[600] leading-[26px]">
-                            입주 청소<br />이사 청소
+                        <div>
+                            <div class="text-[18px] font-[600] leading-[26px]">
+                                {{ service.name }}
+                            </div>
+                            <div
+                                v-if="idx === 2"
+                                class="text-[16px] text-[--color-text-gray] font-[500]"
+                            >
+                                원룸, 아파트, 오피스텔 등등은 이곳을 눌러주세요.
+                            </div>
+                            <div
+                                v-else-if="idx === 3"
+                                class="text-[16px] text-[--color-text-gray] font-[500]"
+                            >
+                                더많은 서비스를 원하시면 이곳을 눌러주세요.
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        class="content max-w-[185px] h-[90px] flex items-center border-[--color-border-blue] border-[1.5px] px-[10%]"
-                        @click="() => handleSelectClinic(ClinicType.BUSINESS_CLINIC)"
-                    >
-                        <img
-                            class="w-[30px] h-[30px] mr-[10px]"
-                            src="/assets/images/icons/apart.svg"
-                            alt="아파트 아이콘"
-                        />
-                        <div class="text-[18px] font-[600] leading-[26px]">사업장 청소</div>
-                    </div>
-                </div>
-                <div
-                    class="mt-[10px] w-full h-[90px] flex items-center border-[--color-border-blue] border-[1.5px] px-[5%]"
-                    @click="() => handleSelectClinic(ClinicType.SPECIAL_CLINIC)"
-                >
-                    <img
-                        class="py-[7.5px] w-[30px] h-full mr-[10px]"
-                        src="/assets/images/icons/apart.svg"
-                        alt="아파트 아이콘"
-                    />
-                    <div class="flex flex-col">
-                        <span class="text-[18px] font-[600] leading-[26px]"
-                            >특수청소 및 전문시공</span
-                        >
-                        <span class="text-[16px] font-[500] text-[--color-text-gray]"
-                            >더많은 서비스를 원하시면 이곳을 눌러주세요.</span
-                        >
                     </div>
                 </div>
             </div>
@@ -411,52 +443,28 @@ export default defineComponent({
                 class="contents-area w-full h-full max-h-[370px] grid grid-rows-2 grid-cols-2 px-[5%] gap-[10px] pb-[85px]"
             >
                 <div
+                    v-for="(building, idx) in buildingList"
+                    :key="`place-${idx}`"
                     class="content max-w-[185px] max-h-[90px] h-[160px] flex border-[--color-border-blue] border-[1.5px] px-[10%] py-[23px]"
-                    @click="() => handleSelectRoom(RoomType.APART)"
+                    :class="[paymentData.roomId === building.id ? 'bg-[--color-border-blue]' : '']"
+                    @click="() => handleSelectBuilding(building)"
                 >
                     <img
+                        v-if="idx === 3"
+                        class="w-[30px] h-[30px] mr-[10px] my-[7px]"
+                        src="/assets/images/icons/home.svg"
+                        alt="아파트 아이콘"
+                    />
+                    <img
+                        v-else
                         class="w-[30px] h-[30px] mr-[10px] my-[7px]"
                         src="/assets/images/icons/apart.svg"
                         alt="아파트 아이콘"
                     />
-                    <div class="text-[18px] font-[600] leading-[22px] my-auto">아파트</div>
-                </div>
-                <div
-                    class="content max-w-[185px] max-h-[90px] h-[160px] flex border-[--color-border-blue] border-[1.5px] px-[10%] py-[23px]"
-                    @click="() => handleSelectRoom(RoomType.VILLA)"
-                >
-                    <img
-                        class="w-[30px] h-[30px] mr-[10px] my-[7px]"
-                        src="/assets/images/icons/apart.svg"
-                        alt="아파트 아이콘"
-                    />
-                    <div class="text-[18px] font-[600] leading-[22px] my-auto">
-                        빌라<br />다세대 주택
-                    </div>
-                </div>
-                <div
-                    class="content max-w-[185px] max-h-[90px] h-[160px] flex border-[--color-border-blue] border-[1.5px] px-[10%] py-[23px]"
-                    @click="() => handleSelectRoom(RoomType.COMMERCIAL_COMPLEX)"
-                >
-                    <img
-                        class="w-[30px] h-[30px] mr-[10px] my-[7px]"
-                        src="/assets/images/icons/apart.svg"
-                        alt="아파트 아이콘"
-                    />
-                    <div class="text-[18px] font-[600] leading-[22px] my-auto">
-                        오피스텔<br />주상복합
-                    </div>
-                </div>
-                <div
-                    class="content max-w-[185px] max-h-[90px] h-[160px] flex border-[--color-border-blue] border-[1.5px] px-[10%] py-[23px]"
-                    @click="() => handleSelectRoom(RoomType.HOUSE)"
-                >
-                    <img
-                        class="w-[30px] h-[30px] mr-[10px] my-[7px]"
-                        src="/assets/images/icons/apart.svg"
-                        alt="아파트 아이콘"
-                    />
-                    <div class="text-[18px] font-[600] leading-[22px] my-auto">주택</div>
+                    <div
+                        class="text-[18px] font-[600] leading-[22px] my-auto"
+                        v-html="building.name.replace('/', '<br/>')"
+                    ></div>
                 </div>
             </div>
             <div class="btn-area w-full h-[45px] flex justify-between gap-x-[15px] px-[5%]">
@@ -505,6 +513,16 @@ export default defineComponent({
                     ></clinic-input>
                 </div>
                 <div class="flex justify-between items-center mb-[15px]">
+                    <div class="text-[18px] font-[600] leading-[26px]">구조</div>
+                    <clinic-select
+                        :selected-value="structureId"
+                        :select-list="structureList"
+                        place-holder="주거 형태를 선택하세요."
+                        :select-handler="setSelectStructure"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                    ></clinic-select>
+                </div>
+                <div class="flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">화장실 수</div>
                     <clinic-input
                         place-holder="화장실 수를 입력해주세요."
@@ -515,11 +533,11 @@ export default defineComponent({
                     ></clinic-input>
                 </div>
                 <div class="flex justify-between items-center mb-[15px]">
-                    <div class="text-[18px] font-[600] leading-[26px]">확장 여부</div>
+                    <div class="text-[18px] font-[600] leading-[26px]">거실 베란다</div>
                     <clinic-select
                         :selected-value="expansion"
                         :select-list="selectList"
-                        place-holder="확장형 인가요?"
+                        place-holder="거실 베란다가 있나요?"
                         :select-handler="setSelectValue"
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                     ></clinic-select>
@@ -598,17 +616,22 @@ export default defineComponent({
                     >
                     </clinic-date>
                 </div>
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">시간</div>
                     <clinic-time
                         :value="targetTime"
                         :change-handler="handleChangeTime"
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                     ></clinic-time>
-                    <!--                    <clinic-input-->
-                    <!--                        place-holder="시간을 입력해주세요."-->
-                    <!--                        class="max-w-[288px] max-h-[60px] w-[73%]"-->
-                    <!--                    ></clinic-input>-->
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="text-[18px] font-[600] leading-[26px]">주소</div>
+                    <clinic-input
+                        place-holder="주소를 입력하세요."
+                        :value="address"
+                        :change-handler="handleChangeAddress"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                    ></clinic-input>
                 </div>
             </div>
             <div class="btn-area w-full h-[45px] flex justify-between gap-x-[15px] px-[5%]">
