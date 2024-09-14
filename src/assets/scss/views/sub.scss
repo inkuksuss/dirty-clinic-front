@@ -325,7 +325,6 @@
                         }
 
                         .info-label {
-                            width: calc(100% + 3px) !important;
 
                             @include mobile {
                                 max-width: 608px;

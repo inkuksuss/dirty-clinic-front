@@ -212,7 +212,7 @@ export default defineComponent({
                     v-for="(info, idx) in scriptList"
                     :key="idx"
                     class="content-wrapper relative h-[80px] border-[1.5px] border-[--color-border-blue] border-solid bg-[--color-white] px-[30px]"
-                    :class="[info.hasImg ? 'has-img' : '']"
+                    :class="[info.hasImg ? 'has-img' : '', info.isOpen ? 'active' : '']"
                     @click="() => handleClick(info)"
                 >
                     <div
