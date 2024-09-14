@@ -32,6 +32,7 @@ export type IAmPortPaymentRequest = {
     buyer_postcode: string | null;
     bypass?: object;
     notice_url?: string;
+    custom_data: object;
 };
 
 export type IAmPortPgBaseRequest = {
@@ -70,14 +71,20 @@ export type IAmPortPaymentResponse = {
 
 export type PaymentPrepareRequest = {
     productId: number;
-    productName: string;
+    serviceId: number;
+    structureId: number;
+    buildingId: number;
+    username: string;
     phoneNumber: string;
     address: string;
     footage: number;
-    description: string;
+    toiletCount: number;
+    verandaCount: number;
+    expansion: 'N' | 'Y';
     depositAmount: string;
     balanceAmount: string;
     isAgreePolicy: 'N' | 'Y';
+    memberMemo: string;
 };
 
 export type PaymentResultRequest = {
@@ -213,23 +220,18 @@ export enum ClinicType {
 
 export type ProductResponse = {
     id: number;
-    name: string;
-    description: string;
     balanceAmount: string;
     depositAmount: string;
-    serviceType: string;
-    created: Date;
-    updated: Date;
 };
 
 export type PaymentData = {
     serviceId: number | null;
-    roomId: number | null;
+    buildingId: number | null;
     structureId: number | null;
     footage: number | null;
-    toiletCnt: number | null;
+    toiletCount: number | null;
     expansion: 'N' | 'Y' | null;
-    verandaCnt: number | null;
+    verandaCount: number | null;
     username: string | null;
     phoneNumber: string | null;
     targetDate: string | null;
@@ -258,4 +260,13 @@ export type CommonCodeType = {
     id: number;
     name: string;
     CommonCodeType: string;
+    SubCommonCodeType: string;
+};
+
+export type EstimateType = {
+    serviceId: string;
+    targetDate: Date;
+    targetTime: string;
+    username: string;
+    phoneNumber: string;
 };

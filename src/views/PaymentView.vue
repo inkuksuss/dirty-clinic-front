@@ -12,7 +12,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <payment-module></payment-module>
+    <div></div>
 </template>
 
 <style scoped></style>

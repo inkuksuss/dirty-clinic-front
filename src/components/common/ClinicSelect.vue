@@ -66,7 +66,7 @@ export default defineComponent({
         <transition name="slide-fade" mode="out-in" class="w-full">
             <div
                 v-if="isOpen"
-                class="select-label absolute top-[100%] left-[-1.5px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] z-10"
+                class="select-label absolute top-[100%] left-[-1.5px] border-[1.5px] border-[#96C8F6] border-solid bg-[--color-white] z-10 max-h-[200px] overflow-y-scroll"
             >
                 <div
                     v-for="(item, index) in inputList"

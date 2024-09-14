@@ -4,6 +4,7 @@ import { useStore } from '@/stores/store';
 import {
     ClinicType,
     type CommonCodeType,
+    type EstimateType,
     type PaymentData,
     PopupType,
     type ProductResponse,
@@ -15,17 +16,22 @@ import ClinicSelect from '@/components/common/ClinicSelect.vue';
 import PaymentModule from '@/components/PaymentModule.vue';
 import { getApiInstance } from '@/utils/api';
 import ClinicDate from '@/components/common/ClinicDate.vue';
-import ClinicTime from '@/components/common/ClinicTime.vue';
 import moment from 'moment';
 
 export default defineComponent({
     name: 'PaymentPopup',
-    components: { ClinicTime, ClinicDate, PaymentModule, ClinicSelect, ClinicInput },
+    components: { ClinicDate, PaymentModule, ClinicSelect, ClinicInput },
     setup() {
         const store = useStore();
         const selectList: Array<SelectType> = [
-            { name: '확장형', value: 'Y' },
-            { name: '기본형', value: 'N' }
+            { name: '네', value: 'Y' },
+            { name: '아니요', value: 'N' }
+        ];
+
+        const timeSelectList: Array<SelectType> = [
+            { name: '08:00', value: '08:00' },
+            { name: '14:00', value: '14:00' },
+            { name: '그외 시간', value: '그외 시간' }
         ];
         const compPopupType = computed(() => store.openPopup);
         const expansion = ref<string>('');
@@ -34,16 +40,22 @@ export default defineComponent({
         const verandaCnt = ref<string | undefined>();
         const username = ref<string | undefined>();
         const phoneNumber = ref<string | undefined>();
-        const targetTime = ref<string | undefined>();
+        const targetTime = ref<string>('');
         const address = ref<string | undefined>();
         const targetDate = ref<Date>(new Date());
-        const balanceAmount = ref<number>(0);
-        const depositAmount = ref<number>(0);
         const productResponse = ref<ProductResponse>();
         const serviceList = ref<CommonCodeType[]>([]);
         const buildingList = ref<CommonCodeType[]>([]);
+        const clinicList = ref<SelectType[]>([]);
         const structureList = ref<SelectType[]>([]);
         const structureId = ref<string>('');
+        const estimateData = ref<EstimateType>({
+            serviceId: '',
+            targetDate: new Date(),
+            targetTime: '',
+            username: '',
+            phoneNumber: ''
+        });
 
         const handleChangeFootage = (v: string) => {
             footage.value = v;
@@ -52,12 +64,12 @@ export default defineComponent({
 
         const handleChangeToilet = (v: string) => {
             toiletCnt.value = v;
-            paymentData.value.toiletCnt = Number(v);
+            paymentData.value.toiletCount = Number(v);
         };
 
         const handleChangeVeranda = (v: string) => {
             verandaCnt.value = v;
-            paymentData.value.verandaCnt = Number(v);
+            paymentData.value.verandaCount = Number(v);
         };
 
         const handleChangeUsername = (v: string) => {
@@ -79,19 +91,37 @@ export default defineComponent({
             targetDate.value = v;
             paymentData.value.targetDate = moment(targetDate.value).format('YYYY-MM-DD');
         };
-        const handleChangeTime = (v: string) => {
-            targetTime.value = v;
-            paymentData.value.targetTime = v;
+
+        const handleChangeTime = (v: string | undefined) => {
+            if (v) {
+                targetTime.value = v;
+                paymentData.value.targetTime = v;
+            }
+        };
+
+        const handleChangeEstimateDate = (v: Date) => {
+            estimateData.value.targetDate = v;
+        };
+
+        const handleChangeEstimateTime = (v: string | undefined) => {
+            if (v) estimateData.value.targetTime = v;
+        };
+
+        const handleChangeEstimateUsername = (v: string) => {
+            estimateData.value.username = v;
+        };
+        const handleChangeEstimatePhoneNumber = (v: string) => {
+            estimateData.value.phoneNumber = v;
         };
 
         const paymentData = ref<PaymentData>({
-            roomId: null,
+            buildingId: null,
             serviceId: null,
             structureId: null,
             footage: null,
-            toiletCnt: null,
+            toiletCount: null,
             expansion: null,
-            verandaCnt: null,
+            verandaCount: null,
             username: null,
             phoneNumber: null,
             targetDate: null,
@@ -109,12 +139,18 @@ export default defineComponent({
             store.setOpenPopup(null);
         };
 
-        const handleSelectBuilding = (place: CommonCodeType) => {
-            paymentData.value.roomId = place.id;
+        const handleSelectBuilding = (building: CommonCodeType) => {
+            paymentData.value.buildingId = building.id;
         };
 
         const setSelectValue = (v: string | undefined) => {
             paymentData.value.expansion = v as 'N' | 'Y';
+        };
+
+        const setServiceValue = (v: string | undefined) => {
+            if (v) {
+                estimateData.value.serviceId = v;
+            }
         };
 
         const setSelectStructure = (value: string | undefined) => {
@@ -124,22 +160,37 @@ export default defineComponent({
         };
 
         const handleSelectService = (service: CommonCodeType) => {
-            getApiInstance()
-                .get('/common/summary?type=building_type')
-                .then((res) => {
-                    if (res.data.code === 0) {
-                        buildingList.value = res.data.data;
-                        paymentData.value.serviceId = service.id;
-                        popupPage.value = 2;
-                    }
-                })
-                .catch((e) => console.log(e));
+            if (service.name === '기타') {
+                getApiInstance()
+                    .get('/common/summary?type=service_type&subType=pay_disable')
+                    .then((res) => {
+                        console.log(res);
+                        if (res.data.code === 0) {
+                            clinicList.value = res.data.data.map((v: CommonCodeType) => {
+                                return { name: v.name, value: v.id.toString() };
+                            });
+                            popupPage.value = 7;
+                        }
+                    })
+                    .catch((e) => console.log(e));
+            } else {
+                getApiInstance()
+                    .get('/common/summary?type=building_type')
+                    .then((res) => {
+                        if (res.data.code === 0) {
+                            buildingList.value = res.data.data;
+                            paymentData.value.serviceId = service.id;
+                            popupPage.value = 2;
+                        }
+                    })
+                    .catch((e) => console.log(e));
+            }
         };
 
         const handleNext = () => {
             switch (popupPage.value) {
                 case 2: {
-                    if (paymentData.value.roomId === null) {
+                    if (paymentData.value.buildingId === null) {
                         window.alert('장소를 신청해주세요.');
                         return;
                     }
@@ -157,42 +208,13 @@ export default defineComponent({
                     break;
                 }
                 case 3: {
-                    if (!paymentData.value.structureId) {
-                        window.alert('구조를 입력해주세요.');
-                        return;
-                    }
-
-                    if (!paymentData.value.footage) {
-                        window.alert('공급면적을 입력해주세요.');
-                        return;
-                    }
-
-                    if (!paymentData.value.toiletCnt && paymentData.value.toiletCnt !== 0) {
-                        window.alert('화장실 수를 입력해주세요.');
-                        return;
-                    }
-
-                    if (!paymentData.value.expansion) {
-                        window.alert('확장 여부를 선택해주세요.');
-                        return;
-                    }
-
-                    if (!paymentData.value.verandaCnt && paymentData.value.verandaCnt !== 0) {
-                        window.alert('베란다 수를 입력해주세요.');
-                        return;
-                    }
-
-                    popupPage.value++;
-                    break;
-                }
-                case 4: {
                     if (!paymentData.value.username) {
                         window.alert('예약자 명을 입력해주세요.');
                         return;
                     }
 
                     if (!paymentData.value.phoneNumber) {
-                        window.alert('화장실 수를 입력해주세요.');
+                        window.alert('전화번호를 입력해주세요.');
                         return;
                     }
 
@@ -214,12 +236,76 @@ export default defineComponent({
                         window.alert('주소를 입력해주세요.');
                         return;
                     }
+                    popupPage.value++;
+                    break;
+                }
+                case 4: {
+                    if (!paymentData.value.structureId) {
+                        window.alert('구조를 입력해주세요.');
+                        return;
+                    }
+
+                    if (!paymentData.value.footage) {
+                        window.alert('공급면적을 입력해주세요.');
+                        return;
+                    }
+
+                    if (!paymentData.value.toiletCount && paymentData.value.toiletCount !== 0) {
+                        window.alert('화장실 수를 입력해주세요.');
+                        return;
+                    }
+
+                    if (!paymentData.value.expansion) {
+                        window.alert('확장 여부를 선택해주세요.');
+                        return;
+                    }
+
+                    if (!paymentData.value.verandaCount && paymentData.value.verandaCount !== 0) {
+                        window.alert('베란다 수를 입력해주세요.');
+                        return;
+                    }
 
                     getProductInfo();
                     break;
                 }
                 case 5: {
                     popupPage.value++;
+                    break;
+                }
+                case 7: {
+                    if (
+                        !estimateData.value.serviceId ||
+                        estimateData.value.serviceId.trim() === ''
+                    ) {
+                        window.alert('클리닉 종류를 선택해주세요.');
+                        return;
+                    }
+                    if (!estimateData.value.targetDate) {
+                        window.alert('예약일을 입력해주세요.');
+                        return;
+                    }
+                    if (!estimateData.value.targetTime) {
+                        window.alert('시간을 입력해주세요.');
+                        return;
+                    }
+                    popupPage.value++;
+                    break;
+                }
+                case 8: {
+                    if (!estimateData.value.username || estimateData.value.username.trim() === '') {
+                        window.alert('성함을 입력해주세요.');
+                        return;
+                    }
+
+                    if (
+                        !estimateData.value.phoneNumber ||
+                        estimateData.value.phoneNumber.trim() === ''
+                    ) {
+                        window.alert('연락처를 입력해주세요.');
+                        return;
+                    }
+
+                    doEstimateByEtc();
                     break;
                 }
             }
@@ -229,42 +315,50 @@ export default defineComponent({
             switch (popupPage.value) {
                 case 2: {
                     paymentData.value.serviceId = null;
-                    paymentData.value.roomId = null;
+                    paymentData.value.buildingId = null;
                     popupPage.value--;
                     break;
                 }
                 case 3: {
-                    paymentData.value.footage = null;
-                    paymentData.value.toiletCnt = null;
-                    paymentData.value.expansion = null;
-                    paymentData.value.verandaCnt = null;
-                    footage.value = undefined;
-                    verandaCnt.value = undefined;
-                    expansion.value = '';
-                    toiletCnt.value = undefined;
-                    paymentData.value.roomId = null;
-                    popupPage.value--;
-                    break;
-                }
-                case 4: {
-                    paymentData.value.structureId = null;
-                    paymentData.value.footage = null;
-                    paymentData.value.toiletCnt = null;
-                    paymentData.value.expansion = null;
-                    paymentData.value.verandaCnt = null;
                     paymentData.value.username = null;
                     paymentData.value.phoneNumber = null;
                     paymentData.value.targetDate = null;
                     paymentData.value.targetTime = null;
                     paymentData.value.address = null;
+
+                    username.value = undefined;
+                    phoneNumber.value = undefined;
+                    targetDate.value = new Date();
+                    targetTime.value = '';
+                    address.value = undefined;
+
+                    paymentData.value.buildingId = null;
+                    popupPage.value--;
+                    break;
+                }
+                case 4: {
+                    paymentData.value.footage = null;
+                    paymentData.value.structureId = null;
+                    paymentData.value.toiletCount = null;
+                    paymentData.value.expansion = null;
+                    paymentData.value.verandaCount = null;
+
+                    paymentData.value.username = null;
+                    paymentData.value.phoneNumber = null;
+                    paymentData.value.targetDate = null;
+                    paymentData.value.targetTime = null;
+                    paymentData.value.address = null;
+
                     footage.value = undefined;
                     verandaCnt.value = undefined;
                     expansion.value = '';
                     toiletCnt.value = undefined;
+                    structureId.value = '';
+
                     username.value = undefined;
                     phoneNumber.value = undefined;
                     targetDate.value = new Date();
-                    targetTime.value = undefined;
+                    targetTime.value = '';
                     address.value = undefined;
                     popupPage.value--;
                     break;
@@ -278,8 +372,24 @@ export default defineComponent({
                     username.value = undefined;
                     phoneNumber.value = undefined;
                     targetDate.value = new Date();
-                    targetTime.value = undefined;
+                    targetTime.value = '';
                     address.value = undefined;
+                    popupPage.value--;
+                    break;
+                }
+                case 7: {
+                    estimateData.value.serviceId = '';
+                    estimateData.value.targetDate = new Date();
+                    estimateData.value.targetTime = '';
+                    popupPage.value = 1;
+                    break;
+                }
+                case 8: {
+                    estimateData.value.serviceId = '';
+                    estimateData.value.targetDate = new Date();
+                    estimateData.value.targetTime = '';
+                    estimateData.value.username = '';
+                    estimateData.value.phoneNumber = '';
                     popupPage.value--;
                     break;
                 }
@@ -290,8 +400,8 @@ export default defineComponent({
             const data = {
                 serviceId: paymentData.value.serviceId,
                 structureId: paymentData.value.structureId,
-                toiletCount: paymentData.value.toiletCnt,
-                verandaCount: paymentData.value.verandaCnt,
+                toiletCount: paymentData.value.toiletCount,
+                verandaCount: paymentData.value.verandaCount,
                 footage: paymentData.value.footage,
                 expansion: paymentData.value.expansion
             };
@@ -300,18 +410,12 @@ export default defineComponent({
                 .post('/product/detail', data)
                 .then((res) => {
                     if (res.data.code === 0) {
+                        console.log(res.data.data);
                         productResponse.value = {
                             id: res.data.data.id,
-                            name: res.data.data.name,
-                            description: res.data.data.description,
                             balanceAmount: res.data.data.balanceAmount,
-                            depositAmount: res.data.data.depositAmount,
-                            serviceType: res.data.data.serviceType,
-                            created: res.data.data.created,
-                            updated: res.data.data.updated
+                            depositAmount: res.data.data.depositAmount
                         };
-                        productResponse.value.balanceAmount = res.data.data.balanceAmount;
-                        depositAmount.value = res.data.data.depositAmount;
                         popupPage.value++;
                     } else {
                         window.alert(res.data.message);
@@ -320,9 +424,49 @@ export default defineComponent({
                 .catch((err) => console.log(err));
         };
 
-        onMounted(() => {
+        const doEstimateByEtc = () => {
+            const data = {
+                serviceId: parseInt(estimateData.value.serviceId),
+                targetDate: moment(estimateData.value.targetDate).format('YYYY-MM-DD'),
+                targetTime: estimateData.value.targetTime,
+                username: estimateData.value.username,
+                phoneNumber: estimateData.value.phoneNumber
+            };
+
             getApiInstance()
-                .get('/common/summary?type=service_type')
+                .post('/reservation/estimate', data)
+                .then((res) => {
+                    console.log(res);
+                    if (res.data.code !== 0) {
+                        window.alert('견적 요청에 실패하였습니다.');
+                        return;
+                    }
+                    popupPage.value = 9;
+                })
+                .catch((e) => console.log(e));
+        };
+
+        const doEstimate = () => {
+            getApiInstance()
+                .post('/reservation/estimate', paymentData.value)
+                .then((res) => {
+                    if (res.data.code !== 0) {
+                        window.alert('견적 요청에 실패하였습니다.');
+                        return;
+                    }
+                    popupPage.value = 9;
+                })
+                .catch((e) => console.log(e));
+        };
+
+        const handlePaymentSuccess = () => {
+            popupPage.value = 10;
+        };
+
+        onMounted(() => {
+            window.alert('현재 준비중인 기능입니다.');
+            getApiInstance()
+                .get('/common/summary?type=service_type&subType=pay_able')
                 .then((res) => {
                     if (res.data.code === 0) {
                         serviceList.value = res.data.data;
@@ -353,6 +497,10 @@ export default defineComponent({
             structureList,
             structureId,
             address,
+            estimateData,
+            clinicList,
+            timeSelectList,
+            handlePaymentSuccess,
             setSelectStructure,
             handleNext,
             handlePrev,
@@ -368,21 +516,30 @@ export default defineComponent({
             handleChangeDate,
             handleChangeTime,
             handleChangeAddress,
-            setSelectValue
+            setSelectValue,
+            setServiceValue,
+            handleChangeEstimateDate,
+            handleChangeEstimateTime,
+            handleChangeEstimateUsername,
+            handleChangeEstimatePhoneNumber,
+            doEstimate
         };
     }
 });
 </script>
 
 <template>
-    <div class="popup-payment absolute max-w-[460px] w-[38%] min-h-[535px] bg-white z-50 p-[15px]">
-        <div v-if="popupPage === 1" class="payment-product">
+    <div class="popup-payment max-w-[460px] w-[38%] h-max absolute bg-white z-50">
+        <div
+            v-if="popupPage === 1"
+            class="payment-product w-full min-h-[535px] h-[535px] flex flex-col p-[15px]"
+        >
             <div class="head-area max-w-[430px] flex justify-between pl-[20px]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
                         >원하는 클리닉을 선택하세요.</span
                     >
-                    <span class="mb-[30px] text-[16px] font-[400] leading-[19px]"
+                    <span class="mb-[50px] text-[16px] font-[400] leading-[19px]"
                         >예약 할 서비스를 골라주세요.</span
                     >
                 </div>
@@ -390,7 +547,7 @@ export default defineComponent({
                     <img src="/assets/images/icons/x-btn.svg" alt="닫기" />
                 </div>
             </div>
-            <div class="contents-area service-page w-full h-full px-[20px] pb-[35px]">
+            <div class="contents-area service-page w-full px-[20px] pb-[35px]">
                 <div class="w-full h-full grid grid-cols-2">
                     <div
                         v-for="(service, idx) in serviceList"
@@ -425,13 +582,16 @@ export default defineComponent({
             </div>
         </div>
         <!-- 2 -->
-        <div v-else-if="popupPage === 2" class="payment-product">
+        <div
+            v-else-if="popupPage === 2"
+            class="payment-product w-full min-h-[535px] h-[535px] flex flex-col p-[15px]"
+        >
             <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
                         >어떤 장소를 신청하시나요?</span
                     >
-                    <span class="mb-[30px] text-[16px] font-[400] leading-[19px]"
+                    <span class="mb-[50px] text-[16px] font-[400] leading-[19px]"
                         >클리닉을 신청할 곳을 선택해주세요.</span
                     >
                 </div>
@@ -440,13 +600,15 @@ export default defineComponent({
                 </div>
             </div>
             <div
-                class="contents-area w-full h-full max-h-[370px] grid grid-rows-2 grid-cols-2 px-[5%] gap-[10px] pb-[85px]"
+                class="contents-area w-full max-h-[370px] grid grid-rows-2 grid-cols-2 px-[5%] gap-[10px] pb-[85px]"
             >
                 <div
                     v-for="(building, idx) in buildingList"
                     :key="`place-${idx}`"
                     class="content max-w-[185px] max-h-[90px] h-[160px] flex border-[--color-border-blue] border-[1.5px] px-[10%] py-[23px]"
-                    :class="[paymentData.roomId === building.id ? 'bg-[--color-border-blue]' : '']"
+                    :class="[
+                        paymentData.buildingId === building.id ? 'bg-[--color-border-blue]' : ''
+                    ]"
                     @click="() => handleSelectBuilding(building)"
                 >
                     <img
@@ -487,7 +649,95 @@ export default defineComponent({
             </div>
         </div>
         <!-- 3 -->
-        <div v-else-if="popupPage === 3" class="payment-input">
+        <div
+            v-else-if="popupPage === 3"
+            class="payment-input w-full min-h-[610px] flex flex-col p-[15px]"
+        >
+            <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
+                <div class="flex flex-col pt-[40px]">
+                    <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
+                        >예약자 정보를 알려주세요.</span
+                    >
+                    <span class="mb-[30px] text-[16px] font-[400] leading-[19px]"
+                        >예약 진행 상황을 받을 수 있는 정보를 알려주세요.</span
+                    >
+                </div>
+                <div @click="handleClickClose">
+                    <img src="/assets/images/icons/x-btn.svg" alt="닫기" />
+                </div>
+            </div>
+            <div class="contents-area flex-col px-[5%] mb-[30px]">
+                <div class="flex justify-between items-center mb-[15px]">
+                    <div class="text-[18px] font-[600] leading-[26px]">예약자 명</div>
+                    <clinic-input
+                        place-holder="예약자 명"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                        :value="username"
+                        :change-handler="handleChangeUsername"
+                    ></clinic-input>
+                </div>
+                <div class="flex justify-between items-center mb-[15px]">
+                    <div class="text-[18px] font-[600] leading-[26px]">전화번호</div>
+                    <clinic-input
+                        place-holder="'-'를 제외 후 입력해주세요."
+                        :is-number="true"
+                        :value="phoneNumber"
+                        :change-handler="handleChangePhone"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                    ></clinic-input>
+                </div>
+                <div class="flex justify-between items-center mb-[15px]">
+                    <div class="text-[18px] font-[600] leading-[26px]">예약일</div>
+                    <clinic-date
+                        :value="targetDate"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                        :change-handler="handleChangeDate"
+                    >
+                    </clinic-date>
+                </div>
+                <div class="flex justify-between items-center mb-[15px]">
+                    <div class="text-[18px] font-[600] leading-[26px]">시간</div>
+                    <clinic-select
+                        :selected-value="targetTime"
+                        :select-list="timeSelectList"
+                        place-holder="시간을 골라주세요."
+                        :select-handler="handleChangeTime"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                    ></clinic-select>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="text-[18px] font-[600] leading-[26px]">주소</div>
+                    <clinic-input
+                        place-holder="주소를 입력하세요."
+                        :value="address"
+                        :change-handler="handleChangeAddress"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                    ></clinic-input>
+                </div>
+            </div>
+            <div class="btn-area w-full h-[45px] flex justify-between gap-x-[15px] px-[5%]">
+                <div
+                    class="flex-center h-full w-full rounded-[80px] border-[--color-border-blue] border-[1.5px]"
+                    @click="handlePrev"
+                >
+                    <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-text-black]"
+                        >이전으로</span
+                    >
+                </div>
+                <div
+                    class="flex-center h-full w-full rounded-[80px] bg-[--color-main-blue]"
+                    @click="handleNext"
+                >
+                    <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-white]"
+                        >다음으로</span
+                    >
+                </div>
+            </div>
+        </div>
+        <div
+            v-else-if="popupPage === 4"
+            class="payment-input w-full min-h-[610px] flex flex-col p-[15px]"
+        >
             <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
@@ -553,107 +803,42 @@ export default defineComponent({
                     ></clinic-input>
                 </div>
             </div>
-            <div class="btn-area w-full h-[45px] flex justify-between gap-x-[15px] px-[5%]">
-                <div
-                    class="flex-center h-full w-full rounded-[80px] border-[--color-border-blue] border-[1.5px]"
-                    @click="handlePrev"
-                >
-                    <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-text-black]"
-                        >이전으로</span
+            <div class="btn-area w-full flex flex-col px-[5%]">
+                <div class="flex justify-between gap-x-[15px]">
+                    <div
+                        class="flex-center h-[45px] w-full rounded-[80px] border-[--color-border-blue] border-[1.5px]"
+                        @click="handlePrev"
                     >
+                        <span
+                            class="text-[18px] font-[600] leading-[23.5px] text-[--color-text-black]"
+                            >이전으로</span
+                        >
+                    </div>
+                    <div
+                        class="flex-center h-[45px] w-full rounded-[80px] bg-[--color-main-blue]"
+                        @click="handleNext"
+                    >
+                        <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-white]"
+                            >다음으로</span
+                        >
+                    </div>
                 </div>
+
                 <div
-                    class="flex-center h-full w-full rounded-[80px] bg-[--color-main-blue]"
-                    @click="handleNext"
+                    class="w-full mt-[15px] h-[60px] rounded-[80px] bg-[--color-main-blue] flex flex-col items-center justify-center"
+                    @click="doEstimate"
                 >
-                    <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-white]"
-                        >다음으로</span
+                    <span class="text-[16px] font-[400] text-[--color-white]"
+                        >원하는 옵션이 없으신가요?</span
                     >
+                    <span class="text-[18px] font-[600] text-[--color-white]">견적 요청하기</span>
                 </div>
             </div>
         </div>
-        <!-- 4 -->
-        <div v-else-if="popupPage === 4" class="payment-input">
-            <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
-                <div class="flex flex-col pt-[40px]">
-                    <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
-                        >예약자 정보를 알려주세요.</span
-                    >
-                    <span class="mb-[30px] text-[16px] font-[400] leading-[19px]"
-                        >예약 진행 상황을 받을 수 있는 정보를 알려주세요.</span
-                    >
-                </div>
-                <div @click="handleClickClose">
-                    <img src="/assets/images/icons/x-btn.svg" alt="닫기" />
-                </div>
-            </div>
-            <div class="contents-area flex-col px-[5%] mb-[30px]">
-                <div class="flex justify-between items-center mb-[15px]">
-                    <div class="text-[18px] font-[600] leading-[26px]">예약자 명</div>
-                    <clinic-input
-                        place-holder="예약자 명"
-                        class="max-w-[288px] max-h-[60px] w-[73%]"
-                        :value="username"
-                        :change-handler="handleChangeUsername"
-                    ></clinic-input>
-                </div>
-                <div class="flex justify-between items-center mb-[15px]">
-                    <div class="text-[18px] font-[600] leading-[26px]">전화번호</div>
-                    <clinic-input
-                        place-holder="전화번호를 입력해주세요."
-                        :is-number="true"
-                        :value="phoneNumber"
-                        :change-handler="handleChangePhone"
-                        class="max-w-[288px] max-h-[60px] w-[73%]"
-                    ></clinic-input>
-                </div>
-                <div class="flex justify-between items-center mb-[15px]">
-                    <div class="text-[18px] font-[600] leading-[26px]">예약일</div>
-                    <clinic-date
-                        :value="targetDate"
-                        class="max-w-[288px] max-h-[60px] w-[73%]"
-                        :change-handler="handleChangeDate"
-                    >
-                    </clinic-date>
-                </div>
-                <div class="flex justify-between items-center mb-[15px]">
-                    <div class="text-[18px] font-[600] leading-[26px]">시간</div>
-                    <clinic-time
-                        :value="targetTime"
-                        :change-handler="handleChangeTime"
-                        class="max-w-[288px] max-h-[60px] w-[73%]"
-                    ></clinic-time>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div class="text-[18px] font-[600] leading-[26px]">주소</div>
-                    <clinic-input
-                        place-holder="주소를 입력하세요."
-                        :value="address"
-                        :change-handler="handleChangeAddress"
-                        class="max-w-[288px] max-h-[60px] w-[73%]"
-                    ></clinic-input>
-                </div>
-            </div>
-            <div class="btn-area w-full h-[45px] flex justify-between gap-x-[15px] px-[5%]">
-                <div
-                    class="flex-center h-full w-full rounded-[80px] border-[--color-border-blue] border-[1.5px]"
-                    @click="handlePrev"
-                >
-                    <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-text-black]"
-                        >이전으로</span
-                    >
-                </div>
-                <div
-                    class="flex-center h-full w-full rounded-[80px] bg-[--color-main-blue]"
-                    @click="handleNext"
-                >
-                    <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-white]"
-                        >다음으로</span
-                    >
-                </div>
-            </div>
-        </div>
-        <div v-else-if="popupPage === 5" class="payment-input">
+        <div
+            v-else-if="popupPage === 5"
+            class="payment-input w-full min-h-[535px] flex flex-col p-[15px]"
+        >
             <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
@@ -732,9 +917,192 @@ export default defineComponent({
         </div>
         <div v-else-if="popupPage === 6" class="payment-input">
             <payment-module
+                :service-list="serviceList"
                 :payment-data="paymentData"
                 :product-data="productResponse"
+                :success-handler="handlePaymentSuccess"
             ></payment-module>
+        </div>
+
+        <!-- 7 > 기타 선택시 -->
+        <div
+            v-else-if="popupPage === 7"
+            class="payment-input w-full min-h-[535px] flex flex-col p-[15px]"
+        >
+            <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
+                <div class="flex flex-col pt-[40px]">
+                    <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
+                        >어떤 클리닉을 원하시나요?</span
+                    >
+                    <span class="mb-[30px] text-[16px] font-[400] leading-[19px]"
+                        >클리닉의 종류와 연락처를 남겨주시면 상담을 도와드려요!</span
+                    >
+                </div>
+                <div @click="handleClickClose">
+                    <img src="/assets/images/icons/x-btn.svg" alt="닫기" />
+                </div>
+            </div>
+            <div class="contents-area flex-col px-[5%] mb-[30px]">
+                <div class="flex justify-between items-center mb-[15px]">
+                    <div class="text-[18px] font-[600] leading-[26px]">거실 베란다</div>
+                    <clinic-select
+                        :selected-value="estimateData.serviceId"
+                        :select-list="clinicList"
+                        place-holder="클리닉을 골라주세요."
+                        :select-handler="setServiceValue"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                    ></clinic-select>
+                </div>
+                <div class="flex justify-between items-center mb-[15px]">
+                    <div class="text-[18px] font-[600] leading-[26px]">예약일</div>
+                    <clinic-date
+                        :value="estimateData.targetDate"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                        :change-handler="handleChangeEstimateDate"
+                    >
+                    </clinic-date>
+                </div>
+                <div class="flex justify-between items-center mb-[15px]">
+                    <div class="text-[18px] font-[600] leading-[26px]">시간</div>
+                    <clinic-select
+                        :selected-value="estimateData.targetTime"
+                        :select-list="timeSelectList"
+                        place-holder="시간을 골라주세요."
+                        :select-handler="handleChangeEstimateTime"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                    ></clinic-select>
+                </div>
+            </div>
+            <div
+                class="btn-area w-full h-[45px] flex justify-between gap-x-[15px] px-[5%] mt-[40px]"
+            >
+                <div
+                    class="flex-center h-full w-full rounded-[80px] border-[--color-border-blue] border-[1.5px]"
+                    @click="handlePrev"
+                >
+                    <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-text-black]"
+                        >이전으로</span
+                    >
+                </div>
+                <div
+                    class="flex-center h-full w-full rounded-[80px] bg-[--color-main-blue]"
+                    @click="handleNext"
+                >
+                    <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-white]"
+                        >다음으로</span
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div
+            v-else-if="popupPage === 8"
+            class="payment-input w-full min-h-[535px] flex flex-col p-[15px]"
+        >
+            <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
+                <div class="flex flex-col pt-[40px]">
+                    <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
+                        >연락드릴 정보를 알려주세요!</span
+                    >
+                    <span class="mb-[30px] text-[16px] font-[400] leading-[19px]"
+                        >클리닉의 종류와 연락처를 남겨주시면 상담을 도와드려요!</span
+                    >
+                </div>
+                <div @click="handleClickClose">
+                    <img src="/assets/images/icons/x-btn.svg" alt="닫기" />
+                </div>
+            </div>
+            <div class="contents-area flex-col px-[5%] mb-[30px]">
+                <div class="flex justify-between items-center mb-[15px]">
+                    <div class="text-[18px] font-[600] leading-[26px]">예약자 명</div>
+                    <clinic-input
+                        place-holder="성함을 입력하세요."
+                        :value="estimateData.username"
+                        :change-handler="handleChangeEstimateUsername"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                    ></clinic-input>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="text-[18px] font-[600] leading-[26px]">전화번호</div>
+                    <clinic-input
+                        :is-number="true"
+                        place-holder="'-'를 제외 후 입력해주세요."
+                        :value="estimateData.phoneNumber"
+                        :change-handler="handleChangeEstimatePhoneNumber"
+                        class="max-w-[288px] max-h-[60px] w-[73%]"
+                    ></clinic-input>
+                </div>
+            </div>
+            <div
+                class="btn-area w-full h-[45px] flex justify-between gap-x-[15px] px-[5%] mt-[130px]"
+            >
+                <div
+                    class="flex-center h-full w-full rounded-[80px] border-[--color-border-blue] border-[1.5px]"
+                    @click="handlePrev"
+                >
+                    <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-text-black]"
+                        >이전으로</span
+                    >
+                </div>
+                <div
+                    class="flex-center h-full w-full rounded-[80px] bg-[--color-main-blue]"
+                    @click="handleNext"
+                >
+                    <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-white]"
+                        >견적 요청하기</span
+                    >
+                </div>
+            </div>
+        </div>
+        <!-- 9 -->
+        <div
+            v-else-if="popupPage === 9"
+            class="flex flex-col justify-center pt-[15px] pb-[35px] pl-[35px] pr-[15px]"
+        >
+            <div class="flex justify-end mb-[4px]">
+                <img
+                    @click="handleClickClose"
+                    class="w-[36px] h-[36px]"
+                    src="@/assets/images/icons/x-btn.svg"
+                />
+            </div>
+            <div class="text-[30px] font-[700] mb-[5px] leading-[36px]">
+                견적 요청이 완료되었어요.
+            </div>
+            <div class="text-[16px] font-[400] mb-[30px] leading-[19px]">
+                최대한 빠르게 확인하여 연락드리겠습니다.<br />알맞은 서비스를 제공할 수 있도록
+                최선을 다하겠습니다.
+            </div>
+            <div
+                class="flex-center w-[190px] h-[45px] border-[--color-border-blue] border-[1.5px] rounded-[80px]"
+                @click="handleClickClose"
+            >
+                <span class="text-[18px] font-[600]">확인</span>
+            </div>
+        </div>
+        <!-- 10 -->
+        <div
+            v-else-if="popupPage === 10"
+            class="flex flex-col justify-center pt-[15px] pb-[35px] pl-[35px] pr-[15px]"
+        >
+            <div class="flex justify-end mb-[4px]">
+                <img
+                    @click="handleClickClose"
+                    class="w-[36px] h-[36px]"
+                    src="@/assets/images/icons/x-btn.svg"
+                />
+            </div>
+            <div class="text-[30px] font-[700] mb-[5px] leading-[36px]">결제가 완료되었어요.</div>
+            <div class="text-[16px] font-[400] mb-[30px] leading-[19px]">
+                최대한 빠르게 확인하여 연락드리겠습니다.<br />알맞은 서비스를 제공할 수 있도록
+                최선을 다하겠습니다.
+            </div>
+            <div
+                class="flex-center w-[190px] h-[45px] border-[--color-border-blue] border-[1.5px] rounded-[80px]"
+                @click="handleClickClose"
+            >
+                <span class="text-[18px] font-[600]">확인</span>
+            </div>
         </div>
     </div>
 </template>

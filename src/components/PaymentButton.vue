@@ -52,7 +52,7 @@ export default defineComponent({
     <transition name="fade" mode="out-in">
         <div
             v-if="isScrolled && !compIsMobile"
-            class="online-btn fixed bottom-[40px] right-[30px] w-[175px] h-[75px] bg-[--color-main-blue] rounded-[100px] flex-center opacity-1 cursor-pointer"
+            class="online-btn fixed bottom-[40px] right-[30px] w-[175px] h-[75px] bg-[--color-main-blue] rounded-[100px] flex-center opacity-1 cursor-pointer z-50"
             @click="handleClickBtn"
         >
             <div class="w-[33px] h-[30px] mr-[10px]">

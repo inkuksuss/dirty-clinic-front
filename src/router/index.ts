@@ -154,6 +154,11 @@ const router = createRouter({
             component: () => import('@/views/PaymentView.vue')
         },
         {
+            path: '/promotion',
+            name: 'promotion',
+            component: () => import('@/views/PromotionView.vue')
+        },
+        {
             path: '/:pathMatch(.*)*',
             redirect: '/'
         }

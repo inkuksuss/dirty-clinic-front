@@ -66,7 +66,7 @@ export default defineComponent({
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/fire.webp', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/waste_1.webp', import.meta.url).href
             }
         ];
 

@@ -73,10 +73,16 @@ export default defineComponent({
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/move_in1.webp', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/move_in_1.webp', import.meta.url).href
             },
             {
-                src: new URL('@/assets/images/sub/promotion/move_in1.webp', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/move_in_2.webp', import.meta.url).href
+            },
+            {
+                src: new URL('@/assets/images/sub/promotion/move_in_3.webp', import.meta.url).href
+            },
+            {
+                src: new URL('@/assets/images/sub/promotion/move_in_4.webp', import.meta.url).href
             }
         ];
 

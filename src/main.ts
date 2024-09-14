@@ -7,6 +7,7 @@ import vClickOutside from 'click-outside-vue3';
 import App from './App.vue';
 import router from './router';
 import { createMetaManager } from 'vue-meta';
+import '@egjs/vue3-flicking/dist/flicking.css';
 
 const app = createApp(App);
 

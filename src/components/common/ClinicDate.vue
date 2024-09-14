@@ -30,10 +30,23 @@ export default defineComponent({
             }
         };
 
+        const today = new Date();
+        const disables = ref<object>({
+            dates: [
+                new Date(new Date().setDate(today.getDate() + 1)),
+                new Date(new Date().setDate(today.getDate() + 2)),
+                new Date(new Date().setDate(today.getDate() + 3)),
+                new Date(2024, 8, 11)
+            ]
+        });
+
+        console.log(disables.value);
+
         return {
             date,
             compLocale,
             compLabel,
+            disables,
             handleChangeDate
         };
     }
@@ -54,6 +67,7 @@ export default defineComponent({
                 v-model="date"
                 :locale="compLocale"
                 :lower-limit="new Date()"
+                :disabled-dates="disables"
                 @update:modelValue="handleChangeDate"
             ></Datepicker>
         </div>

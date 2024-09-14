@@ -166,7 +166,7 @@ export default defineComponent({
                 subList: [
                     { title: '이용후기', dest: '' },
                     { title: '블로그', dest: '' },
-                    { title: '프로모션', dest: '' }
+                    { title: '프로모션', dest: '/promotion' }
                 ]
             }
         ]);

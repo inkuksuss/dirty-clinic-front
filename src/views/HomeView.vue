@@ -9,20 +9,35 @@ import { PopupType } from '@/utils/types';
 import PaymentButton from '@/components/PaymentButton.vue';
 import HomeService from '@/components/home/HomeService.vue';
 import { useMeta } from 'vue-meta';
+import Flicking from '@egjs/vue3-flicking';
+import ClinicImage from '@/components/common/ClinicImage.vue';
+import { AutoPlay } from '@egjs/flicking-plugins';
 
 export default defineComponent({
-    components: { HomeService, PaymentButton, HomePromotion, HomeIntro, HomeScroll, homeSlider },
+    components: {
+        ClinicImage,
+        HomeService,
+        PaymentButton,
+        HomePromotion,
+        HomeIntro,
+        HomeScroll,
+        homeSlider,
+        Flicking: Flicking
+    },
     setup() {
         useMeta({
             title: '더티클리닉',
             description: '우리는 청결의 미학을 실현하는 전문기업 더티클리닉입니다.'
         });
         const store = useStore();
+        const plugin = [new AutoPlay({ duration: 5000, direction: 'NEXT' })];
+
         const handleClickBtn = () => {
             store.setOpenPopup(PopupType.PAYMENT);
         };
 
         return {
+            plugin,
             handleClickBtn
         };
     }
@@ -31,9 +46,36 @@ export default defineComponent({
 
 <template>
     <main class="main-wrapper">
-        <div class="main-image-wrapper w-full flex justify-center items-center bg-black">
-            <div class="main-image w-full h-full flex justify-center items-center relative">
-                <div class="absolute w-full h-full bg-[--color-black] opacity-[40%] z-0"></div>
+        <div class="main-image-wrapper relative flex">
+            <Flicking
+                class="z-0"
+                :plugins="plugin"
+                :options="{
+                    circular: true,
+                    moveType: ['strict', { count: 1 }],
+                    inputType: []
+                }"
+            >
+                <div class="image-item first w-screen h-full relative">
+                  <div class="bg-black w-screen h-full opacity-40 absolute left-0 top-0 z-10"></div>
+                </div>
+                <div class="image-item second w-screen h-full relative">
+                  <div class="bg-black w-screen h-full opacity-40 absolute left-0 top-0 z-10"></div>
+                </div>
+                <!--                <div class="image-item w-screen h-full" key="1">-->
+                <!--                    <clinic-image-->
+                <!--                        class="w-full h-full"-->
+                <!--                        src="/assets/images/home/clinic_main_1.webp"-->
+                <!--                    ></clinic-image>-->
+                <!--                </div>-->
+                <!--                <div class="image-item w-screen h-full" key="2">-->
+                <!--                    <clinic-image-->
+                <!--                        class="w-full h-full"-->
+                <!--                        src="/assets/images/home/clinic_main_2.webp"-->
+                <!--                    ></clinic-image>-->
+                <!--                </div>-->
+            </Flicking>
+            <div class="contents-wrapper w-screen h-full absolute top-0 left-0 h-full z-20 flex-center">
                 <div
                     class="image-content max-w-[--body-width] w-[--body-ratio] flex flex-col justify-between z-10"
                 >

@@ -66,7 +66,7 @@ export default defineComponent({
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/fire.webp', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/completion_1.webp', import.meta.url).href
             }
         ];
 
@@ -126,7 +126,7 @@ export default defineComponent({
         ></sub-manage>
         <sub-promotion
             :page-type="SubPageType.COMPLETION"
-            :data-list="promotionList"
+            :prom-list="promotionList"
         ></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>
         <payment-button :click-handler="handleClickBtn"></payment-button>

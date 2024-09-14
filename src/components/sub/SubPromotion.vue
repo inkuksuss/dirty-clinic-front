@@ -37,7 +37,7 @@ export default defineComponent({
 
         const title = ref<string>();
         const desc = ref<string>();
-        const autoPlay = new AutoPlay({ duration: 1000, direction: 'NEXT', stopOnHover: true });
+        const autoPlay = new AutoPlay({ duration: 2500, direction: 'NEXT', stopOnHover: false });
         const hasPriceList = [
             SubPageType.ONE_ROOM,
             SubPageType.SPOT,
@@ -189,21 +189,33 @@ export default defineComponent({
                 </div>
             </div>
 
-            <div v-if="hasPriceList.includes(compPageType)" class="mb-[50px]">
-                <div v-for="(price, idx) in priceDataList" :key="idx" class="">
-                    <div v-if="price.mainTitle" class="text-[32px] font-[700] text-[--color-black]">{{ price.mainTitle }}</div>
-                    <div v-if="price.mainSubTitle" class="text-[18px] font-[500] text-[--color-black] mb-[40px]">{{ price.mainSubTitle }}</div>
+            <div v-if="hasPriceList.includes(compPageType)" class="has-price-wrapper mb-[50px]">
+                <div v-for="(price, idx) in priceDataList" :key="idx" class="price-wrapper">
+                    <div
+                        v-if="price.mainTitle"
+                        class="main-title text-[32px] font-[700] text-[--color-black]"
+                    >
+                        {{ price.mainTitle }}
+                    </div>
+                    <div
+                        v-if="price.mainSubTitle"
+                        class="main-sub-title text-[18px] font-[500] text-[--color-black] mb-[40px]"
+                    >
+                        {{ price.mainSubTitle }}
+                    </div>
                     <div class="flex items-end">
-                        <div v-if="price.title" class="text-[32px] font-[700] mr-[15px]">
+                        <div v-if="price.title" class="title text-[32px] font-[700] mr-[15px]">
                             {{ price.title }}
                         </div>
-                        <span v-if="price.titleDesc" class="text-[16px] text-[--color-text-gray]">{{
-                            price.titleDesc
-                        }}</span>
+                        <span
+                            v-if="price.titleDesc"
+                            class="title-desc text-[16px] text-[--color-text-gray]"
+                            >{{ price.titleDesc }}</span
+                        >
                     </div>
                     <div
                         v-if="price.subTitle"
-                        class="text-[18px] font-[500] text-[--color-black] mt-[15px]"
+                        class="sub-title text-[18px] font-[500] text-[--color-black] mt-[15px]"
                     >
                         {{ price.subTitle }}
                     </div>
@@ -222,14 +234,14 @@ export default defineComponent({
                     </div>
                     <div
                         v-if="price.ext"
-                        class="text-[16px] font-[500] text-[--color-text-gray] leading-[26px] mt-[15px] whitespace-pre-wrap"
+                        class="ext text-[16px] font-[500] text-[--color-text-gray] leading-[26px] mt-[15px] whitespace-pre-wrap"
                         :class="[idx < priceDataList.length - 1 ? 'mb-[40px]' : '']"
                     >
                         {{ price.ext }}
                     </div>
                     <div
                         v-if="price.ext2"
-                        class="text-[16px] font-[500] text-[--color-text-gray] leading-[26px] mt-[15px] whitespace-pre-wrap"
+                        class="ext2 text-[16px] font-[500] text-[--color-text-gray] leading-[26px] mt-[15px] whitespace-pre-wrap"
                     >
                         {{ price.ext2 }}
                     </div>
@@ -259,26 +271,14 @@ export default defineComponent({
                     <Flicking
                         class="flicking-area flex overflow-hidden"
                         :plugins="plugins"
-                        :options="{ circular: true, panelsPerView: 2, renderOnlyVisible: true }"
+                        :options="{ circular: true, panelsPerView: 2, align: 'next' }"
                     >
                         <div
                             v-for="(prom, index) in promDataList"
                             :key="index"
-                            class="promotion-box w-[49%] flex-center relative mx-[10px]"
+                            class="promotion-box w-[50%] flex-center relative mx-[10px]"
                         >
-                            <img :src="prom.src" class="w-full" />
-                            <div class="text-box w-[82%] h-[65%] absolute top-[22%] left-[9%]">
-                                <div
-                                    class="text-[--color-text-black] text-[18px] font-[500] leading-[21px]"
-                                >
-                                    더티클리닉의 꺠끗함을 만나보세요. {{ index }}
-                                </div>
-                                <div
-                                    class="text-[--color-text-black] text-[32px] font-[700] leading-[38px]"
-                                >
-                                    프로모션 50%
-                                </div>
-                            </div>
+                            <clinic-image :src="prom.src" class="w-full" />
                         </div>
                     </Flicking>
                 </div>
@@ -290,70 +290,5 @@ export default defineComponent({
                 {{ compPromLabel }}
             </div>
         </div>
-
-        <!-- isMobile -->
-<!--        <div v-else class="promotion-content mobile max-w-[608px] w-full mx-[25px]">-->
-<!--            <div class="text-area mb-[30px]">-->
-<!--                <div class="text-[&#45;&#45;color-text-black] text-[32px] font-[700] leading-[38px]">-->
-<!--                    한눈에 보는 가격표를 쉽게 결정하세요.-->
-<!--                </div>-->
-<!--                <div class="text-[&#45;&#45;color-text-black] text-[18px] font-[500] leading-[26px]">-->
-<!--                    해당 장소 가격 노출-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="main-image w-full max-h-[430px] h-max mb-[20px]">-->
-<!--                &lt;!&ndash;                <img :src="mainImg" class="w-full h-full max-h-[430px]" />&ndash;&gt;-->
-<!--            </div>-->
-
-<!--            <div class="sub-promotion-list">-->
-<!--                <div-->
-<!--                    v-if="promDataList && promDataList.length === 1"-->
-<!--                    class="sub-promotion single w-full max-h-[180px] h-max inline-flex"-->
-<!--                >-->
-<!--                    <div class="promotion-box w-full max-h-[180px] relative">-->
-<!--&lt;!&ndash;                        <img :src="promDataList[0].img" class="w-full max-h-[180px]" />&ndash;&gt;-->
-<!--                        <div class="text-box w-[82%] h-[65%] absolute top-[17.5%] left-[6%]">-->
-<!--                            <div-->
-<!--                                class="text-[&#45;&#45;color-text-black] text-[18px] font-[500] leading-[21px]"-->
-<!--                            >-->
-<!--                                더티클리닉의 꺠끗함을 만나보세요.-->
-<!--                            </div>-->
-<!--                            <div-->
-<!--                                class="text-[&#45;&#45;color-text-black] text-[32px] font-[700] leading-[38px]"-->
-<!--                            >-->
-<!--                                프로모션 50%-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div v-else class="sub-promotion w-full">-->
-<!--                    <Flicking-->
-<!--                        class="flicking-area flex overflow-hidden"-->
-<!--                        :plugins="plugins"-->
-<!--                        :options="{ circular: true, panelsPerView: 1, renderOnlyVisible: false }"-->
-<!--                    >-->
-<!--                        <div-->
-<!--                            v-for="(prom, index) in promDataList"-->
-<!--                            :key="index"-->
-<!--                            class="promotion-box max-w-[608px] w-full max-h-[180px] flex-center relative"-->
-<!--                        >-->
-<!--                            <img :src="prom.src" class="w-full max-h-[180px]" />-->
-<!--                            <div class="text-box w-[82%] h-[65%] absolute top-[22%] left-[9%]">-->
-<!--                                <div-->
-<!--                                    class="text-[&#45;&#45;color-text-black] text-[18px] font-[500] leading-[21px]"-->
-<!--                                >-->
-<!--                                    더티클리닉의 꺠끗함을 만나보세요. {{ index }}-->
-<!--                                </div>-->
-<!--                                <div-->
-<!--                                    class="text-[&#45;&#45;color-text-black] text-[32px] font-[700] leading-[38px]"-->
-<!--                                >-->
-<!--                                    프로모션 50%-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </Flicking>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
     </div>
 </template>
