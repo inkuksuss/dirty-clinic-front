@@ -16,7 +16,7 @@ export default defineComponent({
         const store = useStore();
         const compPopupType = computed(() => store.openPopup);
         const handleClickBg = () => {
-            store.setOpenPopup(null);
+            // store.setOpenPopup(null);
         };
 
         const handleClickClose = () => {

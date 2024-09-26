@@ -1,0 +1,76 @@
+.review-wrapper {
+    .review-contents {
+        .review-area {
+            .review-box {
+                .text-area {
+                    width: calc(100% - 195px);
+                    .content {
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                    }
+                }
+            }
+        }
+    }
+
+    @include mobile() {
+        .review-contents {
+            max-width: 608px;
+            width: calc(100vw - 50px);
+            margin-left: 25px;
+            margin-right: 25px;
+
+            .review-header {
+                .title {
+                    font-size: 36px;
+                    font-weight: 700;
+                    margin-bottom: 5px;
+                }
+                .desc {
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 20px;
+                }
+            }
+
+            .review-area {
+                padding-bottom: 60px;
+                .review-box {
+                    height: 146px;
+                    padding-bottom: 25px;
+                    padding-top: 25px;
+
+                    .text-area {
+                        width: calc(100% - 120px);
+
+                        .title {
+                            font-size: 20px;
+                            margin-bottom: 5px;
+                        }
+
+                        .content {
+                            font-size: 14px;
+                            -webkit-line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            display: -webkit-box;
+                            margin-bottom: 10px;
+                        }
+                    }
+
+                    .img-area {
+                        margin-left: 20px;
+                        width: 100px;
+                        height: 100px;
+                        min-width: 100px;
+                        min-height: 100px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -164,7 +164,7 @@ export default defineComponent({
                 posCenterX: 0,
                 posStartX: 0,
                 subList: [
-                    { title: '이용후기', dest: '' },
+                    { title: '이용후기', dest: '/review' },
                     { title: '블로그', dest: '' },
                     { title: '프로모션', dest: '/promotion' }
                 ]

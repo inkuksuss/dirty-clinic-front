@@ -61,6 +61,10 @@ body {
         -o-user-select: none;
         user-select: none;
     }
+
+    .bg-logo {
+        aspect-ratio: 900 / 860;
+    }
 }
 
 .input-wrapper {

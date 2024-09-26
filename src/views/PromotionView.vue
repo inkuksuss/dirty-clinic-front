@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { useStore } from '@/stores/store';
 import { useMeta } from 'vue-meta';
 import ClinicImage from '@/components/common/ClinicImage.vue';
@@ -13,6 +13,9 @@ export default defineComponent({
             title: '프로모션',
             description: '더티클리닉이 진행하고 있는 프로모션을 모아보세요.'
         });
+
+        const store = useStore();
+        const compIsMobile = computed(() => store.isMobile);
 
         const simpleList = ref<string[]>([
             new URL('@/assets/images/sub/promotion/spot_1.webp', import.meta.url).href,
@@ -49,14 +52,21 @@ export default defineComponent({
             professionList,
             specialList,
             coatingList,
-            appliancesList
+            appliancesList,
+            compIsMobile
         };
     }
 });
 </script>
 
 <template>
-    <div class="promotion-wrapper pt-[--header-height] flex justify-center">
+    <div class="promotion-wrapper pt-[--header-height] flex justify-center relative">
+        <div
+            v-if="!compIsMobile"
+            class="bg-logo absolute bottom-[-75px] left-[43%] w-[75%] max-w-[900px] max-h-[860px] -z-10"
+        >
+            <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />
+        </div>
         <div class="promotion-contents max-w-[--body-width] w-[--body-ratio]">
             <div
                 class="promotion-header pt-[60px] pb-[40px] border-b-[1px] border-[--color-border-blue]"

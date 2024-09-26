@@ -529,12 +529,12 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="popup-payment max-w-[460px] w-[38%] h-max absolute bg-white z-50">
+    <div class="popup-payment w-[460px] h-max absolute bg-white z-50">
         <div
             v-if="popupPage === 1"
-            class="payment-product w-full min-h-[535px] h-[535px] flex flex-col p-[15px]"
+            class="payment-product w-full min-h-[535px] flex flex-col p-[15px]"
         >
-            <div class="head-area max-w-[430px] flex justify-between pl-[20px]">
+            <div class="head-area w-full flex justify-between pl-[20px]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
                         >원하는 클리닉을 선택하세요.</span
@@ -547,35 +547,33 @@ export default defineComponent({
                     <img src="/assets/images/icons/x-btn.svg" alt="닫기" />
                 </div>
             </div>
-            <div class="contents-area service-page w-full px-[20px] pb-[35px]">
-                <div class="w-full h-full grid grid-cols-2">
-                    <div
-                        v-for="(service, idx) in serviceList"
-                        :key="`service-${idx}`"
-                        class="content h-[90px] flex items-center border-[--color-border-blue] border-[1.5px] pl-[20px] pr-[10px] mb-[10px]"
-                        @click="() => handleSelectService(service)"
-                    >
-                        <img
-                            class="w-[30px] h-[30px] mr-[10px]"
-                            src="/assets/images/icons/apart.svg"
-                            alt="아파트 아이콘"
-                        />
-                        <div>
-                            <div class="text-[18px] font-[600] leading-[26px]">
-                                {{ service.name }}
-                            </div>
-                            <div
-                                v-if="idx === 2"
-                                class="text-[16px] text-[--color-text-gray] font-[500]"
-                            >
-                                원룸, 아파트, 오피스텔 등등은 이곳을 눌러주세요.
-                            </div>
-                            <div
-                                v-else-if="idx === 3"
-                                class="text-[16px] text-[--color-text-gray] font-[500]"
-                            >
-                                더많은 서비스를 원하시면 이곳을 눌러주세요.
-                            </div>
+            <div class="contents-area service-page w-full px-[20px] pb-[35px] grid grid-cols-2">
+                <div
+                    v-for="(service, idx) in serviceList"
+                    :key="`service-${idx}`"
+                    class="content min-h-[90px] flex items-center border-[--color-border-blue] border-[1.5px] pl-[20px] pr-[10px] py-[20px] mb-[10px]"
+                    @click="() => handleSelectService(service)"
+                >
+                    <img
+                        class="w-[30px] h-[30px] mr-[10px]"
+                        src="/assets/images/icons/apart.svg"
+                        alt="아파트 아이콘"
+                    />
+                    <div>
+                        <div class="text-[18px] font-[600] leading-[26px]">
+                            {{ service.name }}
+                        </div>
+                        <div
+                            v-if="idx === 2"
+                            class="text-[16px] text-[--color-text-gray] font-[500]"
+                        >
+                            원룸, 아파트, 오피스텔 등등은 이곳을 눌러주세요.
+                        </div>
+                        <div
+                            v-else-if="idx === 3"
+                            class="text-[16px] text-[--color-text-gray] font-[500]"
+                        >
+                            더많은 서비스를 원하시면 이곳을 눌러주세요.
                         </div>
                     </div>
                 </div>
@@ -584,9 +582,9 @@ export default defineComponent({
         <!-- 2 -->
         <div
             v-else-if="popupPage === 2"
-            class="payment-product w-full min-h-[535px] h-[535px] flex flex-col p-[15px]"
+            class="payment-product w-full h-max flex flex-col p-[15px]"
         >
-            <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
+            <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
                         >어떤 장소를 신청하시나요?</span
@@ -600,12 +598,12 @@ export default defineComponent({
                 </div>
             </div>
             <div
-                class="contents-area w-full max-h-[370px] grid grid-rows-2 grid-cols-2 px-[5%] gap-[10px] pb-[85px]"
+                class="contents-area w-full grid grid-rows-2 grid-cols-2 px-[5%] gap-[10px] pb-[85px]"
             >
                 <div
                     v-for="(building, idx) in buildingList"
                     :key="`place-${idx}`"
-                    class="content max-w-[185px] max-h-[90px] h-[160px] flex border-[--color-border-blue] border-[1.5px] px-[10%] py-[23px]"
+                    class="content w-full max-h-[90px] h-[160px] flex border-[--color-border-blue] border-[1.5px] px-[10%] py-[23px]"
                     :class="[
                         paymentData.buildingId === building.id ? 'bg-[--color-border-blue]' : ''
                     ]"
@@ -629,9 +627,9 @@ export default defineComponent({
                     ></div>
                 </div>
             </div>
-            <div class="btn-area w-full h-[45px] flex justify-between gap-x-[15px] px-[5%]">
+            <div class="btn-area w-full min-h-[45px] flex justify-between gap-x-[15px] px-[5%]">
                 <div
-                    class="flex-center h-full w-full rounded-[80px] border-[--color-border-blue] border-[1.5px]"
+                    class="flex-center h-[45px] w-full rounded-[80px] border-[--color-border-blue] border-[1.5px]"
                     @click="handlePrev"
                 >
                     <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-text-black]"
@@ -639,7 +637,7 @@ export default defineComponent({
                     >
                 </div>
                 <div
-                    class="flex-center h-full w-full rounded-[80px] bg-[--color-main-blue]"
+                    class="flex-center h-[45px] w-full rounded-[80px] bg-[--color-main-blue]"
                     @click="handleNext"
                 >
                     <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-white]"
@@ -653,7 +651,7 @@ export default defineComponent({
             v-else-if="popupPage === 3"
             class="payment-input w-full min-h-[610px] flex flex-col p-[15px]"
         >
-            <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
+            <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
                         >예약자 정보를 알려주세요.</span
@@ -667,7 +665,7 @@ export default defineComponent({
                 </div>
             </div>
             <div class="contents-area flex-col px-[5%] mb-[30px]">
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">예약자 명</div>
                     <clinic-input
                         place-holder="예약자 명"
@@ -676,7 +674,7 @@ export default defineComponent({
                         :change-handler="handleChangeUsername"
                     ></clinic-input>
                 </div>
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">전화번호</div>
                     <clinic-input
                         place-holder="'-'를 제외 후 입력해주세요."
@@ -686,7 +684,7 @@ export default defineComponent({
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                     ></clinic-input>
                 </div>
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">예약일</div>
                     <clinic-date
                         :value="targetDate"
@@ -695,7 +693,7 @@ export default defineComponent({
                     >
                     </clinic-date>
                 </div>
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">시간</div>
                     <clinic-select
                         :selected-value="targetTime"
@@ -705,7 +703,7 @@ export default defineComponent({
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                     ></clinic-select>
                 </div>
-                <div class="flex justify-between items-center">
+                <div class="content-box flex justify-between items-center">
                     <div class="text-[18px] font-[600] leading-[26px]">주소</div>
                     <clinic-input
                         place-holder="주소를 입력하세요."
@@ -738,7 +736,7 @@ export default defineComponent({
             v-else-if="popupPage === 4"
             class="payment-input w-full min-h-[610px] flex flex-col p-[15px]"
         >
-            <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
+            <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
                         >자세한 정보를 알려주세요.</span
@@ -752,7 +750,7 @@ export default defineComponent({
                 </div>
             </div>
             <div class="contents-area flex-col px-[5%] mb-[30px]">
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">공급면적</div>
                     <clinic-input
                         place-holder="평수를 입력해주세요."
@@ -762,7 +760,7 @@ export default defineComponent({
                         :change-handler="handleChangeFootage"
                     ></clinic-input>
                 </div>
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">구조</div>
                     <clinic-select
                         :selected-value="structureId"
@@ -772,7 +770,7 @@ export default defineComponent({
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                     ></clinic-select>
                 </div>
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">화장실 수</div>
                     <clinic-input
                         place-holder="화장실 수를 입력해주세요."
@@ -782,7 +780,7 @@ export default defineComponent({
                         :change-handler="handleChangeToilet"
                     ></clinic-input>
                 </div>
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">거실 베란다</div>
                     <clinic-select
                         :selected-value="expansion"
@@ -792,7 +790,7 @@ export default defineComponent({
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                     ></clinic-select>
                 </div>
-                <div class="flex justify-between items-center">
+                <div class="content-box flex justify-between items-center">
                     <div class="text-[18px] font-[600] leading-[26px]">베란다 수</div>
                     <clinic-input
                         place-holder="베란다 수를 입력해주세요."
@@ -839,7 +837,7 @@ export default defineComponent({
             v-else-if="popupPage === 5"
             class="payment-input w-full min-h-[535px] flex flex-col p-[15px]"
         >
-            <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
+            <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
                         >예약금을 결제해요.</span
@@ -854,9 +852,11 @@ export default defineComponent({
                 </div>
             </div>
             <div class="contents-area flex-col mx-[5%] border-b-[1px] border-[#96C8F6] pb-[5px]">
-                <div class="flex justify-between items-center mb-[20px]">
-                    <div class="text-[18px] font-[600] leading-[26px]">서비스 예상금액</div>
-                    <div class="w-[256px] relative">
+                <div class="content-box flex justify-between items-center mb-[20px]">
+                    <div class="text-[18px] font-[600] leading-[26px] min-w-[134px]">
+                        서비스 예상금액
+                    </div>
+                    <div class="w-full relative">
                         <input
                             :value="productResponse ? productResponse.balanceAmount : null"
                             readonly="true"
@@ -867,9 +867,9 @@ export default defineComponent({
                         </span>
                     </div>
                 </div>
-                <div class="flex justify-between items-center mb-[20px]">
-                    <div class="text-[18px] font-[600] leading-[26px]">예약금</div>
-                    <div class="w-[256px] relative">
+                <div class="content-box flex justify-between items-center mb-[20px]">
+                    <div class="text-[18px] font-[600] leading-[26px] min-w-[134px]">예약금</div>
+                    <div class="w-full relative">
                         <input
                             :value="productResponse ? productResponse.depositAmount : null"
                             readonly="true"
@@ -929,7 +929,7 @@ export default defineComponent({
             v-else-if="popupPage === 7"
             class="payment-input w-full min-h-[535px] flex flex-col p-[15px]"
         >
-            <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
+            <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
                         >어떤 클리닉을 원하시나요?</span
@@ -943,7 +943,7 @@ export default defineComponent({
                 </div>
             </div>
             <div class="contents-area flex-col px-[5%] mb-[30px]">
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">거실 베란다</div>
                     <clinic-select
                         :selected-value="estimateData.serviceId"
@@ -953,7 +953,7 @@ export default defineComponent({
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                     ></clinic-select>
                 </div>
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">예약일</div>
                     <clinic-date
                         :value="estimateData.targetDate"
@@ -962,7 +962,7 @@ export default defineComponent({
                     >
                     </clinic-date>
                 </div>
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">시간</div>
                     <clinic-select
                         :selected-value="estimateData.targetTime"
@@ -999,7 +999,7 @@ export default defineComponent({
             v-else-if="popupPage === 8"
             class="payment-input w-full min-h-[535px] flex flex-col p-[15px]"
         >
-            <div class="head-area max-w-[430px] flex justify-between pl-[5%]">
+            <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
                         >연락드릴 정보를 알려주세요!</span
@@ -1013,7 +1013,7 @@ export default defineComponent({
                 </div>
             </div>
             <div class="contents-area flex-col px-[5%] mb-[30px]">
-                <div class="flex justify-between items-center mb-[15px]">
+                <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">예약자 명</div>
                     <clinic-input
                         place-holder="성함을 입력하세요."
@@ -1022,7 +1022,7 @@ export default defineComponent({
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                     ></clinic-input>
                 </div>
-                <div class="flex justify-between items-center">
+                <div class="content-box flex justify-between items-center">
                     <div class="text-[18px] font-[600] leading-[26px]">전화번호</div>
                     <clinic-input
                         :is-number="true"
@@ -1034,10 +1034,10 @@ export default defineComponent({
                 </div>
             </div>
             <div
-                class="btn-area w-full h-[45px] flex justify-between gap-x-[15px] px-[5%] mt-[130px]"
+                class="btn-area w-full min-h-[45px] h-[45px] flex justify-between gap-x-[15px] px-[5%] mt-[130px]"
             >
                 <div
-                    class="flex-center h-full w-full rounded-[80px] border-[--color-border-blue] border-[1.5px]"
+                    class="flex-center h-full w-full rounded-[80px] border-[--color-border-blue] border-[1.5px] px-[10px]"
                     @click="handlePrev"
                 >
                     <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-text-black]"
@@ -1045,7 +1045,7 @@ export default defineComponent({
                     >
                 </div>
                 <div
-                    class="flex-center h-full w-full rounded-[80px] bg-[--color-main-blue]"
+                    class="flex-center h-full w-full rounded-[80px] bg-[--color-main-blue] px-[10px]"
                     @click="handleNext"
                 >
                     <span class="text-[18px] font-[600] leading-[23.5px] text-[--color-white]"

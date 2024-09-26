@@ -39,6 +39,7 @@ export type IAmPortPgBaseRequest = {
     pg: string;
     pay_method?: string;
     buyer_tel?: string;
+    m_redirect_url?: string;
 };
 
 export type IAmPortPaymentResponse = {
@@ -269,4 +270,24 @@ export type EstimateType = {
     targetTime: string;
     username: string;
     phoneNumber: string;
+};
+
+export type ReviewSummary = {
+    id: number;
+    title: string;
+    content: string;
+    thumbnail: string;
+    created: Date;
+};
+
+export type ReviewDetail = {
+    id: number;
+    title: string;
+    content: string;
+    thumbnail: string;
+    creatorName: string;
+    created: Date;
+    updated: Date;
+    createdBy: number;
+    updatedBy: number | null;
 };

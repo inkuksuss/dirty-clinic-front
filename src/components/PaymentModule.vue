@@ -9,8 +9,10 @@ import {
     type IAmPortPgBaseRequest,
     type PaymentData,
     type PaymentPrepareRequest,
+    PopupType,
     type ProductResponse
 } from '@/utils/types';
+import { useStore } from '@/stores/store';
 
 export default defineComponent({
     name: 'PaymentModule',
@@ -24,6 +26,7 @@ export default defineComponent({
         }
     },
     setup(props) {
+        const store = useStore();
         const compPaymentData = computed(() => props.paymentData);
         const compProductData = computed(() => props.productData);
         const compServiceList = computed(() => props.serviceList);
@@ -44,17 +47,20 @@ export default defineComponent({
         };
 
         const kakaoPaymentBaseRequest: IAmPortPgBaseRequest = {
-            pg: 'kakaopay.TC0ONETIME'
+            pg: 'kakaopay.TC0ONETIME',
+            m_redirect_url: 'https://www.forori.com/trauma-scene-cleaning'
         };
 
         const tossPaymentBaseRequest: IAmPortPgBaseRequest = {
             pg: 'tosspay.tosstest',
-            pay_method: 'card'
+            pay_method: 'card',
+            m_redirect_url: 'https://www.forori.com/trauma-scene-cleaning'
         };
 
         const kgPaymentBaseRequest: IAmPortPgBaseRequest = {
             pg: 'html5_inicis.INIpayTest',
-            pay_method: 'card'
+            pay_method: 'card',
+            m_redirect_url: 'https://www.forori.com/trauma-scene-cleaning'
         };
 
         const doPaymentPrepare = async () => {
@@ -88,6 +94,10 @@ export default defineComponent({
             } catch (e) {
                 console.log(e);
             }
+        };
+
+        const closePopup = () => {
+            store.setOpenPopup(null);
         };
 
         const doPayment = async (pgBaseRequest: IAmPortPgBaseRequest) => {
@@ -138,9 +148,8 @@ export default defineComponent({
                                 )) as ApiResponse<any>;
                                 console.log(response);
                                 if (response.data.code == 0) {
-                                    if (response.data.data !== null) {
-                                        props.successHandler();
-                                    }
+                                    if (response.data.data !== null) props.successHandler();
+                                    else closePopup();
                                 } else {
                                     console.log('fail');
                                 }

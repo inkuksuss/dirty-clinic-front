@@ -159,6 +159,16 @@ const router = createRouter({
             component: () => import('@/views/PromotionView.vue')
         },
         {
+            path: '/review',
+            name: 'review',
+            component: () => import('@/views/ReviewView.vue')
+        },
+        {
+            path: '/review/:id',
+            name: 'reviewDetail',
+            component: () => import('@/views/ReviewDetailView.vue')
+        },
+        {
             path: '/:pathMatch(.*)*',
             redirect: '/'
         }

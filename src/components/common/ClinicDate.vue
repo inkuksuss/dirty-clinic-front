@@ -61,7 +61,7 @@ export default defineComponent({
         >
             {{ compLabel }}
         </div>
-        <div class="relative">
+        <div class="relative w-full">
             <Datepicker
                 class="w-full h-[60px] border-[1.5px] border-[--color-border-blue] py-[17px] px-[20px]"
                 v-model="date"
