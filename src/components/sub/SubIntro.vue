@@ -47,9 +47,9 @@ export default defineComponent({
             <div class="image-area flex justify-between">
                 <div
                     v-if="compIntroList.length < 7"
-                    class="grid-area one-line w-full flex justify-between mb-[70px] gap-x-[20px]"
+                    class="grid-area one-line flex justify-between w-full mb-[70px] gap-x-[20px]"
                 >
-                    <div v-for="(data, idx) in compIntroList" :key="idx" class="flex flex-col items-center">
+                    <div v-for="(data, idx) in compIntroList" :key="idx" class="content-box flex flex-col items-center">
                         <div class="image-wrapper flex-center">
                             <clinic-image
                                 class="h-full rounded-[50%]"

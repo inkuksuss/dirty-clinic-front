@@ -65,12 +65,6 @@ export default defineComponent({
             }
         ];
 
-        const promotionList: SubPromotionType[] = [
-            {
-                src: new URL('@/assets/images/sub/promotion/fire.webp', import.meta.url).href
-            }
-        ];
-
         const manageList: SubManageType[] = [
             {
                 title: '욕실',
@@ -141,7 +135,6 @@ export default defineComponent({
 
         return {
             introList,
-            promotionList,
             manageList,
             serviceList,
             manageTitle,
@@ -163,7 +156,7 @@ export default defineComponent({
             :page-type="SubPageType.MOLD"
             :manage-list="manageList"
         ></sub-manage>
-        <sub-promotion :page-type="SubPageType.MOLD" :prom-list="promotionList"></sub-promotion>
+        <sub-promotion :page-type="SubPageType.MOLD"></sub-promotion>
         <sub-service :data-list="serviceList"></sub-service>
         <payment-button :click-handler="handleClickBtn"></payment-button>
     </div>

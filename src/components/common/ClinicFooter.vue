@@ -58,7 +58,7 @@ export default defineComponent({
                             >대표자 최문석 | 사업자등록번호 571-54-00602</span
                         >
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
-                            >대표번호 010-3352-0037</span
+                            >대표번호 010-3352-0037 | 팩스번호 0504-494-1720</span
                         >
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
                             >Copyright © 2023 DIRTY CLINIC. All Rights Reserved.</span
@@ -99,7 +99,7 @@ export default defineComponent({
                     >대표자 최문석 | 사업자등록번호 571-54-00602</span
                 >
                 <span class="mb-[5px] text-[14px] font-[400] text-[--color-text-gray]"
-                    >대표번호 010-3352-0037</span
+                    >대표번호 010-3352-0037 | 팩스번호 0504-494-1720</span
                 >
                 <span class="mb-[20px] text-[14px] font-[400] text-[--color-text-gray]"
                     >Copyright © 2023 DIRTY CLINIC. All Rights Reserved.</span

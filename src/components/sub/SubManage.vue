@@ -176,7 +176,7 @@ export default defineComponent({
                 v-else-if="compPageType && specialClinicList.includes(compPageType)"
                 class="special-clinic-wrapper w-full flex justify-between items-center"
             >
-                <div class="text-area mr-[50px] min-w-[260px]">
+                <div class="text-area mr-[20px] min-w-[260px]">
                     <div
                         class="text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px] whitespace-pre-wrap"
                     >

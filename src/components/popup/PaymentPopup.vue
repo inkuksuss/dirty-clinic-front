@@ -17,6 +17,7 @@ import PaymentModule from '@/components/PaymentModule.vue';
 import { getApiInstance } from '@/utils/api';
 import ClinicDate from '@/components/common/ClinicDate.vue';
 import moment from 'moment';
+import { checkHasSpecialCharacters } from '@/utils/common';
 
 export default defineComponent({
     name: 'PaymentPopup',
@@ -29,11 +30,12 @@ export default defineComponent({
         ];
 
         const timeSelectList: Array<SelectType> = [
-            { name: '08:00', value: '08:00' },
-            { name: '14:00', value: '14:00' },
-            { name: '그외 시간', value: '그외 시간' }
+            { name: '오전 8시', value: '08:00' },
+            { name: '오후 2시', value: '14:00' },
+            { name: '그외 시간대', value: '그외 시간대' }
         ];
         const compPopupType = computed(() => store.openPopup);
+        const compIsMobile = computed(() => store.isMobile);
         const expansion = ref<string>('');
         const footage = ref<string | undefined>();
         const toiletCnt = ref<string | undefined>();
@@ -218,6 +220,14 @@ export default defineComponent({
                         return;
                     }
 
+                    if (
+                        !Number.isInteger(parseFloat(paymentData.value.phoneNumber)) ||
+                        checkHasSpecialCharacters(paymentData.value.phoneNumber)
+                    ) {
+                        window.alert('전화번호는 숫자만 입력 가능합니다.');
+                        return;
+                    }
+
                     if (!paymentData.value.targetDate) {
                         window.alert('예약일을 입력해주세요.');
                         return;
@@ -240,18 +250,37 @@ export default defineComponent({
                     break;
                 }
                 case 4: {
-                    if (!paymentData.value.structureId) {
-                        window.alert('구조를 입력해주세요.');
-                        return;
-                    }
-
                     if (!paymentData.value.footage) {
                         window.alert('공급면적을 입력해주세요.');
                         return;
                     }
 
+                    if (paymentData.value.footage < 1) {
+                        window.alert('공급면적은 1보다 작을 수 없습니다.');
+                        return;
+                    }
+
+                    if (footage.value?.slice(-1) === '.') {
+                        window.alert('공급면적 형식이 숫자가 아닙니다.');
+                        return;
+                    }
+
+                    if (!paymentData.value.structureId) {
+                        window.alert('구조를 입력해주세요.');
+                        return;
+                    }
+
                     if (!paymentData.value.toiletCount && paymentData.value.toiletCount !== 0) {
                         window.alert('화장실 수를 입력해주세요.');
+                        return;
+                    }
+
+                    if (
+                        paymentData.value.toiletCount &&
+                        (!Number.isInteger(parseFloat(paymentData.value.toiletCount.toString())) ||
+                            checkHasSpecialCharacters(paymentData.value.toiletCount.toString()))
+                    ) {
+                        window.alert('화장실 수는 숫자만 입력 가능합니다.');
                         return;
                     }
 
@@ -262,6 +291,14 @@ export default defineComponent({
 
                     if (!paymentData.value.verandaCount && paymentData.value.verandaCount !== 0) {
                         window.alert('베란다 수를 입력해주세요.');
+                        return;
+                    }
+
+                    if (
+                        !Number.isInteger(parseFloat(paymentData.value.verandaCount.toString())) ||
+                        checkHasSpecialCharacters(paymentData.value.verandaCount.toString())
+                    ) {
+                        window.alert('베란다 수는 숫자만 입력 가능합니다.');
                         return;
                     }
 
@@ -302,6 +339,14 @@ export default defineComponent({
                         estimateData.value.phoneNumber.trim() === ''
                     ) {
                         window.alert('연락처를 입력해주세요.');
+                        return;
+                    }
+
+                    if (
+                        !Number.isInteger(parseFloat(estimateData.value.phoneNumber)) ||
+                        checkHasSpecialCharacters(estimateData.value.phoneNumber)
+                    ) {
+                        window.alert('전화번호는 숫자만 입력 가능합니다.');
                         return;
                     }
 
@@ -364,16 +409,16 @@ export default defineComponent({
                     break;
                 }
                 case 5: {
-                    paymentData.value.username = null;
-                    paymentData.value.phoneNumber = null;
-                    paymentData.value.targetDate = null;
-                    paymentData.value.targetTime = null;
-                    paymentData.value.address = null;
-                    username.value = undefined;
-                    phoneNumber.value = undefined;
-                    targetDate.value = new Date();
-                    targetTime.value = '';
-                    address.value = undefined;
+                    paymentData.value.footage = null;
+                    paymentData.value.structureId = null;
+                    paymentData.value.toiletCount = null;
+                    paymentData.value.expansion = null;
+                    paymentData.value.verandaCount = null;
+                    footage.value = undefined;
+                    verandaCnt.value = undefined;
+                    expansion.value = '';
+                    toiletCnt.value = undefined;
+                    structureId.value = '';
                     popupPage.value--;
                     break;
                 }
@@ -405,12 +450,10 @@ export default defineComponent({
                 footage: paymentData.value.footage,
                 expansion: paymentData.value.expansion
             };
-            console.log(data);
             getApiInstance()
                 .post('/product/detail', data)
                 .then((res) => {
                     if (res.data.code === 0) {
-                        console.log(res.data.data);
                         productResponse.value = {
                             id: res.data.data.id,
                             balanceAmount: res.data.data.balanceAmount,
@@ -436,7 +479,6 @@ export default defineComponent({
             getApiInstance()
                 .post('/reservation/estimate', data)
                 .then((res) => {
-                    console.log(res);
                     if (res.data.code !== 0) {
                         window.alert('견적 요청에 실패하였습니다.');
                         return;
@@ -447,6 +489,58 @@ export default defineComponent({
         };
 
         const doEstimate = () => {
+            if (!paymentData.value.footage) {
+                window.alert('공급면적을 입력해주세요.');
+                return;
+            }
+
+            if (paymentData.value.footage < 1) {
+                window.alert('공급면적은 1보다 작을 수 없습니다.');
+                return;
+            }
+
+            if (footage.value?.slice(-1) === '.') {
+                window.alert('공급면적 형식이 숫자가 아닙니다.');
+                return;
+            }
+
+            if (!paymentData.value.structureId) {
+                window.alert('구조를 입력해주세요.');
+                return;
+            }
+
+            if (!paymentData.value.toiletCount && paymentData.value.toiletCount !== 0) {
+                window.alert('화장실 수를 입력해주세요.');
+                return;
+            }
+
+            if (
+                paymentData.value.toiletCount &&
+                (!Number.isInteger(parseFloat(paymentData.value.toiletCount.toString())) ||
+                    checkHasSpecialCharacters(paymentData.value.toiletCount.toString()))
+            ) {
+                window.alert('화장실 수는 숫자만 입력 가능합니다.');
+                return;
+            }
+
+            if (!paymentData.value.expansion) {
+                window.alert('확장 여부를 선택해주세요.');
+                return;
+            }
+
+            if (!paymentData.value.verandaCount && paymentData.value.verandaCount !== 0) {
+                window.alert('베란다 수를 입력해주세요.');
+                return;
+            }
+
+            if (
+                !Number.isInteger(parseFloat(paymentData.value.verandaCount.toString())) ||
+                checkHasSpecialCharacters(paymentData.value.verandaCount.toString())
+            ) {
+                window.alert('베란다 수는 숫자만 입력 가능합니다.');
+                return;
+            }
+
             getApiInstance()
                 .post('/reservation/estimate', paymentData.value)
                 .then((res) => {
@@ -461,6 +555,10 @@ export default defineComponent({
 
         const handlePaymentSuccess = () => {
             popupPage.value = 10;
+        };
+
+        const handlePaymentFail = () => {
+            popupPage.value = 11;
         };
 
         onMounted(() => {
@@ -500,7 +598,9 @@ export default defineComponent({
             estimateData,
             clinicList,
             timeSelectList,
+            compIsMobile,
             handlePaymentSuccess,
+            handlePaymentFail,
             setSelectStructure,
             handleNext,
             handlePrev,
@@ -532,8 +632,14 @@ export default defineComponent({
     <div class="popup-payment w-[460px] h-max absolute bg-white z-50">
         <div
             v-if="popupPage === 1"
-            class="payment-product w-full min-h-[535px] flex flex-col p-[15px]"
+            class="payment-product w-full min-h-[535px] flex flex-col p-[15px] relative"
         >
+            <!--            <div-->
+            <!--                v-if="!compIsMobile"-->
+            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
+            <!--            >-->
+            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
+            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[20px]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
@@ -582,8 +688,14 @@ export default defineComponent({
         <!-- 2 -->
         <div
             v-else-if="popupPage === 2"
-            class="payment-product w-full h-max flex flex-col p-[15px]"
+            class="payment-product w-full h-max flex flex-col p-[15px] relative"
         >
+            <!--            <div-->
+            <!--                v-if="!compIsMobile"-->
+            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
+            <!--            >-->
+            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
+            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
@@ -649,8 +761,14 @@ export default defineComponent({
         <!-- 3 -->
         <div
             v-else-if="popupPage === 3"
-            class="payment-input w-full min-h-[610px] flex flex-col p-[15px]"
+            class="payment-input w-full min-h-[610px] flex flex-col p-[15px] relative"
         >
+            <!--            <div-->
+            <!--                v-if="!compIsMobile"-->
+            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
+            <!--            >-->
+            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
+            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
@@ -672,15 +790,17 @@ export default defineComponent({
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                         :value="username"
                         :change-handler="handleChangeUsername"
+                        :length="25"
                     ></clinic-input>
                 </div>
                 <div class="content-box flex justify-between items-center mb-[15px]">
                     <div class="text-[18px] font-[600] leading-[26px]">전화번호</div>
                     <clinic-input
-                        place-holder="'-'를 제외 후 입력해주세요."
+                        place-holder="'-'를 제외한 숫자만 입력해주세요."
                         :is-number="true"
                         :value="phoneNumber"
                         :change-handler="handleChangePhone"
+                        :length="25"
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                     ></clinic-input>
                 </div>
@@ -709,6 +829,7 @@ export default defineComponent({
                         place-holder="주소를 입력하세요."
                         :value="address"
                         :change-handler="handleChangeAddress"
+                        :length="200"
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                     ></clinic-input>
                 </div>
@@ -734,8 +855,14 @@ export default defineComponent({
         </div>
         <div
             v-else-if="popupPage === 4"
-            class="payment-input w-full min-h-[610px] flex flex-col p-[15px]"
+            class="payment-input w-full min-h-[610px] flex flex-col p-[15px] relative"
         >
+            <!--            <div-->
+            <!--                v-if="!compIsMobile"-->
+            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
+            <!--            >-->
+            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
+            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
@@ -758,6 +885,7 @@ export default defineComponent({
                         :value="footage"
                         :is-number="true"
                         :change-handler="handleChangeFootage"
+                        :length="5"
                     ></clinic-input>
                 </div>
                 <div class="content-box flex justify-between items-center mb-[15px]">
@@ -778,6 +906,7 @@ export default defineComponent({
                         :value="toiletCnt"
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                         :change-handler="handleChangeToilet"
+                        :length="3"
                     ></clinic-input>
                 </div>
                 <div class="content-box flex justify-between items-center mb-[15px]">
@@ -798,6 +927,7 @@ export default defineComponent({
                         :value="verandaCnt"
                         :is-number="true"
                         :change-handler="handleChangeVeranda"
+                        :length="3"
                     ></clinic-input>
                 </div>
             </div>
@@ -835,8 +965,14 @@ export default defineComponent({
         </div>
         <div
             v-else-if="popupPage === 5"
-            class="payment-input w-full min-h-[535px] flex flex-col p-[15px]"
+            class="payment-input w-full min-h-[535px] flex flex-col p-[15px] relative"
         >
+            <!--            <div-->
+            <!--                v-if="!compIsMobile"-->
+            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
+            <!--            >-->
+            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
+            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
@@ -921,14 +1057,21 @@ export default defineComponent({
                 :payment-data="paymentData"
                 :product-data="productResponse"
                 :success-handler="handlePaymentSuccess"
+                :fail-handler="handlePaymentFail"
             ></payment-module>
         </div>
 
         <!-- 7 > 기타 선택시 -->
         <div
             v-else-if="popupPage === 7"
-            class="payment-input w-full min-h-[535px] flex flex-col p-[15px]"
+            class="payment-input w-full min-h-[535px] flex flex-col p-[15px] relative"
         >
+            <!--            <div-->
+            <!--                v-if="!compIsMobile"-->
+            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
+            <!--            >-->
+            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
+            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
@@ -997,8 +1140,14 @@ export default defineComponent({
 
         <div
             v-else-if="popupPage === 8"
-            class="payment-input w-full min-h-[535px] flex flex-col p-[15px]"
+            class="payment-input w-full min-h-[535px] flex flex-col p-[15px] relative"
         >
+            <!--            <div-->
+            <!--                v-if="!compIsMobile"-->
+            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
+            <!--            >-->
+            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
+            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
@@ -1020,15 +1169,17 @@ export default defineComponent({
                         :value="estimateData.username"
                         :change-handler="handleChangeEstimateUsername"
                         class="max-w-[288px] max-h-[60px] w-[73%]"
+                        :length="25"
                     ></clinic-input>
                 </div>
                 <div class="content-box flex justify-between items-center">
                     <div class="text-[18px] font-[600] leading-[26px]">전화번호</div>
                     <clinic-input
                         :is-number="true"
-                        place-holder="'-'를 제외 후 입력해주세요."
+                        place-holder="'-'를 제외한 숫자만 입력해주세요."
                         :value="estimateData.phoneNumber"
                         :change-handler="handleChangeEstimatePhoneNumber"
+                        :length="25"
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                     ></clinic-input>
                 </div>
@@ -1095,6 +1246,30 @@ export default defineComponent({
             <div class="text-[30px] font-[700] mb-[5px] leading-[36px]">결제가 완료되었어요.</div>
             <div class="text-[16px] font-[400] mb-[30px] leading-[19px]">
                 최대한 빠르게 확인하여 연락드리겠습니다.<br />알맞은 서비스를 제공할 수 있도록
+                최선을 다하겠습니다.
+            </div>
+            <div
+                class="flex-center w-[190px] h-[45px] border-[--color-border-blue] border-[1.5px] rounded-[80px]"
+                @click="handleClickClose"
+            >
+                <span class="text-[18px] font-[600]">확인</span>
+            </div>
+        </div>
+        <!-- 11 -->
+        <div
+            v-else-if="popupPage === 11"
+            class="flex flex-col justify-center pt-[15px] pb-[35px] pl-[35px] pr-[15px]"
+        >
+            <div class="flex justify-end mb-[4px]">
+                <img
+                    @click="handleClickClose"
+                    class="w-[36px] h-[36px]"
+                    src="@/assets/images/icons/x-btn.svg"
+                />
+            </div>
+            <div class="text-[30px] font-[700] mb-[5px] leading-[36px]">결제가 실패하였어요.</div>
+            <div class="text-[16px] font-[400] mb-[30px] leading-[19px]">
+                전화상담을 통해 자세히 도와드리겠습니다.<br />알맞은 서비스를 제공할 수 있도록
                 최선을 다하겠습니다.
             </div>
             <div

@@ -14,29 +14,35 @@
                 .image-item {
                     width: 100vw;
                     &.first {
-                        background-image: url('/assets/images/home/clinic_main_1@2x.webp');
+                        background-image: url('/assets/images/home/clinic_main_small_1@2x.webp');
                         background-size: cover;
-                        //background-repeat: no-repeat;
                         aspect-ratio: 1200 / 595;
+
+                        @media (min-width: 1200px) {
+                            background-image: url('/assets/images/home/clinic_main_big_1@2x.webp');
+                            aspect-ratio: 1920 / 595;
+                        }
 
                         @include mobile {
                             background-image: url('/assets/images/home/clinic_main_1_mobile@2x.webp');
                             background-size: cover;
-                            //background-repeat: no-repeat;
                             aspect-ratio: 375 / 595;
                         }
                     }
 
                     &.second {
-                        background-image: url('/assets/images/home/clinic_main_2@2x.webp');
+                        background-image: url('/assets/images/home/clinic_main_small_2@2x.webp');
                         background-size: cover;
-                        //background-repeat: no-repeat;
                         aspect-ratio: 1200 / 595;
+
+                        @media (min-width: 1200px) {
+                            background-image: url('/assets/images/home/clinic_main_big_2@2x.webp');
+                            aspect-ratio: 1920 / 595;
+                        }
 
                         @include mobile {
                             background-image: url('/assets/images/home/clinic_main_2_mobile@2x.webp');
                             background-size: cover;
-                            //background-repeat: no-repeat;
                             aspect-ratio: 375 / 595;
                         }
                     }
@@ -262,16 +268,9 @@
                                 aspect-ratio: 267 / 321;
                             }
                         }
-                        &:nth-child(2) {
-                            img {
-                                aspect-ratio: 222 / 320;
-                            }
-                        }
 
-                        &:last-child {
-                            img {
-                                aspect-ratio: 222 / 320;
-                            }
+                        img {
+                            aspect-ratio: 222 / 320;
                         }
                     }
                 }
@@ -304,17 +303,14 @@
 
                             .image-container {
                                 &:first-child {
-                                    width: 38.5vw;
-                                    margin-right: 5px;
+                                    width: 38.4vw;
                                 }
 
-                                &:nth-child(2) {
-                                    width: 32vw;
-                                    margin-right: 5px;
-                                }
+                                width: 31.7vw;
+                                margin-right: 5px;
 
                                 &:last-child {
-                                    width: 32vw;
+                                    margin-right: 0;
                                 }
                             }
                         }

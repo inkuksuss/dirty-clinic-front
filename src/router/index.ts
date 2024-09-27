@@ -144,16 +144,6 @@ const router = createRouter({
             component: () => import('@/views/sub/AppliancesCleaningView.vue')
         },
         {
-            path: '/login',
-            name: 'login',
-            component: () => import('@/views/LoginView.vue')
-        },
-        {
-            path: '/payment',
-            name: 'payment',
-            component: () => import('@/views/PaymentView.vue')
-        },
-        {
             path: '/promotion',
             name: 'promotion',
             component: () => import('@/views/PromotionView.vue')
@@ -167,6 +157,11 @@ const router = createRouter({
             path: '/review/:id',
             name: 'reviewDetail',
             component: () => import('@/views/ReviewDetailView.vue')
+        },
+        {
+            path: '/payment/result',
+            name: 'paymentResult',
+            component: () => import('@/views/payment/MobilePaymentResult.vue')
         },
         {
             path: '/:pathMatch(.*)*',

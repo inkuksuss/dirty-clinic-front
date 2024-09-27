@@ -14,6 +14,7 @@ export default defineComponent({
             title: '리뷰',
             description: '더티클리닉이 진행한 서비스를 후기로 만나보세요!'
         });
+        const reg = /<[^>]*>?/g;
         const store = useStore();
         const compIsMobile = computed(() => store.isMobile);
         const reviewList = ref<ReviewSummary[]>([]);
@@ -84,6 +85,7 @@ export default defineComponent({
         });
 
         return {
+            reg,
             reviewList,
             compIsMobile,
             handleClickReview,
@@ -126,7 +128,7 @@ export default defineComponent({
                         <div
                             class="content w-full text-[14px] font-[300] leading-[20px] max-h-[60px]"
                         >
-                            {{ review.content }}
+                            {{ review.content.replace(reg, '') }}
                         </div>
                         <div class="text-[14px] font-[300] leading-[20px]">
                             {{ moment(review.created).format('YY.MM.DD') }}

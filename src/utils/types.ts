@@ -13,6 +13,11 @@ export enum PopupType {
     PAYMENT = 'PAYMENT'
 }
 
+export enum HeaderType {
+    DEFAULT = 'DEFAULT',
+    BACK = 'BACK'
+}
+
 export type ApiResponse<T> = {
     code: number;
     message: string;
@@ -31,6 +36,7 @@ export type IAmPortPaymentRequest = {
     buyer_addr: string | null;
     buyer_postcode: string | null;
     bypass?: object;
+    display?: object;
     notice_url?: string;
     custom_data: object;
 };

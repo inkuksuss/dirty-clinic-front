@@ -1,11 +1,12 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { type PopupType } from '@/utils/types';
+import { HeaderType, type PopupType } from '@/utils/types';
 
 export const useStore = defineStore('store', () => {
     const isMobile = ref<boolean>(document.documentElement.clientWidth < 769);
     const width = ref<number>(document.documentElement.clientWidth);
     const openPopup = ref<PopupType | null>(null);
+    const headerType = ref<HeaderType | null>(null);
 
     const setIsMobile = (v: boolean) => {
         isMobile.value = v;
@@ -19,5 +20,18 @@ export const useStore = defineStore('store', () => {
         openPopup.value = v;
     };
 
-    return { isMobile, width, openPopup, setIsMobile, setWidth, setOpenPopup };
+    const setHeaderType = (v: HeaderType | null) => {
+        headerType.value = v;
+    };
+
+    return {
+        isMobile,
+        width,
+        openPopup,
+        headerType,
+        setIsMobile,
+        setWidth,
+        setOpenPopup,
+        setHeaderType
+    };
 });

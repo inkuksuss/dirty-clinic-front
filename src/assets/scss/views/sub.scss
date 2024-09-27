@@ -27,6 +27,16 @@
 
     .intro-wrapper {
         .intro-contents {
+            .image-area {
+                .grid-area {
+                    &.one-line {
+                        .content-box {
+                            flex: 1 0 auto;
+                        }
+                    }
+                }
+            }
+
             @include tablet {
                 .image-area {
                     .grid-area {

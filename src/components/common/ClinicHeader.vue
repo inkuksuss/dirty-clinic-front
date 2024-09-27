@@ -1,13 +1,18 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, onUnmounted, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import vClickOutside from 'click-outside-vue3';
 import { useStore } from '@/stores/store';
 import MobileMenu from '@/components/popup/MobileMenu.vue';
-import { type HeaderCategoryType, type SubHeaderType } from '@/utils/types';
+import { type HeaderCategoryType, HeaderType, type SubHeaderType } from '@/utils/types';
 
 export default defineComponent({
     name: 'ClinicHeader',
+    computed: {
+        HeaderType() {
+            return HeaderType;
+        }
+    },
     components: { MobileMenu },
     directives: {
         clickOutside: vClickOutside.directive
@@ -23,6 +28,7 @@ export default defineComponent({
         const isScroll = ref<boolean>(false);
         const compWidth = computed(() => store.width);
         const compIsMobile = computed(() => store.isMobile);
+        const compHeaderType = computed(() => store.headerType);
         const mobileIsOpen = ref<boolean>(false);
 
         const headerList = ref<Array<HeaderCategoryType>>([
@@ -258,8 +264,12 @@ export default defineComponent({
             router.push('/');
         };
 
+        const handleClickBack = () => {
+            router.push('/review');
+        };
+
         const handleChangeMobileMenu = () => {
-            headerList.value.forEach(h => h.mobileIsSelect = false);
+            headerList.value.forEach((h) => (h.mobileIsSelect = false));
             mobileIsOpen.value = !mobileIsOpen.value;
         };
 
@@ -277,7 +287,7 @@ export default defineComponent({
         };
 
         const handleChangeMobileIsSelect = (id: number, value: boolean): void => {
-            headerList.value.forEach(h => h.mobileIsSelect = false);
+            headerList.value.forEach((h) => (h.mobileIsSelect = false));
             const findHeader = headerList.value.find((h) => h.id === id);
             if (findHeader) findHeader.mobileIsSelect = value;
         };
@@ -291,9 +301,9 @@ export default defineComponent({
         });
 
         watch(compIsMobile, (next, prev) => {
-          if (!next && prev) {
-            mobileIsOpen.value = false;
-          }
+            if (!next && prev) {
+                mobileIsOpen.value = false;
+            }
         });
 
         onMounted(() => {
@@ -315,11 +325,13 @@ export default defineComponent({
             isScroll,
             moveEl,
             mobileIsOpen,
+            compHeaderType,
             handleClick,
             handleMouseEnter,
             handleMouseLeave,
             handleChangeMobileMenu,
             handleClickLogo,
+            handleClickBack,
             handleChangeMobileIsSelect
         };
     }
@@ -376,7 +388,7 @@ export default defineComponent({
                     @mouseenter="() => handleMouseEnter(category)"
                 >
                     <div
-                        class="title w-full h-full flex-center font-[500] text-[16px] hover:text-[--color-hover] hover:font-[800]"
+                        class="title w-full h-full flex-center font-[500] text-[16px] hover:text-[--color-hover]"
                     >
                         <span class="leading-[19px]">{{ category.title }}</span>
                     </div>
@@ -387,7 +399,19 @@ export default defineComponent({
             v-else
             class="px-[20px] bg-[--color-white] h-[--header-height] flex justify-between items-center fixed top-0 left-0 w-screen z-40"
         >
-            <div class="logo-wrapper w-[88px] h-[27px]" @click="handleClickLogo">
+            <div
+                v-if="compHeaderType === HeaderType.BACK"
+                class="back-logo-wrapper w-[88px] h-[27px] flex items-center"
+                @click="handleClickBack"
+            >
+                <img
+                    class="w-[30px] h-[30px]"
+                    src="/assets/images/icons/arrow-blue.svg"
+                    alt="arrow-blue"
+                />
+                <div class="text-[20px] font-[500] leading-[20px]">게시판</div>
+            </div>
+            <div v-else class="logo-wrapper w-[88px] h-[27px]" @click="handleClickLogo">
                 <img
                     class="w-full h-full"
                     src="/assets/images/home/clinic_logo@1x.webp"

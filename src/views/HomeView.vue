@@ -10,12 +10,10 @@ import PaymentButton from '@/components/PaymentButton.vue';
 import HomeService from '@/components/home/HomeService.vue';
 import { useMeta } from 'vue-meta';
 import Flicking from '@egjs/vue3-flicking';
-import ClinicImage from '@/components/common/ClinicImage.vue';
 import { AutoPlay } from '@egjs/flicking-plugins';
 
 export default defineComponent({
     components: {
-        ClinicImage,
         HomeService,
         PaymentButton,
         HomePromotion,
@@ -57,25 +55,19 @@ export default defineComponent({
                 }"
             >
                 <div class="image-item first w-screen h-full relative">
-                  <div class="bg-black w-screen h-full opacity-40 absolute left-0 top-0 z-10"></div>
+                    <div
+                        class="bg-black w-screen h-full opacity-40 absolute left-0 top-0 z-10"
+                    ></div>
                 </div>
                 <div class="image-item second w-screen h-full relative">
-                  <div class="bg-black w-screen h-full opacity-40 absolute left-0 top-0 z-10"></div>
+                    <div
+                        class="bg-black w-screen h-full opacity-40 absolute left-0 top-0 z-10"
+                    ></div>
                 </div>
-                <!--                <div class="image-item w-screen h-full" key="1">-->
-                <!--                    <clinic-image-->
-                <!--                        class="w-full h-full"-->
-                <!--                        src="/assets/images/home/clinic_main_1.webp"-->
-                <!--                    ></clinic-image>-->
-                <!--                </div>-->
-                <!--                <div class="image-item w-screen h-full" key="2">-->
-                <!--                    <clinic-image-->
-                <!--                        class="w-full h-full"-->
-                <!--                        src="/assets/images/home/clinic_main_2.webp"-->
-                <!--                    ></clinic-image>-->
-                <!--                </div>-->
             </Flicking>
-            <div class="contents-wrapper w-screen h-full absolute top-0 left-0 h-full z-20 flex-center">
+            <div
+                class="contents-wrapper w-screen h-full absolute top-0 left-0 h-full z-20 flex-center"
+            >
                 <div
                     class="image-content max-w-[--body-width] w-[--body-ratio] flex flex-col justify-between z-10"
                 >

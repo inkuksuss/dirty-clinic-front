@@ -1,10 +1,11 @@
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from 'vue';
+import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useMeta } from 'vue-meta';
 import { getApiInstance } from '@/utils/api';
 import { useRoute, useRouter } from 'vue-router';
-import { type ReviewDetail, type ReviewSummary } from '@/utils/types';
+import { HeaderType, type ReviewDetail, type ReviewSummary } from '@/utils/types';
 import moment from 'moment';
+import { useStore } from '@/stores/store';
 
 export default defineComponent({
     components: {},
@@ -13,7 +14,7 @@ export default defineComponent({
             title: '리뷰상세',
             description: '더티클리닉이 진행한 서비스를 후기로 만나보세요!'
         });
-
+        const store = useStore();
         const route = useRoute();
         const router = useRouter();
         const review = ref<ReviewDetail>();
@@ -27,7 +28,6 @@ export default defineComponent({
             getApiInstance()
                 .get(`/review/summary/recent?id=${id}`)
                 .then((res) => {
-                    console.log(res);
                     if (res.data.code === 0) {
                         reviewSummaryList.value = res.data.data;
                     }
@@ -39,7 +39,6 @@ export default defineComponent({
             getApiInstance()
                 .get(`/review/detail/${id}`)
                 .then((res) => {
-                    console.log(res);
                     if (res.data.code === 0) {
                         review.value = res.data.data;
                         if (review.value) getSummaryList(review.value.id);
@@ -49,7 +48,12 @@ export default defineComponent({
         };
 
         onMounted(() => {
+            store.setHeaderType(HeaderType.BACK);
             if (route.params.id) getDetail(route.params.id as unknown as number);
+        });
+
+        onUnmounted(() => {
+            store.setHeaderType(null);
         });
 
         watch(route, () => {
@@ -87,7 +91,9 @@ export default defineComponent({
                 v-html="review.content"
                 class="review-content-wrapper pt-[60px] pb-[50px] border-b-[1px] border-[--color-border-blue]"
             ></div>
-            <div class="creator-wrapper border-b-[1px] border-[--color-border-blue] py-[30px] w-full">
+            <div
+                class="creator-wrapper border-b-[1px] border-[--color-border-blue] py-[30px] w-full"
+            >
                 <div class="truncate">{{ review.creatorName }}</div>
             </div>
         </div>
@@ -114,9 +120,7 @@ export default defineComponent({
                     >
                         {{ summary.title }}
                     </div>
-                    <div
-                        class="content w-full text-[14px] font-[300] leading-[20px] mb-[6px]"
-                    >
+                    <div class="content w-full text-[14px] font-[300] leading-[20px] mb-[6px]">
                         {{ summary.content }}
                     </div>
                     <div class="text-[14px] font-[300] leading-[20px]">

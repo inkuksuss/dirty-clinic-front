@@ -23,6 +23,10 @@ export default defineComponent({
         successHandler: {
             type: Function as PropType<() => void>,
             required: true
+        },
+        failHandler: {
+            type: Function as PropType<() => void>,
+            required: true
         }
     },
     setup(props) {
@@ -43,24 +47,25 @@ export default defineComponent({
             buyer_addr: '',
             buyer_postcode: '',
             bypass: {},
-            custom_data: {}
+            custom_data: {},
+            display: {}
         };
 
         const kakaoPaymentBaseRequest: IAmPortPgBaseRequest = {
             pg: 'kakaopay.TC0ONETIME',
-            m_redirect_url: 'https://www.forori.com/trauma-scene-cleaning'
+            m_redirect_url: 'https://www.forori.com/payment/result'
         };
 
         const tossPaymentBaseRequest: IAmPortPgBaseRequest = {
             pg: 'tosspay.tosstest',
             pay_method: 'card',
-            m_redirect_url: 'https://www.forori.com/trauma-scene-cleaning'
+            m_redirect_url: 'https://www.forori.com/payment/result'
         };
 
         const kgPaymentBaseRequest: IAmPortPgBaseRequest = {
             pg: 'html5_inicis.INIpayTest',
             pay_method: 'card',
-            m_redirect_url: 'https://www.forori.com/trauma-scene-cleaning'
+            m_redirect_url: 'https://www.forori.com/payment/result'
         };
 
         const doPaymentPrepare = async () => {
@@ -84,12 +89,11 @@ export default defineComponent({
                     targetTime: compPaymentData.value?.targetTime,
                     memberMemo: ''
                 } as PaymentPrepareRequest;
-                console.log(prepareRequest);
                 const res = await getApiInstance().post('/payment/prepare', prepareRequest);
                 if (res.data.code === 0) {
                     return res;
                 } else {
-                    window.alert(res.data.message);
+                    window.alert('결제 준비를 실패하였습니다.');
                 }
             } catch (e) {
                 console.log(e);
@@ -124,12 +128,17 @@ export default defineComponent({
                             compPaymentData.value,
                             compProductData.value
                         );
-                        paymentRequest.bypass =
-                            pgBaseRequest.pg === 'html5_inicis.INIpayTest'
-                                ? {
-                                      acceptmethod: 'noeasypay' // 간편결제 버튼을 통합결제창에서 제외(PC)
-                                  }
-                                : {};
+                        paymentRequest.m_redirect_url += `?id=${prepareResponse.data.data.merchantUid}`;
+                        if (pgBaseRequest.pg === 'html5_inicis.INIpayTest') {
+                            paymentRequest.bypass = {
+                                acceptmethod: 'noeasypay', // 간편결제 버튼을 통합결제창에서 제외(PC)
+                                P_RESERVED: 'noeasypay=Y', // 간편결제 버튼을 통합결제창에서 제외(모바일),
+                            };
+                            paymentRequest.display = {
+                                card_quota: [] // 할부개월 6개월만 활성화
+                            };
+                        }
+
                         console.warn(paymentRequest);
 
                         iAmPortClient.request_pay(
@@ -137,21 +146,24 @@ export default defineComponent({
                             async (rsp: IAmPortPaymentResponse) => {
                                 // callback
                                 console.log(rsp);
-                                const response = (await getApiInstance().post(
-                                    '/reservation/result',
-                                    {
-                                        merchantUid: rsp.merchant_uid,
-                                        status: rsp.status,
-                                        success: rsp.success,
-                                        errorMsg: rsp.error_msg
+                                try {
+                                    const response = (await getApiInstance().post(
+                                        '/reservation/result',
+                                        {
+                                            merchantUid: rsp.merchant_uid,
+                                            status: rsp.status,
+                                            success: rsp.success,
+                                            errorMsg: rsp.error_msg
+                                        }
+                                    )) as ApiResponse<any>;
+                                    console.log(response);
+                                    if (response.data.code == 0) {
+                                        props.successHandler();
+                                    } else {
+                                        props.failHandler();
                                     }
-                                )) as ApiResponse<any>;
-                                console.log(response);
-                                if (response.data.code == 0) {
-                                    if (response.data.data !== null) props.successHandler();
-                                    else closePopup();
-                                } else {
-                                    console.log('fail');
+                                } catch (e) {
+                                    props.failHandler();
                                 }
                             }
                         );

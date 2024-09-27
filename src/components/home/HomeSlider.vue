@@ -14,7 +14,8 @@ export default defineComponent({
         const imgList = ref<string[]>([
             new URL('@/assets/images/home/slider_1.webp', import.meta.url).href,
             new URL('@/assets/images/home/slider_2.webp', import.meta.url).href,
-            new URL('@/assets/images/home/slider_3.webp', import.meta.url).href
+            new URL('@/assets/images/home/slider_3.webp', import.meta.url).href,
+            new URL('@/assets/images/home/slider_4.webp', import.meta.url).href
         ]);
 
         onMounted(() => {});
@@ -51,14 +52,14 @@ export default defineComponent({
                 </div>
             </Flicking>
 
-            <div v-else class="img-area flex gap-x-[17px] w-full">
+            <div v-else class="img-area flex gap-x-[15px] w-full">
                 <div
                     v-for="(img, idx) in imgList"
                     class="image-container"
                     :key="`slider-${idx}`"
                     :class="idx === 0 ? 'max-w-[267px]' : 'max-w-[222px]'"
                 >
-                    <clinic-image class="w-full" :src="img"></clinic-image>
+                    <clinic-image class="w-full h-full" :src="img"></clinic-image>
                 </div>
             </div>
         </div>

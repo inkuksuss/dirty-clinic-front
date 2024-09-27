@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ref, type PropType, defineComponent } from 'vue';
+import {ref, type PropType, defineComponent, watch, computed} from 'vue';
 
 export default defineComponent({
     name: 'ClinicInput',
@@ -24,9 +24,11 @@ export default defineComponent({
     },
     setup(props) {
         const inputValue = ref<string | undefined>();
+        const compValue = computed(() => props.value);
 
         const handleChangeInput = (e: Event): void => {
             const newValue = (e.target as any).value;
+
             props.changeHandler(newValue);
             inputValue.value = newValue;
         };
@@ -37,6 +39,13 @@ export default defineComponent({
                 props.enterHandler(inputValue.value ? inputValue.value : '');
             }
         };
+
+        watch(compValue, (next, prev) => {
+          if (props.isNumber) {
+            const number = next?.replace(/[^0-9.]/g, '');
+            if (number) props.changeHandler(number);
+          }
+        });
 
         return {
             handleChangeInput,
@@ -49,6 +58,18 @@ export default defineComponent({
 <template>
     <div class="input-wrapper w-full h-[60px] flex-center">
         <input
+            v-if="isNumber"
+            class="w-full h-full border-[1.5px] border-[--color-border-blue] py-[17px] px-[20px]"
+            :value="value"
+            :placeholder="placeHolder"
+            :maxlength="length"
+            @input="handleChangeInput"
+            @keydown="handleKeyDown"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+            :readonly="readOnly"
+        />
+        <input
+            v-else
             class="w-full h-full border-[1.5px] border-[--color-border-blue] py-[17px] px-[20px]"
             :value="value"
             :placeholder="placeHolder"
@@ -56,7 +77,6 @@ export default defineComponent({
             @input="handleChangeInput"
             @keydown="handleKeyDown"
             :readonly="readOnly"
-            :type="isNumber ? 'number' : ''"
         />
     </div>
 </template>

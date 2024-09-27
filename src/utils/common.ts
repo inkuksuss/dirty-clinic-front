@@ -50,3 +50,10 @@ export const getUserId = (): string => {
 export const resolveUrl = (url: string) => {
     return new URL(url, import.meta.url).href;
 };
+
+/* eslint-disable no-useless-escape */
+export const checkHasSpecialCharacters = (v: string): boolean => {
+    const regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+
+    return regExp.test(v);
+};

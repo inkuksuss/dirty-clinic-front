@@ -175,7 +175,7 @@ export default defineComponent({
         <div class="promotion-content max-w-[--body-width] w-[--body-ratio]">
             <div
                 class="text-area"
-                :class="[specialClinicList.includes(compPageType) ? 'mb-[50px]' : 'mb-[30px]']"
+                :class="[specialClinicList.includes(compPageType) ? 'mb-[50px]' : 'mb-[30px]', compPageType === SubPageType.MOLD ? 'mb-[80px]' : '']"
             >
                 <div
                     class="text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px]"
