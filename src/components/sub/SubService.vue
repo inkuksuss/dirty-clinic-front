@@ -38,7 +38,7 @@ export default defineComponent({
                 <div
                     v-for="(data, index) in dataList"
                     :key="index"
-                    class="service-box min-h-[140px] bg-[--color-skyblue] flex items-center pl-[30px] pr-[25px] py-[20px]"
+                    class="service-box min-h-[140px] bg-[--color-skyblue] flex items-center pl-[30px] py-[20px]"
                 >
                     <img v-if="index == 0" class="w-[55px] h-[55px] mr-[20px]" :src="data.src" />
                     <img
@@ -59,13 +59,13 @@ export default defineComponent({
                             {{ data.title }}
                         </div>
                         <div
-                            class="desc text-[--color-text-black] text-[18px] font-[500] leading-[26px] whitespace-pre-wrap"
+                            class="desc text-[--color-text-black] text-[16px] font-[500] leading-[26px] whitespace-pre-wrap"
                         >
                             {{ data.desc }}
                         </div>
                         <div
                             v-if="data.ext"
-                            class="desc text-[--color-text-gray] text-[16px] font-[500] leading-[26px]"
+                            class="desc text-[--color-text-gray] text-[14px] font-[500] leading-[26px]"
                         >
                             {{ data.ext }}
                         </div>

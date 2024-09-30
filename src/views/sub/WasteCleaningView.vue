@@ -89,7 +89,7 @@ export default defineComponent({
         ];
 
         const manageTitle = '세상에 존재하는\n' + '모든 쓰레기 처리 가능합니다.';
-        const manageDesc = '전문 인력이 정확한 규모와 견적 안내해 드리고 있습니다.';
+        const manageDesc = `전문 인력이 정확한 규모와 견적 <br class="break-d">안내해 드리고 있습니다.`;
         const manageImg = new URL('@/assets/images/sub/manage/waste.webp', import.meta.url).href;
 
         const bannerScript = {

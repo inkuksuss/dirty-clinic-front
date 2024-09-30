@@ -124,10 +124,12 @@ export default defineComponent({
 
         const promotionList: SubPromotionType[] = [
             {
-                src: new URL('@/assets/images/sub/promotion/appliances_1.webp', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/appliances_1.webp', import.meta.url)
+                    .href
             },
             {
-                src: new URL('@/assets/images/sub/promotion/appliances_2.webp', import.meta.url).href
+                src: new URL('@/assets/images/sub/promotion/appliances_2.webp', import.meta.url)
+                    .href
             }
         ];
 
@@ -297,8 +299,8 @@ export default defineComponent({
                     </div>
                     <div class="desc pl-[30px] text-[--color-black] text-[20px] font-[500]">
                         전문상담과 예약확정 > 제품 오작동 확인 및 전력차단 > 제품 분해 및 세척 >
-                        제품 건조 및 재조립 ><br />제품 살균소독 > 고객님과 함께 현장검수(작동확인)
-                        및 완료
+                        제품 건조 및 재조립 > 제품 살균소독 > 고객님과 함께 현장검수(작동확인) 및
+                        완료
                     </div>
                 </div>
                 <div>
@@ -312,9 +314,8 @@ export default defineComponent({
                     </div>
                     <div class="desc pl-[30px] text-[--color-black] text-[20px] font-[500]">
                         전문상담과 예약확정 > 재질확인 및 특수약품 도포 > 핸드폴리셔 작업(오염도 및
-                        진드기 제거) ><br />
-                        폐수 흡입 및 헹굼 > 천연향료 탈취작업 및 살균소독 > 고객님과 함께 현장검수
-                        및 완료
+                        진드기 제거) > 폐수 흡입 및 헹굼 > 천연향료 탈취작업 및 살균소독 > 고객님과
+                        함께 현장검수 및 완료
                     </div>
                 </div>
             </div>

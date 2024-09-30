@@ -101,9 +101,8 @@ export default defineComponent({
                 <div
                     v-if="compDesc"
                     class="text-[--color-text-black] text-[18px] font-[500] leading-[26px] whitespace-pre-wrap"
-                >
-                    {{ compDesc }}
-                </div>
+                    v-html="compDesc"
+                ></div>
             </div>
             <!-- 외창청소 -->
             <div
@@ -185,9 +184,8 @@ export default defineComponent({
                     <div
                         v-if="compDesc"
                         class="text-[--color-text-black] text-[18px] font-[500] leading-[26px] whitespace-pre-wrap"
-                    >
-                        {{ compDesc }}
-                    </div>
+                        v-html="compDesc"
+                    ></div>
                 </div>
                 <div v-if="compMainImg" class="max-w-[430px]">
                     <clinic-image :src="compMainImg"></clinic-image>

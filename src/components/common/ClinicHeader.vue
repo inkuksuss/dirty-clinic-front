@@ -14,9 +14,6 @@ export default defineComponent({
         }
     },
     components: { MobileMenu },
-    directives: {
-        clickOutside: vClickOutside.directive
-    },
     setup() {
         const store = useStore();
         const router = useRouter();
@@ -334,6 +331,9 @@ export default defineComponent({
             handleClickBack,
             handleChangeMobileIsSelect
         };
+    },
+    directives: {
+        clickOutside: vClickOutside.directive
     }
 });
 </script>

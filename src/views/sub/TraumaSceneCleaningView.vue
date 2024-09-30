@@ -120,10 +120,7 @@ export default defineComponent({
         ];
 
         const manageTitle = '유품·고독사 청소\n특성상 작업범위가 넓습니다.';
-        const manageDesc =
-            '전문인력이 현장실측 시\n' +
-            '고객님의 피해 상황과 작업환경을 고려해\n' +
-            '현장에서 안내해 드리고 있습니다.';
+        const manageDesc = `전문인력이 현장실측 시 <br class="break-d"/>고객님의 피해 상황과 작업환경을 고려해 <br class="break-d"/>현장에서 안내해 드리고 있습니다.`;
         const manageImg = new URL('@/assets/images/sub/manage/keepsake.webp', import.meta.url).href;
 
         const bannerScript = {
