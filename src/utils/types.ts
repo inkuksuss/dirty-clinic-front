@@ -10,7 +10,9 @@ export type User = {
 };
 
 export enum PopupType {
-    PAYMENT = 'PAYMENT'
+    PAYMENT = 'PAYMENT',
+    TERMS_OF_USE = 'TERMS_OF_USE',
+    PRIVACY_POLICY = 'PRIVACY_POLICY'
 }
 
 export enum HeaderType {

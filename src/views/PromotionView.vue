@@ -65,7 +65,7 @@ export default defineComponent({
             v-if="!compIsMobile"
             class="bg-logo absolute bottom-[-75px] left-[43%] w-[75%] max-w-[900px] max-h-[860px] -z-10"
         >
-            <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />
+            <img class="w-full h-full" src="/assets/images/common/bg_logo@2x.webp" />
         </div>
         <div class="promotion-contents max-w-[--body-width] w-[--body-ratio]">
             <div

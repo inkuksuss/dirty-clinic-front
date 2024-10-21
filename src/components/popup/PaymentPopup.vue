@@ -2,10 +2,15 @@
 import { computed, defineComponent, onMounted, ref } from 'vue';
 import { useStore } from '@/stores/store';
 import {
+    type ApiResponse,
     ClinicType,
     type CommonCodeType,
     type EstimateType,
+    type IAmPortPaymentRequest,
+    type IAmPortPaymentResponse,
+    type IAmPortPgBaseRequest,
     type PaymentData,
+    type PaymentPrepareRequest,
     PopupType,
     type ProductResponse,
     RoomType,
@@ -13,7 +18,6 @@ import {
 } from '@/utils/types';
 import ClinicInput from '@/components/common/ClinicInput.vue';
 import ClinicSelect from '@/components/common/ClinicSelect.vue';
-import PaymentModule from '@/components/PaymentModule.vue';
 import { getApiInstance } from '@/utils/api';
 import ClinicDate from '@/components/common/ClinicDate.vue';
 import moment from 'moment';
@@ -21,7 +25,7 @@ import { checkHasSpecialCharacters } from '@/utils/common';
 
 export default defineComponent({
     name: 'PaymentPopup',
-    components: { ClinicDate, PaymentModule, ClinicSelect, ClinicInput },
+    components: { ClinicDate, ClinicSelect, ClinicInput },
     setup() {
         const store = useStore();
         const selectList: Array<SelectType> = [
@@ -58,6 +62,169 @@ export default defineComponent({
             username: '',
             phoneNumber: ''
         });
+        const paymentTypeList = ref<
+            { type: string; isSelect: boolean; src?: string; name?: string }[]
+        >([
+            {
+                type: 'card',
+                name: '신용/체크카드',
+                isSelect: false
+            },
+            {
+                type: 'toss',
+                src: new URL('@/assets/images/payment/toss@2x.webp', import.meta.url).href,
+                isSelect: false
+            },
+            {
+                type: 'kakao',
+                src: new URL('@/assets/images/payment/kakao@2x.webp', import.meta.url).href,
+                name: '카카오페이',
+                isSelect: false
+            }
+        ]);
+        const isAgreePolicy = ref<boolean>(false);
+        const paymentBaseRequest: IAmPortPaymentRequest = {
+            pg: '',
+            pay_method: '',
+            merchant_uid: '',
+            name: '',
+            amount: 0,
+            buyer_email: '',
+            buyer_name: '',
+            buyer_tel: '',
+            buyer_addr: '',
+            buyer_postcode: '',
+            bypass: {},
+            custom_data: {},
+            display: {}
+        };
+
+        const kakaoPaymentBaseRequest: IAmPortPgBaseRequest = {
+            pg: 'kakaopay.TC0ONETIME',
+            m_redirect_url: 'https://www.forori.com/payment/result'
+        };
+
+        const tossPaymentBaseRequest: IAmPortPgBaseRequest = {
+            pg: 'tosspay.tosstest',
+            pay_method: 'card',
+            m_redirect_url: 'https://www.forori.com/payment/result'
+        };
+
+        const kgPaymentBaseRequest: IAmPortPgBaseRequest = {
+            pg: 'html5_inicis.INIpayTest',
+            pay_method: 'card',
+            m_redirect_url: 'https://www.forori.com/payment/result'
+        };
+
+        const paymentData = ref<PaymentData>({
+            buildingId: null,
+            serviceId: null,
+            structureId: null,
+            footage: null,
+            toiletCount: null,
+            expansion: null,
+            verandaCount: null,
+            username: null,
+            phoneNumber: null,
+            targetDate: null,
+            targetTime: null,
+            address: null
+        });
+
+        const popupPage = ref<number>(5);
+
+        const doPaymentPrepare = async () => {
+            try {
+                const prepareRequest = {
+                    productId: productResponse.value?.id,
+                    serviceId: paymentData.value?.serviceId,
+                    structureId: paymentData.value?.structureId,
+                    buildingId: paymentData.value?.buildingId,
+                    username: paymentData.value?.username,
+                    phoneNumber: paymentData.value?.phoneNumber,
+                    address: paymentData.value?.address,
+                    footage: paymentData.value?.footage,
+                    toiletCount: paymentData.value?.toiletCount,
+                    verandaCount: paymentData.value?.verandaCount,
+                    expansion: paymentData.value?.expansion,
+                    depositAmount: productResponse.value?.depositAmount,
+                    balanceAmount: productResponse.value?.balanceAmount,
+                    isAgreePolicy: isAgreePolicy.value ? 'Y' : 'N',
+                    targetDate: paymentData.value?.targetDate,
+                    targetTime: paymentData.value?.targetTime,
+                    memberMemo: ''
+                } as PaymentPrepareRequest;
+                const res = await getApiInstance().post('/payment/prepare', prepareRequest);
+                if (res.data.code === 0) {
+                    return res;
+                } else {
+                    window.alert('결제 준비를 실패하였습니다.');
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+        const doPayment = async (pgBaseRequest: IAmPortPgBaseRequest) => {
+            try {
+                const prepareResponse = await doPaymentPrepare();
+                if (prepareResponse) {
+                    const iAmPortClient = window.IMP;
+                    // iAmPortClient.init('imp15738717');
+                    iAmPortClient.init('imp11531748');
+                    const paymentRequest = Object.assign({}, paymentBaseRequest, pgBaseRequest);
+                    paymentRequest.name = `더티클리닉-${serviceList.value?.find(
+                        (v) => v.id === paymentData.value?.serviceId
+                    )?.name}-${paymentData.value?.footage}평`;
+                    paymentRequest.buyer_name = paymentData.value?.username;
+                    paymentRequest.buyer_addr = paymentData.value?.address;
+                    paymentRequest.merchant_uid = prepareResponse.data.data.merchantUid;
+                    paymentRequest.amount = prepareResponse.data.data.amount;
+                    paymentRequest.buyer_tel = paymentData.value.phoneNumber as string;
+                    paymentRequest.custom_data = Object.assign(
+                        {},
+                        paymentData.value,
+                        productResponse.value
+                    );
+                    paymentRequest.m_redirect_url += `?id=${prepareResponse.data.data.merchantUid}`;
+                    if (pgBaseRequest.pg === 'html5_inicis.INIpayTest') {
+                        paymentRequest.bypass = {
+                            acceptmethod: 'noeasypay', // 간편결제 버튼을 통합결제창에서 제외(PC)
+                            P_RESERVED: 'noeasypay=Y' // 간편결제 버튼을 통합결제창에서 제외(모바일),
+                        };
+                        paymentRequest.display = {
+                            card_quota: [] // 할부개월 6개월만 활성화
+                        };
+                    }
+
+                    iAmPortClient.request_pay(
+                        paymentRequest,
+                        async (rsp: IAmPortPaymentResponse) => {
+                            try {
+                                const response = (await getApiInstance().post(
+                                    '/reservation/result',
+                                    {
+                                        merchantUid: rsp.merchant_uid,
+                                        status: rsp.status,
+                                        success: rsp.success,
+                                        errorMsg: rsp.error_msg
+                                    }
+                                )) as ApiResponse<any>;
+                                if (response.data.code == 0) {
+                                    handlePaymentSuccess();
+                                } else {
+                                    handlePaymentFail();
+                                }
+                            } catch (e) {
+                                handlePaymentFail();
+                            }
+                        }
+                    );
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
 
         const handleChangeFootage = (v: string) => {
             footage.value = v;
@@ -116,23 +283,6 @@ export default defineComponent({
             estimateData.value.phoneNumber = v;
         };
 
-        const paymentData = ref<PaymentData>({
-            buildingId: null,
-            serviceId: null,
-            structureId: null,
-            footage: null,
-            toiletCount: null,
-            expansion: null,
-            verandaCount: null,
-            username: null,
-            phoneNumber: null,
-            targetDate: null,
-            targetTime: null,
-            address: null
-        });
-
-        const popupPage = ref<number>(1);
-
         const handleClickBg = () => {
             store.setOpenPopup(null);
         };
@@ -159,6 +309,17 @@ export default defineComponent({
             if (!value) return;
             paymentData.value.structureId = parseInt(value, 10);
             structureId.value = value;
+        };
+
+        const handleSelectPaymentType = (type: string) => {
+            paymentTypeList.value.forEach((v) => (v.isSelect = false));
+            paymentTypeList.value
+                .filter((v) => v.type === type)
+                .forEach((v) => (v.isSelect = true));
+        };
+
+        const handleChangePolicy = () => {
+            isAgreePolicy.value = !isAgreePolicy.value;
         };
 
         const handleSelectService = (service: CommonCodeType) => {
@@ -306,7 +467,23 @@ export default defineComponent({
                     break;
                 }
                 case 5: {
-                    popupPage.value++;
+                    const paymentType = paymentTypeList.value.find((v) => v.isSelect);
+                    if (!paymentType) {
+                        window.alert('결제 수단을 선택해주세요.');
+                        return;
+                    }
+                    if (!isAgreePolicy.value) {
+                        window.alert('이용약관 및 개인정보 수집 · 이용 동의를 체크해주세요.');
+                        return;
+                    }
+
+                    doPayment(
+                        paymentType.type === 'card'
+                            ? kgPaymentBaseRequest
+                            : paymentType.type === 'toss'
+                              ? tossPaymentBaseRequest
+                              : kakaoPaymentBaseRequest
+                    );
                     break;
                 }
                 case 7: {
@@ -409,6 +586,9 @@ export default defineComponent({
                     break;
                 }
                 case 5: {
+                    paymentTypeList.value.forEach((v) => (v.isSelect = false));
+                    isAgreePolicy.value = false;
+
                     paymentData.value.footage = null;
                     paymentData.value.structureId = null;
                     paymentData.value.toiletCount = null;
@@ -599,6 +779,8 @@ export default defineComponent({
             clinicList,
             timeSelectList,
             compIsMobile,
+            paymentTypeList,
+            isAgreePolicy,
             handlePaymentSuccess,
             handlePaymentFail,
             setSelectStructure,
@@ -622,6 +804,8 @@ export default defineComponent({
             handleChangeEstimateTime,
             handleChangeEstimateUsername,
             handleChangeEstimatePhoneNumber,
+            handleSelectPaymentType,
+            handleChangePolicy,
             doEstimate
         };
     }
@@ -642,7 +826,7 @@ export default defineComponent({
             <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[20px]">
                 <div class="flex flex-col pt-[40px]">
-                    <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
+                    <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
                         >원하는 클리닉을 선택하세요.</span
                     >
                     <span class="mb-[50px] text-[16px] font-[400] leading-[19px]"
@@ -671,13 +855,13 @@ export default defineComponent({
                         </div>
                         <div
                             v-if="idx === 2"
-                            class="text-[16px] text-[--color-text-gray] font-[500]"
+                            class="text-[14px] text-[--color-text-gray] font-[500]"
                         >
                             원룸, 아파트, 오피스텔 등등은 이곳을 눌러주세요.
                         </div>
                         <div
                             v-else-if="idx === 3"
-                            class="text-[16px] text-[--color-text-gray] font-[500]"
+                            class="text-[14px] text-[--color-text-gray] font-[500]"
                         >
                             더많은 서비스를 원하시면 이곳을 눌러주세요.
                         </div>
@@ -698,7 +882,7 @@ export default defineComponent({
             <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
-                    <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
+                    <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
                         >어떤 장소를 신청하시나요?</span
                     >
                     <span class="mb-[50px] text-[16px] font-[400] leading-[19px]"
@@ -771,7 +955,7 @@ export default defineComponent({
             <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
-                    <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
+                    <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
                         >예약자 정보를 알려주세요.</span
                     >
                     <span class="mb-[30px] text-[16px] font-[400] leading-[19px]"
@@ -865,7 +1049,7 @@ export default defineComponent({
             <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
-                    <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
+                    <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
                         >자세한 정보를 알려주세요.</span
                     >
                     <span class="mb-[30px] text-[16px] font-[400] leading-[19px]"
@@ -969,13 +1153,13 @@ export default defineComponent({
         >
             <!--            <div-->
             <!--                v-if="!compIsMobile"-->
-            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
+            <!--                class="bg-logo absolute bottom-[0px] left-[0px] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
             <!--            >-->
-            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
+            <!--                <img class="w-full h-full" src="@/assets/images/common/popup_bg@2x.webp" />-->
             <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
-                    <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
+                    <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
                         >예약금을 결제해요.</span
                     >
                     <span class="mb-[30px] text-[16px] font-[400] leading-[19px]"
@@ -989,7 +1173,7 @@ export default defineComponent({
             </div>
             <div class="contents-area flex-col mx-[5%] border-b-[1px] border-[#96C8F6] pb-[5px]">
                 <div class="content-box flex justify-between items-center mb-[20px]">
-                    <div class="text-[18px] font-[600] leading-[26px] min-w-[134px]">
+                    <div class="text-[18px] font-[600] leading-[26px] min-w-[134px] mr-[10px]">
                         서비스 예상금액
                     </div>
                     <div class="w-full relative">
@@ -1004,7 +1188,9 @@ export default defineComponent({
                     </div>
                 </div>
                 <div class="content-box flex justify-between items-center mb-[20px]">
-                    <div class="text-[18px] font-[600] leading-[26px] min-w-[134px]">예약금</div>
+                    <div class="text-[18px] font-[600] leading-[26px] min-w-[134px] mr-[10px]">
+                        예약금
+                    </div>
                     <div class="w-full relative">
                         <input
                             :value="productResponse ? productResponse.depositAmount : null"
@@ -1017,8 +1203,66 @@ export default defineComponent({
                     </div>
                 </div>
             </div>
+            <div class="mx-[5%] pb-[10px] border-b-[1px] border-[#96C8F6]">
+                <div class="text-[20px] leading-[26px] font-[600] mt-[30px] mb-[20px]">
+                    결제 수단
+                </div>
+                <div
+                    v-for="paymentType in paymentTypeList"
+                    :key="paymentType.type"
+                    @click="() => handleSelectPaymentType(paymentType.type)"
+                    class="flex h-[26px] items-center mb-[20px]"
+                >
+                    <div class="w-[20px] h-[20px] mr-[10px]">
+                        <img
+                            v-if="paymentType.isSelect"
+                            src="/assets/images/icons/checkbox_check.svg"
+                            class="w-full h-full"
+                        />
+                        <img
+                            v-else
+                            src="/assets/images/icons/checkbox_uncheck.svg"
+                            class="w-full h-full"
+                        />
+                    </div>
+                    <div class="flex">
+                        <img
+                            v-if="paymentType.src"
+                            :src="paymentType.src"
+                            class="mr-[5px]"
+                            :class="paymentType.type === 'toss' ? 'h-[20px]' : 'h-[26px]'"
+                        />
+                        <div v-if="paymentType.name" class="text-[16px] leading-[26px] font-[600]">
+                            {{ paymentType.name }}
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="mx-[5%]">
-                <div class="info-wrapper flex items-start mt-[15px]">
+                <div @click="handleChangePolicy" class="flex mt-[30px] items-center">
+                    <div class="w-[20px] h-[20px] mr-[10px]">
+                        <img
+                            v-if="isAgreePolicy"
+                            src="/assets/images/icons/checkbox_check.svg"
+                            class="w-full h-full"
+                        />
+                        <img
+                            v-else
+                            src="/assets/images/icons/checkbox_uncheck.svg"
+                            class="w-full h-full"
+                        />
+                    </div>
+                    <span class="text-[16px] font-[400] text-[--color-main-blue] mr-[5px]"
+                        >이용약관</span
+                    >
+                    <span class="text-[16px] font-[400] text-[--color-text-gray] mr-[5px]">및</span>
+                    <span class="text-[16px] font-[400] text-[--color-main-blue] mr-[5px]"
+                        >개인정보 수집 · 이용
+                    </span>
+                    <span class="text-[16px] font-[400] text-[--color-text-gray]">동의</span>
+                </div>
+
+                <div class="info-wrapper flex items-start mt-[17px]">
                     <img
                         class="w-[15px] h-[15px] mr-[5px]"
                         src="/assets/images/icons/info.svg"
@@ -1026,11 +1270,11 @@ export default defineComponent({
                     />
                     <span class="text-[16px] font-[400] leading-[19px] text-[--color-text-gray]"
                         >고객님이 선택하신 서비스의 예상 금액입니다.<br />
-                        현장 및 상세 예약 확인에 따라 금액이 변동될 수 있으며,<br />
-                        예약금 결제 후 확정 문자를 드립니다.</span
+                        현장 및 상세 예약 확인에 따라 금액이 변동될 수 있으며, 예약금 결제 후 확정
+                        문자를 드립니다.</span
                     >
                 </div>
-                <div class="w-full h-[45px] flex justify-between gap-x-[15px] mt-[45px]">
+                <div class="w-full h-[45px] flex justify-between gap-x-[15px] mt-[45px] mb-[15px]">
                     <div
                         class="flex-center h-full w-full rounded-[80px] border-[--color-border-blue] border-[1.5px]"
                         @click="handlePrev"
@@ -1051,15 +1295,6 @@ export default defineComponent({
                 </div>
             </div>
         </div>
-        <div v-else-if="popupPage === 6" class="payment-input">
-            <payment-module
-                :service-list="serviceList"
-                :payment-data="paymentData"
-                :product-data="productResponse"
-                :success-handler="handlePaymentSuccess"
-                :fail-handler="handlePaymentFail"
-            ></payment-module>
-        </div>
 
         <!-- 7 > 기타 선택시 -->
         <div
@@ -1074,7 +1309,7 @@ export default defineComponent({
             <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
-                    <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
+                    <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
                         >어떤 클리닉을 원하시나요?</span
                     >
                     <span class="mb-[30px] text-[16px] font-[400] leading-[19px]"
@@ -1150,7 +1385,7 @@ export default defineComponent({
             <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
-                    <span class="mb-[5px] text-[30px] font-[700] leading-[36px]"
+                    <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
                         >연락드릴 정보를 알려주세요!</span
                     >
                     <span class="mb-[30px] text-[16px] font-[400] leading-[19px]"
@@ -1214,10 +1449,10 @@ export default defineComponent({
                 <img
                     @click="handleClickClose"
                     class="w-[36px] h-[36px]"
-                    src="@/assets/images/icons/x-btn.svg"
+                    src="/assets/images/icons/x-btn.svg"
                 />
             </div>
-            <div class="text-[30px] font-[700] mb-[5px] leading-[36px]">
+            <div class="text-[28px] font-[700] mb-[5px] leading-[36px]">
                 견적 요청이 완료되었어요.
             </div>
             <div class="text-[16px] font-[400] mb-[30px] leading-[19px]">
@@ -1240,10 +1475,10 @@ export default defineComponent({
                 <img
                     @click="handleClickClose"
                     class="w-[36px] h-[36px]"
-                    src="@/assets/images/icons/x-btn.svg"
+                    src="/assets/images/icons/x-btn.svg"
                 />
             </div>
-            <div class="text-[30px] font-[700] mb-[5px] leading-[36px]">결제가 완료되었어요.</div>
+            <div class="text-[28px] font-[700] mb-[5px] leading-[36px]">결제가 완료되었어요.</div>
             <div class="text-[16px] font-[400] mb-[30px] leading-[19px]">
                 최대한 빠르게 확인하여 연락드리겠습니다.<br />알맞은 서비스를 제공할 수 있도록
                 최선을 다하겠습니다.
@@ -1264,10 +1499,10 @@ export default defineComponent({
                 <img
                     @click="handleClickClose"
                     class="w-[36px] h-[36px]"
-                    src="@/assets/images/icons/x-btn.svg"
+                    src="/assets/images/icons/x-btn.svg"
                 />
             </div>
-            <div class="text-[30px] font-[700] mb-[5px] leading-[36px]">결제가 실패하였어요.</div>
+            <div class="text-[28px] font-[700] mb-[5px] leading-[36px]">결제가 실패하였어요.</div>
             <div class="text-[16px] font-[400] mb-[30px] leading-[19px]">
                 전화상담을 통해 자세히 도와드리겠습니다.<br />알맞은 서비스를 제공할 수 있도록
                 최선을 다하겠습니다.

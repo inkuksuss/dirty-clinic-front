@@ -101,7 +101,7 @@ export default defineComponent({
             v-if="!compIsMobile"
             class="bg-logo absolute bottom-[-75px] left-[43%] w-[75%] max-w-[900px] max-h-[860px] -z-10"
         >
-            <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />
+            <img class="w-full h-full" src="/assets/images/common/bg_logo@2x.webp" />
         </div>
         <div class="review-contents max-w-[--body-width] w-[--body-ratio]">
             <div
@@ -113,7 +113,7 @@ export default defineComponent({
                     서비스를 후기로 만나보세요!
                 </div>
             </div>
-            <div class="review-area pb-[155px]">
+            <div v-if="reviewList && reviewList.length > 0" class="review-area pb-[155px]">
                 <div
                     v-for="(review, idx) in reviewList"
                     @click="() => handleClickReview(review.id)"
@@ -144,6 +144,9 @@ export default defineComponent({
                         />
                     </div>
                 </div>
+            </div>
+            <div v-else class="flex-center w-full h-[400px]">
+                <div class="text-[20px] text-[--color-text-gray]">아직 등록된 리뷰가 없어요!</div>
             </div>
         </div>
     </div>

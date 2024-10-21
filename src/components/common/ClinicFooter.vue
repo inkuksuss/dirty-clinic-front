@@ -1,6 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import { useStore } from '@/stores/store';
+import { PopupType } from '@/utils/types';
 
 type FooterCategory = {
     title: string;
@@ -21,9 +22,22 @@ export default defineComponent({
         const store = useStore();
         const compIsMobile = computed(() => store.isMobile);
 
+        const handleClick = (title: string) => {
+            if (title === '이용약관') {
+                store.setOpenPopup(PopupType.TERMS_OF_USE);
+            } else if (title === '개인정보처리방침') {
+                store.setOpenPopup(PopupType.PRIVACY_POLICY);
+            } else if (title === '고객센터') {
+                window.alert('010-3352-0037');
+            } else {
+                return;
+            }
+        };
+
         return {
             categoryList,
-            compIsMobile
+            compIsMobile,
+            handleClick
         };
     }
 });
@@ -46,6 +60,7 @@ export default defineComponent({
                             class="link-wrapper mr-[30px] text-[18px] font-[600] text-[--color-text-black] cursor-pointer"
                             v-for="category in categoryList"
                             :key="category.title"
+                            @click="() => handleClick(category.title)"
                         >
                             <span>{{ category.title }}</span>
                         </div>
@@ -55,7 +70,7 @@ export default defineComponent({
                             >경기도 부천시 소사구 경인로 1185번길 57-12, 1층(송내동)</span
                         >
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
-                            >대표자 최문석 | 사업자등록번호 571-54-00602</span
+                            >대표자 최문석 | 사업자등록번호 571-54-00602 | 통신 판매업 신고 제2024-부천소사-0181호</span
                         >
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
                             >대표번호 010-3352-0037 | 팩스번호 0504-494-1720</span
@@ -78,6 +93,7 @@ export default defineComponent({
                     class="link-wrapper mr-[30px] text-[16px] font-[600] text-[--color-text-black]"
                     v-for="category in categoryList"
                     :key="category.title"
+                    @click="() => handleClick(category.title)"
                 >
                     <span>{{ category.title }}</span>
                 </div>
@@ -96,7 +112,7 @@ export default defineComponent({
                 >
                 <span
                     class="mb-[5px] text-[14px] font-[400] text-[--color-text-gray] leading-[16px]"
-                    >대표자 최문석 | 사업자등록번호 571-54-00602</span
+                    >대표자 최문석 | 사업자등록번호 571-54-00602 | 통신 판매업 신고 제2024-부천소사-0181호</span
                 >
                 <span class="mb-[5px] text-[14px] font-[400] text-[--color-text-gray]"
                     >대표번호 010-3352-0037 | 팩스번호 0504-494-1720</span

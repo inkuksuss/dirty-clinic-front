@@ -24,7 +24,7 @@ export default defineComponent({
     },
     setup() {
         useMeta({
-            title: '더티클리닉',
+            title: '더티 클리닉 | 입주청소, 사업장청소, 준공청소, 화재청소 전문업체',
             description: '우리는 청결의 미학을 실현하는 전문기업 더티클리닉입니다.'
         });
         const store = useStore();

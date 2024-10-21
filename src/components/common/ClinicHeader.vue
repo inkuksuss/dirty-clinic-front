@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, defineComponent, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import vClickOutside from 'click-outside-vue3';
 import { useStore } from '@/stores/store';
@@ -342,25 +342,22 @@ export default defineComponent({
     <header>
         <div
             v-if="!compIsMobile"
-            class="header-wrapper fixed top-0 left-0 bg-[--color-white] flex items-center justify-between w-screen h-[--header-height] pl-[50px] pr-[60px] z-40 cursor-pointer"
-            :class="[isScroll ? 'border-b-[1px] border-b-[--color-border-blue]' : '']"
+            class="header-wrapper fixed top-0 left-0 bg-[--color-white] flex flex-row-reverse items-center justify-between w-screen h-[--header-height] z-40 cursor-pointer"
+            :class="isScroll ? 'isScroll' : ''"
         >
-            <div class="logo-wrapper w-[133px] h-[41px]" @click="handleClickLogo">
-                <img
-                    class="w-full h-full"
-                    src="/assets/images/home/clinic_logo@2x.webp"
-                    alt="main_logo"
-                />
-            </div>
             <div
-                class="category-wrapper relative flex justify-end items-center h-full"
+                class="category-wrapper relative flex justify-end items-center h-full pr-[60px] border-[--color-border-blue]"
+                :class="isScroll ? 'border-b-[1px]' : 'border-b-0'"
                 ref="categoryWrapperElement"
                 @mouseleave="handleMouseLeave"
             >
                 <div
                     ref="moveEl"
                     class="category-body absolute bg-white top-[--header-height] w-[150px] pt-[22.5px] pb-[22.5px] border-[1px] border-[--color-border-blue] flex flex-col"
-                    :class="[isOpen ? 'flex' : 'hidden', isScroll ? 'border-t-[0]' : '']"
+                    :class="[
+                        isOpen ? 'flex' : 'hidden',
+                        isScroll ? 'border-t-0 isScroll' : 'border-t-[1px]'
+                    ]"
                 >
                     <div v-for="(category, idx) in headerList" :key="idx" class="w-full h-full">
                         <div v-if="category.isReady" class="w-full h-full">
@@ -392,6 +389,18 @@ export default defineComponent({
                     >
                         <span class="leading-[19px]">{{ category.title }}</span>
                     </div>
+                </div>
+            </div>
+            <div
+                class="w-full flex-1 pl-[50px] h-full flex items-center border-[--color-border-blue]"
+                :class="isScroll ? 'border-b-[1px]' : 'border-b-0'"
+            >
+                <div class="logo-wrapper w-[133px] h-[41px]" @click="handleClickLogo">
+                    <img
+                        class="w-full h-full"
+                        src="/assets/images/home/clinic_logo@2x.webp"
+                        alt="main_logo"
+                    />
                 </div>
             </div>
         </div>

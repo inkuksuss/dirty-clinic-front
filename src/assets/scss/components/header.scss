@@ -1,8 +1,12 @@
 @import '@/assets/scss/variables.scss';
 
 .header-wrapper {
-    //height: $header-height;
-    //background-color: $color-white;
+    height: $header-height;
+
+    &.isScroll {
+        height: calc($header-height + 1px);
+    }
+
 
     .logo-wrapper {
         img {
@@ -12,6 +16,10 @@
     .category-wrapper {
         .category-body {
             transition: all 0.2s ease;
+
+            &.isScroll {
+                top: calc($header-height + 1px);
+            }
         }
 
         .category-contents {

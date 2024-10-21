@@ -4,6 +4,8 @@ import { useStore } from '@/stores/store';
 import { PopupType } from '@/utils/types';
 import PaymentPopup from '@/components/popup/PaymentPopup.vue';
 import MobileMenu from '@/components/popup/MobileMenu.vue';
+import TermsOfUsePopup from '@/components/popup/TermsOfUsePopup.vue';
+import PrivatePolicyPopup from '@/components/popup/PrivatePolicyPopup.vue';
 
 type FooterCategory = {
     title: string;
@@ -11,12 +13,13 @@ type FooterCategory = {
 
 export default defineComponent({
     name: 'ClinicPopup',
-    components: { PaymentPopup },
+    components: { PrivatePolicyPopup, TermsOfUsePopup, PaymentPopup },
     setup() {
         const store = useStore();
         const compPopupType = computed(() => store.openPopup);
         const handleClickBg = () => {
             // store.setOpenPopup(null);
+            console.log('hjello');
         };
 
         const handleClickClose = () => {
@@ -34,11 +37,16 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="popup-wrapper w-screen h-screen fixed top-0 left-0 z-40 flex-center">
+    <div class="popup-wrapper w-screen h-screen fixed top-0 left-0 z-40 flex-center overflow-y-scroll">
         <div
             class="popup-bg flex-center bg-black opacity-80 w-full h-full"
-            @click="handleClickBg"
         ></div>
         <payment-popup v-if="compPopupType === PopupType.PAYMENT"></payment-popup>
+        <terms-of-use-popup
+            v-else-if="compPopupType === PopupType.TERMS_OF_USE"
+        ></terms-of-use-popup>
+        <private-policy-popup
+            v-else-if="compPopupType === PopupType.PRIVACY_POLICY"
+        ></private-policy-popup>
     </div>
 </template>

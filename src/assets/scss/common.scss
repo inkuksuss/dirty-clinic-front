@@ -65,6 +65,11 @@ body {
     .bg-logo {
         aspect-ratio: 900 / 860;
     }
+
+    .no-scroll {
+        overflow-y: hidden;
+        height: 100%;
+    }
 }
 
 .input-wrapper {

@@ -8,9 +8,13 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="check-wrapper max-w-[--body-width] w-[--body-ratio] flex justify-between mb-[160px]">
+    <div
+        class="check-wrapper max-w-[--body-width] w-[--body-ratio] flex justify-between mb-[160px]"
+    >
         <div class="text-area flex flex-col mr-[80px]">
-            <div class="main text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px]">
+            <div
+                class="main text-[--color-text-black] text-[32px] font-[700] leading-[38px] mb-[10px]"
+            >
                 체크리스트로 더블체크하세요.
             </div>
             <div class="sub text-[--color-text-black] text-[18px] font-[500] leading-[26px]">
@@ -19,10 +23,12 @@ export default defineComponent({
                 <br />※ 점검표는 직접 인쇄하여 사용해주세요
             </div>
         </div>
-        <div class="check-btn w-[225px] min-w-[225px] h-[55px] rounded-[80px] bg-[--color-main-blue] flex-center mt-[50px]">
-            <span class="text-[--color-white] text-[20px] font-[600] leading-[26px]"
-                >점검표 다운로드</span
-            >
+        <div
+            class="check-btn w-[225px] min-w-[225px] h-[55px] rounded-[80px] bg-[--color-main-blue] flex-center mt-[50px]"
+        >
+            <div class="text-[--color-white] text-[20px] font-[600] leading-[26px]">
+                <a href="/assets/images/common/checklist.webp" target="_blank">점검표 다운로드</a>
+            </div>
         </div>
     </div>
 </template>
