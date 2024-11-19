@@ -2,6 +2,7 @@
 import { computed, defineComponent } from 'vue';
 import { useStore } from '@/stores/store';
 import { PopupType } from '@/utils/types';
+import router from '@/router';
 
 type FooterCategory = {
     title: string;
@@ -29,8 +30,10 @@ export default defineComponent({
                 store.setOpenPopup(PopupType.PRIVACY_POLICY);
             } else if (title === '고객센터') {
                 window.alert('010-3352-0037');
+            } else if (title === '회사소개') {
+                router.push('/introduce');
             } else {
-                return;
+                window.alert('준비중입니다.');
             }
         };
 
@@ -67,13 +70,18 @@ export default defineComponent({
                     </div>
                     <div class="contents-description-wrapper flex flex-col mt-[30px]">
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
-                            >경기도 부천시 소사구 경인로 1185번길 57-12, 1층(송내동)</span
+                            >상호명 더티클리닉 | 경기도 부천시 소사구 경인로 1185번길 57-12,
+                            1층(송내동)</span
                         >
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
-                            >대표자 최문석 | 사업자등록번호 571-54-00602 | 통신 판매업 신고 제2024-부천소사-0181호</span
+                            >대표자 최문석 | 이메일 chlanstjr96@naver.com</span
                         >
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
-                            >대표번호 010-3352-0037 | 팩스번호 0504-494-1720</span
+                            >사업자등록번호 571-54-00602 | 통신 판매업 신고
+                            제2024-부천소사-0181호</span
+                        >
+                        <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
+                            >대표번호 1666-9278 | 팩스번호 0504-494-1720</span
                         >
                         <span class="mb-[10px] text-[16px] font-[400] text-[--color-text-gray]"
                             >Copyright © 2023 DIRTY CLINIC. All Rights Reserved.</span
@@ -108,14 +116,19 @@ export default defineComponent({
             </div>
             <div class="contents-description-wrapper flex flex-col mt-[30px]">
                 <span class="text-[14px] font-[400] text-[--color-text-gray]"
-                    >경기도 부천시 소사구 경인로 1185번길 57-12, 1층(송내동)</span
+                    >상호명 더티클리닉 | 경기도 부천시 소사구 경인로 1185번길 57-12,
+                    1층(송내동)</span
                 >
                 <span
                     class="mb-[5px] text-[14px] font-[400] text-[--color-text-gray] leading-[16px]"
-                    >대표자 최문석 | 사업자등록번호 571-54-00602 | 통신 판매업 신고 제2024-부천소사-0181호</span
+                    >대표자 최문석 | 이메일 chlanstjr96@naver.com</span
+                >
+                <span
+                    class="mb-[5px] text-[14px] font-[400] text-[--color-text-gray] leading-[16px]"
+                    >사업자등록번호 571-54-00602 | 통신 판매업 신고 제2024-부천소사-0181호</span
                 >
                 <span class="mb-[5px] text-[14px] font-[400] text-[--color-text-gray]"
-                    >대표번호 010-3352-0037 | 팩스번호 0504-494-1720</span
+                    >대표번호 1666-9278 | 팩스번호 0504-494-1720</span
                 >
                 <span class="mb-[20px] text-[14px] font-[400] text-[--color-text-gray]"
                     >Copyright © 2023 DIRTY CLINIC. All Rights Reserved.</span

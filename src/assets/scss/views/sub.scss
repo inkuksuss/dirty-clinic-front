@@ -76,7 +76,7 @@
                 }
             }
 
-            @include sm {
+            @media (max-width: 480px) {
                 .image-area {
                     .grid-area {
                         display: grid;
@@ -335,7 +335,6 @@
                         }
 
                         .info-label {
-
                             @include mobile {
                                 max-width: 608px;
                             }
@@ -539,6 +538,8 @@
             margin-bottom: 80px;
 
             .text-area {
+                margin-right: 0px;
+
                 .main {
                     font-size: 24px;
                     font-weight: 600;

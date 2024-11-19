@@ -19,7 +19,6 @@ export default defineComponent({
         const compPopupType = computed(() => store.openPopup);
         const handleClickBg = () => {
             // store.setOpenPopup(null);
-            console.log('hjello');
         };
 
         const handleClickClose = () => {

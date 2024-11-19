@@ -1,5 +1,25 @@
 .popup-wrapper {
     .popup-payment {
+        .payment-product {
+            background-image: url('/assets/images/common/bg_popup@2x.webp');
+            background-size: cover;
+
+            .head-area {
+            }
+            .contents-area {
+                .content {
+                    img {
+                        aspect-ratio: 40 / 40;
+                    }
+                }
+            }
+        }
+
+        .payment-input {
+            background-image: url('/assets/images/common/bg_popup@2x.webp');
+            background-size: cover;
+        }
+
         .contents-area {
             &.service-page {
                 .content {
@@ -23,35 +43,6 @@
                 }
             }
         }
-
-        div {
-            &.payment-product {
-                .head-area {
-                }
-                .contents-area {
-                    .content {
-                        img {
-                            aspect-ratio: 40 / 40;
-                        }
-                    }
-                }
-            }
-
-            &.payment-room {
-                .head-area {
-                }
-                .contents-area {
-                    .first-row {
-                    }
-
-                    .content {
-                        img {
-                            aspect-ratio: 40 / 40;
-                        }
-                    }
-                }
-            }
-        }
     }
 
     @include mobile {
@@ -61,6 +52,8 @@
             overflow-y: scroll;
 
             .payment-input {
+                background-image: none !important;
+
                 .contents-area {
                     .content-box {
                         flex-direction: column;
@@ -91,6 +84,8 @@
             }
 
             .payment-product {
+                background-image: none !important;
+
                 .contents-area {
                     display: flex;
                     flex-direction: column;
@@ -115,7 +110,8 @@
             }
         }
 
-        .popup-terms-of-use, .popup-privacy-policy {
+        .popup-terms-of-use,
+        .popup-privacy-policy {
             width: 100vw;
             height: 100vh;
 
@@ -133,7 +129,6 @@
                     p {
                         height: calc(100vh - 230px);
                     }
-
                 }
             }
         }

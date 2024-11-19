@@ -27,7 +27,7 @@ export type ApiResponse<T> = {
 };
 
 export type IAmPortPaymentRequest = {
-    pg: string;
+    channelKey: string;
     pay_method: string | null;
     merchant_uid: string;
     name: string;
@@ -44,7 +44,7 @@ export type IAmPortPaymentRequest = {
 };
 
 export type IAmPortPgBaseRequest = {
-    pg: string;
+    channelKey: string;
     pay_method?: string;
     buyer_tel?: string;
     m_redirect_url?: string;

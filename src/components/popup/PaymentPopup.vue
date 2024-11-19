@@ -84,7 +84,7 @@ export default defineComponent({
         ]);
         const isAgreePolicy = ref<boolean>(false);
         const paymentBaseRequest: IAmPortPaymentRequest = {
-            pg: '',
+            channelKey: '',
             pay_method: '',
             merchant_uid: '',
             name: '',
@@ -100,20 +100,20 @@ export default defineComponent({
         };
 
         const kakaoPaymentBaseRequest: IAmPortPgBaseRequest = {
-            pg: 'kakaopay.TC0ONETIME',
-            m_redirect_url: 'https://www.forori.com/payment/result'
+            channelKey: 'channel-key-f23b5fe1-bcb1-4a6f-ad68-103528ed2d45',
+            m_redirect_url: 'https://www.dirty-clinic.com/payment/result'
         };
 
         const tossPaymentBaseRequest: IAmPortPgBaseRequest = {
-            pg: 'tosspay.tosstest',
+            channelKey: 'channel-key-e23a3961-2eec-41f2-b10f-10b91c3adfff',
             pay_method: 'card',
-            m_redirect_url: 'https://www.forori.com/payment/result'
+            m_redirect_url: 'https://www.dirty-clinic.com/payment/result'
         };
 
         const kgPaymentBaseRequest: IAmPortPgBaseRequest = {
-            pg: 'html5_inicis.INIpayTest',
+            channelKey: 'channel-key-499a2702-b18c-4d79-8ad9-fc2f92477bd4',
             pay_method: 'card',
-            m_redirect_url: 'https://www.forori.com/payment/result'
+            m_redirect_url: 'https://www.dirty-clinic.com/payment/result'
         };
 
         const paymentData = ref<PaymentData>({
@@ -131,7 +131,7 @@ export default defineComponent({
             address: null
         });
 
-        const popupPage = ref<number>(5);
+        const popupPage = ref<number>(1);
 
         const doPaymentPrepare = async () => {
             try {
@@ -170,8 +170,8 @@ export default defineComponent({
                 const prepareResponse = await doPaymentPrepare();
                 if (prepareResponse) {
                     const iAmPortClient = window.IMP;
-                    // iAmPortClient.init('imp15738717');
                     iAmPortClient.init('imp11531748');
+
                     const paymentRequest = Object.assign({}, paymentBaseRequest, pgBaseRequest);
                     paymentRequest.name = `더티클리닉-${serviceList.value?.find(
                         (v) => v.id === paymentData.value?.serviceId
@@ -187,7 +187,10 @@ export default defineComponent({
                         productResponse.value
                     );
                     paymentRequest.m_redirect_url += `?id=${prepareResponse.data.data.merchantUid}`;
-                    if (pgBaseRequest.pg === 'html5_inicis.INIpayTest') {
+                    if (
+                        pgBaseRequest.channelKey ===
+                        'channel-key-499a2702-b18c-4d79-8ad9-fc2f92477bd4'
+                    ) {
                         paymentRequest.bypass = {
                             acceptmethod: 'noeasypay', // 간편결제 버튼을 통합결제창에서 제외(PC)
                             P_RESERVED: 'noeasypay=Y' // 간편결제 버튼을 통합결제창에서 제외(모바일),
@@ -215,7 +218,9 @@ export default defineComponent({
                                 } else {
                                     handlePaymentFail();
                                 }
+                                console.log(response);
                             } catch (e) {
+                                console.error(e);
                                 handlePaymentFail();
                             }
                         }
@@ -327,7 +332,6 @@ export default defineComponent({
                 getApiInstance()
                     .get('/common/summary?type=service_type&subType=pay_disable')
                     .then((res) => {
-                        console.log(res);
                         if (res.data.code === 0) {
                             clinicList.value = res.data.data.map((v: CommonCodeType) => {
                                 return { name: v.name, value: v.id.toString() };
@@ -741,6 +745,10 @@ export default defineComponent({
             popupPage.value = 11;
         };
 
+        const handleClickPrivatePolicy = () => {};
+
+        const handleClickTermsOfUse = () => {};
+
         onMounted(() => {
             window.alert('현재 준비중인 기능입니다.');
             getApiInstance()
@@ -781,6 +789,8 @@ export default defineComponent({
             compIsMobile,
             paymentTypeList,
             isAgreePolicy,
+            handleClickPrivatePolicy,
+            handleClickTermsOfUse,
             handlePaymentSuccess,
             handlePaymentFail,
             setSelectStructure,
@@ -818,12 +828,6 @@ export default defineComponent({
             v-if="popupPage === 1"
             class="payment-product w-full min-h-[535px] flex flex-col p-[15px] relative"
         >
-            <!--            <div-->
-            <!--                v-if="!compIsMobile"-->
-            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
-            <!--            >-->
-            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
-            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[20px]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
@@ -874,12 +878,6 @@ export default defineComponent({
             v-else-if="popupPage === 2"
             class="payment-product w-full h-max flex flex-col p-[15px] relative"
         >
-            <!--            <div-->
-            <!--                v-if="!compIsMobile"-->
-            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
-            <!--            >-->
-            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
-            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
@@ -947,12 +945,6 @@ export default defineComponent({
             v-else-if="popupPage === 3"
             class="payment-input w-full min-h-[610px] flex flex-col p-[15px] relative"
         >
-            <!--            <div-->
-            <!--                v-if="!compIsMobile"-->
-            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
-            <!--            >-->
-            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
-            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
@@ -1041,12 +1033,6 @@ export default defineComponent({
             v-else-if="popupPage === 4"
             class="payment-input w-full min-h-[610px] flex flex-col p-[15px] relative"
         >
-            <!--            <div-->
-            <!--                v-if="!compIsMobile"-->
-            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
-            <!--            >-->
-            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
-            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
@@ -1151,12 +1137,6 @@ export default defineComponent({
             v-else-if="popupPage === 5"
             class="payment-input w-full min-h-[535px] flex flex-col p-[15px] relative"
         >
-            <!--            <div-->
-            <!--                v-if="!compIsMobile"-->
-            <!--                class="bg-logo absolute bottom-[0px] left-[0px] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
-            <!--            >-->
-            <!--                <img class="w-full h-full" src="@/assets/images/common/popup_bg@2x.webp" />-->
-            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
@@ -1239,8 +1219,8 @@ export default defineComponent({
                 </div>
             </div>
             <div class="mx-[5%]">
-                <div @click="handleChangePolicy" class="flex mt-[30px] items-center">
-                    <div class="w-[20px] h-[20px] mr-[10px]">
+                <div class="flex mt-[30px] items-center">
+                    <div class="w-[20px] h-[20px] mr-[10px]" @click="handleChangePolicy">
                         <img
                             v-if="isAgreePolicy"
                             src="/assets/images/icons/checkbox_check.svg"
@@ -1252,13 +1232,21 @@ export default defineComponent({
                             class="w-full h-full"
                         />
                     </div>
-                    <span class="text-[16px] font-[400] text-[--color-main-blue] mr-[5px]"
-                        >이용약관</span
+                    <a
+                        class="text-[16px] font-[400] text-[--color-main-blue] mr-[5px] hover:underline"
+                        @click="handleClickTermsOfUse"
+                        href="https://www.dirty-clinic.com?popup=terms-of-use"
+                        target="_blank"
+                        >이용약관</a
                     >
                     <span class="text-[16px] font-[400] text-[--color-text-gray] mr-[5px]">및</span>
-                    <span class="text-[16px] font-[400] text-[--color-main-blue] mr-[5px]"
+                    <a
+                        class="text-[16px] font-[400] text-[--color-main-blue] mr-[5px] hover:underline"
+                        @click="handleClickPrivatePolicy"
+                        href="https://www.dirty-clinic.com?popup=private-policy"
+                        target="_blank"
                         >개인정보 수집 · 이용
-                    </span>
+                    </a>
                     <span class="text-[16px] font-[400] text-[--color-text-gray]">동의</span>
                 </div>
 
@@ -1301,12 +1289,6 @@ export default defineComponent({
             v-else-if="popupPage === 7"
             class="payment-input w-full min-h-[535px] flex flex-col p-[15px] relative"
         >
-            <!--            <div-->
-            <!--                v-if="!compIsMobile"-->
-            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
-            <!--            >-->
-            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
-            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
@@ -1377,12 +1359,6 @@ export default defineComponent({
             v-else-if="popupPage === 8"
             class="payment-input w-full min-h-[535px] flex flex-col p-[15px] relative"
         >
-            <!--            <div-->
-            <!--                v-if="!compIsMobile"-->
-            <!--                class="bg-logo absolute bottom-[-107px] left-[15%] w-[580px] max-w-[580px] max-h-[550px] -z-10"-->
-            <!--            >-->
-            <!--                <img class="w-full h-full" src="@/assets/images/common/bg_logo@2x.webp" />-->
-            <!--            </div>-->
             <div class="head-area w-full flex justify-between pl-[5%]">
                 <div class="flex flex-col pt-[40px]">
                     <span class="mb-[5px] text-[28px] font-[700] leading-[36px]"
@@ -1443,7 +1419,7 @@ export default defineComponent({
         <!-- 9 -->
         <div
             v-else-if="popupPage === 9"
-            class="flex flex-col justify-center pt-[15px] pb-[35px] pl-[35px] pr-[15px]"
+            class="flex flex-col justify-center pt-[15px] pb-[35px] px-[20px]"
         >
             <div class="flex justify-end mb-[4px]">
                 <img
@@ -1469,7 +1445,7 @@ export default defineComponent({
         <!-- 10 -->
         <div
             v-else-if="popupPage === 10"
-            class="flex flex-col justify-center pt-[15px] pb-[35px] pl-[35px] pr-[15px]"
+            class="flex flex-col justify-center pt-[15px] pb-[35px] px-[20px]"
         >
             <div class="flex justify-end mb-[4px]">
                 <img
@@ -1493,7 +1469,7 @@ export default defineComponent({
         <!-- 11 -->
         <div
             v-else-if="popupPage === 11"
-            class="flex flex-col justify-center pt-[15px] pb-[35px] pl-[35px] pr-[15px]"
+            class="flex flex-col justify-center pt-[15px] pb-[35px] px-[20px]"
         >
             <div class="flex justify-end mb-[4px]">
                 <img

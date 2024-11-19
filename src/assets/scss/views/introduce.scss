@@ -1,0 +1,37 @@
+.introduce-wrapper {
+    .introduce-contents {
+        .introduce-header {
+        }
+    }
+
+    @include mobile {
+        .introduce-contents {
+            max-width: 608px;
+            width: calc(100vw - 50px);
+            margin-left: 25px;
+            margin-right: 25px;
+
+            .introduce-header {
+                padding-top: 40px;
+
+                .title {
+                    font-size: 36px;
+                    margin-bottom: 5px;
+                }
+
+                .desc {
+                    font-size: 16px;
+                    font-weight: 400;
+                }
+            }
+
+            .introduce-body {
+                p {
+                    font-size: 16px;
+                }
+
+                padding-bottom: 80px;
+            }
+        }
+    }
+}

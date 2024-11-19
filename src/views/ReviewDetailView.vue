@@ -121,7 +121,7 @@ export default defineComponent({
                         {{ summary.title }}
                     </div>
                     <div class="content w-full text-[14px] font-[300] leading-[20px] mb-[6px]">
-                        {{ summary.content }}
+                        {{ summary.content.replace(/<[^>]*>?/g, '') }}
                     </div>
                     <div class="text-[14px] font-[300] leading-[20px]">
                         {{ moment(summary.created).format('YY.MM.DD') }}

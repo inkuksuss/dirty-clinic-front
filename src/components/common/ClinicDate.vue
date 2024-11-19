@@ -31,6 +31,8 @@ export default defineComponent({
         };
 
         const today = new Date();
+        const maxDate = new Date(new Date().setDate(today.getDate() + 30));
+
         const disables = ref<object>({
             dates: [
                 new Date(new Date().setDate(today.getDate() + 1)),
@@ -47,6 +49,7 @@ export default defineComponent({
             compLocale,
             compLabel,
             disables,
+            maxDate,
             handleChangeDate
         };
     }
@@ -66,6 +69,7 @@ export default defineComponent({
                 class="w-full h-[60px] border-[1.5px] border-[--color-border-blue] py-[17px] px-[20px]"
                 v-model="date"
                 :locale="compLocale"
+                :upper-limit="maxDate"
                 :lower-limit="new Date()"
                 :disabled-dates="disables"
                 @update:modelValue="handleChangeDate"

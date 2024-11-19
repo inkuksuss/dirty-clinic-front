@@ -9,6 +9,11 @@ const router = createRouter({
             component: () => import('@/views/HomeView.vue')
         },
         {
+            path: '/introduce',
+            name: 'introduce',
+            component: () => import('@/views/Introduce.vue')
+        },
+        {
             path: '/moving-cleaning',
             name: 'movingCleaning',
             component: () => import('@/views/sub/MovingCleaningView.vue')

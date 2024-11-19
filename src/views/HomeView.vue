@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import homeSlider from '@/components/home/HomeSlider.vue';
 import HomeScroll from '@/components/home/HomeScroll.vue';
 import HomeIntro from '@/components/home/HomeIntro.vue';
@@ -11,6 +11,7 @@ import HomeService from '@/components/home/HomeService.vue';
 import { useMeta } from 'vue-meta';
 import Flicking from '@egjs/vue3-flicking';
 import { AutoPlay } from '@egjs/flicking-plugins';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
     components: {
@@ -24,15 +25,26 @@ export default defineComponent({
     },
     setup() {
         useMeta({
-            title: '더티 클리닉 | 입주청소, 사업장청소, 준공청소, 화재청소 전문업체',
+            title: '더티클리닉 | 입주청소, 사업장청소, 준공청소, 화재청소 전문기업',
             description: '우리는 청결의 미학을 실현하는 전문기업 더티클리닉입니다.'
         });
         const store = useStore();
+        const route = useRoute();
         const plugin = [new AutoPlay({ duration: 5000, direction: 'NEXT' })];
 
         const handleClickBtn = () => {
             store.setOpenPopup(PopupType.PAYMENT);
         };
+
+        onMounted(() => {
+            if (route.query && route.query.popup) {
+                if (route.query.popup === 'terms-of-use') {
+                    store.setOpenPopup(PopupType.TERMS_OF_USE);
+                } else if (route.query.popup === 'private-policy') {
+                    store.setOpenPopup(PopupType.PRIVACY_POLICY);
+                }
+            }
+        });
 
         return {
             plugin,
