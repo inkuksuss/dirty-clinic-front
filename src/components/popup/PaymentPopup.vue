@@ -49,6 +49,7 @@ export default defineComponent({
         const targetTime = ref<string>('');
         const address = ref<string | undefined>();
         const targetDate = ref<Date>(new Date());
+        const disableDay = ref<Array<Date>>([]);
         const productResponse = ref<ProductResponse>();
         const serviceList = ref<CommonCodeType[]>([]);
         const buildingList = ref<CommonCodeType[]>([]);
@@ -218,7 +219,6 @@ export default defineComponent({
                                 } else {
                                     handlePaymentFail();
                                 }
-                                console.log(response);
                             } catch (e) {
                                 console.error(e);
                                 handlePaymentFail();
@@ -339,7 +339,7 @@ export default defineComponent({
                             popupPage.value = 7;
                         }
                     })
-                    .catch((e) => console.log(e));
+                    .catch((e) => {});
             } else {
                 getApiInstance()
                     .get('/common/summary?type=building_type')
@@ -350,7 +350,7 @@ export default defineComponent({
                             popupPage.value = 2;
                         }
                     })
-                    .catch((e) => console.log(e));
+                    .catch((e) => {});
             }
         };
 
@@ -371,7 +371,7 @@ export default defineComponent({
                                 popupPage.value++;
                             }
                         })
-                        .catch((e) => console.log(e));
+                        .catch((e) => {});
                     break;
                 }
                 case 3: {
@@ -411,7 +411,19 @@ export default defineComponent({
                         window.alert('주소를 입력해주세요.');
                         return;
                     }
-                    popupPage.value++;
+
+                    getApiInstance()
+                        .post('/day/check', {
+                            targetDay: moment(paymentData.value.targetDate).format('YYYY-MM-DD')
+                        })
+                        .then((res) => {
+                            if (res.data.code === 0) {
+                                popupPage.value++;
+                            } else {
+                                window.alert('예약 불가능한 날짜입니다.');
+                            }
+                        })
+                        .catch((e) => {});
                     break;
                 }
                 case 4: {
@@ -648,7 +660,7 @@ export default defineComponent({
                         window.alert(res.data.message);
                     }
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {});
         };
 
         const doEstimateByEtc = () => {
@@ -669,7 +681,7 @@ export default defineComponent({
                     }
                     popupPage.value = 9;
                 })
-                .catch((e) => console.log(e));
+                .catch((e) => {});
         };
 
         const doEstimate = () => {
@@ -726,7 +738,12 @@ export default defineComponent({
             }
 
             getApiInstance()
-                .post('/reservation/estimate', paymentData.value)
+                .post(
+                    '/reservation/estimate',
+                    Object.assign({}, paymentData.value, {
+                        targetDate: moment(paymentData.value.targetDate).format('YYYY-MM-DD')
+                    })
+                )
                 .then((res) => {
                     if (res.data.code !== 0) {
                         window.alert('견적 요청에 실패하였습니다.');
@@ -734,7 +751,7 @@ export default defineComponent({
                     }
                     popupPage.value = 9;
                 })
-                .catch((e) => console.log(e));
+                .catch((e) => {});
         };
 
         const handlePaymentSuccess = () => {
@@ -750,15 +767,47 @@ export default defineComponent({
         const handleClickTermsOfUse = () => {};
 
         onMounted(() => {
-            window.alert('현재 준비중인 기능입니다.');
-            getApiInstance()
-                .get('/common/summary?type=service_type&subType=pay_able')
-                .then((res) => {
-                    if (res.data.code === 0) {
-                        serviceList.value = res.data.data;
-                    }
-                })
-                .catch((e) => console.log(e));
+            window.alert('현재 준비중인 서비스입니다.');
+            store.setOpenPopup(null);
+
+            // getApiInstance()
+            //     .get('/common/summary?type=service_type&subType=pay_able')
+            //     .then((res) => {
+            //         if (res.data.code === 0) {
+            //             serviceList.value = res.data.data;
+            //         }
+            //     })
+            //     .catch((e) => console.log(e));
+            //
+            // getApiInstance()
+            //     .get('/day/summary')
+            //     .then((res) => {
+            //         if (res.data.code === 0) {
+            //             const data = res.data.data as string[];
+            //
+            //             if (data && data.length > 0) {
+            //                 const today = new Date();
+            //                 const disableDayList = data.map((day) =>
+            //                     moment(day, 'YYYY-MM-DD').toDate()
+            //                 );
+            //                 for (let i = 0; i <= 31; i++) {
+            //                     const ableDay = new Date(new Date().setDate(today.getDate() + i));
+            //                     if (
+            //                         !disableDayList.find(
+            //                             (day) => day.getDate() === ableDay.getDate()
+            //                         )
+            //                     ) {
+            //                         targetDate.value = ableDay;
+            //                         break;
+            //                     }
+            //                 }
+            //                 disableDay.value = disableDayList;
+            //             }
+            //         } else {
+            //             console.log('예약 가능 날짜를 불러오는데 실패하였습니다.');
+            //         }
+            //     })
+            //     .catch((e) => console.log(e));
         });
 
         return {
@@ -789,6 +838,7 @@ export default defineComponent({
             compIsMobile,
             paymentTypeList,
             isAgreePolicy,
+            disableDay,
             handleClickPrivatePolicy,
             handleClickTermsOfUse,
             handlePaymentSuccess,
@@ -984,6 +1034,7 @@ export default defineComponent({
                     <div class="text-[18px] font-[600] leading-[26px]">예약일</div>
                     <clinic-date
                         :value="targetDate"
+                        :disable-day="disableDay"
                         class="max-w-[288px] max-h-[60px] w-[73%]"
                         :change-handler="handleChangeDate"
                     >
@@ -1258,8 +1309,8 @@ export default defineComponent({
                     />
                     <span class="text-[16px] font-[400] leading-[19px] text-[--color-text-gray]"
                         >고객님이 선택하신 서비스의 예상 금액입니다.<br />
-                        현장 및 상세 예약 확인에 따라 금액이 변동될 수 있으며, 예약금 결제 후 확정
-                        문자를 드립니다.</span
+                        현장 및 상세 예약 확인에 따라 금액이 변동될 수 있으며, 예약금 결제 후 2
+                        영업일 이내로 예약 확정 및 확정 문자를 드립니다.</span
                     >
                 </div>
                 <div class="w-full h-[45px] flex justify-between gap-x-[15px] mt-[45px] mb-[15px]">

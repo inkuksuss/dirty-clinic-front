@@ -168,7 +168,7 @@ export default defineComponent({
                 posStartX: 0,
                 subList: [
                     { title: '이용후기', dest: '/review' },
-                    { title: '블로그', dest: '' },
+                    { title: '블로그', dest: '/blog' },
                     { title: '프로모션', dest: '/promotion' }
                 ]
             }
@@ -179,7 +179,10 @@ export default defineComponent({
                 window.alert('현재 준비중인 페이지입니다.');
                 return;
             }
-            router.push(sub.dest);
+
+            if (sub.dest === '/blog') {
+                window.open('https://blog.naver.com/chlanstjr98');
+            } else router.push(sub.dest);
         };
 
         const calculateElementWidth = () => {

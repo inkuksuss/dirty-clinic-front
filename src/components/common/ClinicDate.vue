@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ref, type PropType, defineComponent, computed } from 'vue';
+import { ref, type PropType, defineComponent, computed, onMounted } from 'vue';
 import { ko } from 'date-fns/locale';
 import Datepicker from 'vue3-datepicker';
 
@@ -10,6 +10,7 @@ export default defineComponent({
         label: { type: String as PropType<string>, required: false },
         value: { type: Date as PropType<Date> },
         // maxValue: { type: Date as PropType<Date>, required: false },
+        disableDay: { type: Array as PropType<Array<Date>>, required: false },
         readOnly: { type: Boolean as PropType<boolean>, default: false },
         changeHandler: {
             type: Function as PropType<(v: Date) => void>,
@@ -21,7 +22,7 @@ export default defineComponent({
     setup(props) {
         const compLabel = computed(() => props.label);
         const date = ref<Date>(props.value ? props.value : new Date());
-
+        const compDisableDay = computed(() => props.disableDay);
         const compLocale = computed(() => ko);
 
         const handleChangeDate = (date: Date | null | undefined) => {
@@ -31,18 +32,17 @@ export default defineComponent({
         };
 
         const today = new Date();
-        const maxDate = new Date(new Date().setDate(today.getDate() + 30));
+        const maxDate = new Date(new Date().setDate(today.getDate() + 31));
 
-        const disables = ref<object>({
-            dates: [
-                new Date(new Date().setDate(today.getDate() + 1)),
-                new Date(new Date().setDate(today.getDate() + 2)),
-                new Date(new Date().setDate(today.getDate() + 3)),
-                new Date(2024, 8, 11)
-            ]
+        const disables = ref<{ dates: Array<Date> }>({
+            dates: []
         });
 
-        console.log(disables.value);
+        onMounted(() => {
+            if (compDisableDay.value && compDisableDay.value?.length > 0) {
+                disables.value.dates = compDisableDay.value;
+            }
+        });
 
         return {
             date,

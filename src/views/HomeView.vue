@@ -33,6 +33,7 @@ export default defineComponent({
         const plugin = [new AutoPlay({ duration: 5000, direction: 'NEXT' })];
 
         const handleClickBtn = () => {
+            // window.alert('현재 준비중인 서비스입니다.');
             store.setOpenPopup(PopupType.PAYMENT);
         };
 
