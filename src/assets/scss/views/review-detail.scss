@@ -4,6 +4,71 @@
             .review-box {
             }
         }
+
+        .review-content-wrapper {
+            ul {
+                display: block;
+                list-style-type: disc;
+                margin-block-start: 1em;
+                margin-block-end: 1em;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
+                padding-inline-start: 40px;
+            }
+
+            ul[data-checked=false] {
+                list-style-type: square;
+            }
+
+            ol {
+                display: block;
+                list-style-type: decimal;
+                margin-block-start: 1em;
+                margin-block-end: 1em;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
+                padding-inline-start: 40px;
+            }
+
+            li {
+                display: list-item;
+                text-align: -webkit-match-parent;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            .ql-size-large {
+                font-size: 20px;
+            }
+
+            .ql-size-huge {
+                font-size: 24px;
+            }
+
+            .ql-size-small {
+                font-size: 12px;
+            }
+
+            @include mobile {
+                p {
+                    font-size: 14px;
+                }
+
+                .ql-size-large {
+                    font-size: 18px;
+                }
+
+                .ql-size-huge {
+                    font-size: 22px;
+                }
+
+                .ql-size-small {
+                    font-size: 10px;
+                }
+            }
+        }
     }
 
     .review-summary-wrapper {
